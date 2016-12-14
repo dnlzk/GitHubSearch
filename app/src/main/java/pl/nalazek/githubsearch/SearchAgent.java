@@ -2,6 +2,10 @@ package pl.nalazek.githubsearch;
 
 import android.support.v4.widget.NestedScrollView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,12 +15,21 @@ import java.util.Observer;
  */
 public class SearchAgent implements Observer {
 
+    enum SearchScope { USERS, REPOSITORIES }
+
     private static SearchAgent instance = new SearchAgent();
 
     private static NestedScrollView scrollViewDisplay;
-    private static int pResultsPerPage = 50;
-    private static Boolean pScopeUsers = false;
-    private static Boolean pScopeRepos = false;
+    private int pResultsPerPage = 50;
+    private Boolean pScopeUsers = false;
+    private Boolean pScopeRepos = false;
+    private QueryTask actualOnView = null;
+    private QueryTask actualProcessing = null;
+    private HashSet<Integer> pageCache;
+    private QueryHistory queryHistory;
+
+
+
 
     /**
      * Gets an instance of a single SearchAgent class
@@ -32,12 +45,33 @@ public class SearchAgent implements Observer {
      * Private constructor
      */
     private SearchAgent() {
-
     }
 
+    /**
+     * Use to set the scope of searching
+     * @param searchScope pass the SearchScope enums to define the scope or none to disable searching
+     */
+    public void setSearchScope(SearchScope... searchScope) {
+        pScopeUsers = false;
+        pScopeRepos = false;
+        for(SearchScope scope : searchScope) {
+            switch(scope){
+                case USERS: pScopeUsers = true; break;
+                case REPOSITORIES: pScopeRepos = true; break;
+            }
+        }
+    }
+
+
+    /**
+     * Called when a new pair is put into QueryHistory
+     * @param observable instance of QueryHistory
+     * @param o not used
+     */
     @Override
     public void update(Observable observable, Object o) {
-
+        QueryHistory qHistory = (QueryHistory) observable;
+        QueryTask qTask = (QueryTask) o;
     }
 }
 

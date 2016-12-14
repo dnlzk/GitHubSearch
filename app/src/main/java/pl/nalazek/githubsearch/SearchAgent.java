@@ -62,6 +62,23 @@ public class SearchAgent implements Observer {
         }
     }
 
+    /**
+     * Use to set the number of results viewed. Note that if you set the scope both to USERS
+     * and REPOSITORIES the number of results viewed will be doubled.
+     * Example: passing number = 30
+     * if the scope is set only to USERS there will be 30 results on page,
+     * if the scope is set to both USERS and REPOSITORIES there will be 60 results on page
+     * @param number the number of results
+     * @see SearchAgent#setSearchScope(SearchScope...)
+     */
+    public void setResultsNumber(int number){
+        pResultsPerPage = number;
+    }
+
+    public int getResultsPerPage() {
+        return pResultsPerPage;
+    }
+
 
     /**
      * Called when a new pair is put into QueryHistory

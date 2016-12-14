@@ -23,7 +23,7 @@ public class QueryHistory extends Observable {
             qHistory.put(key, value);
         }
         setChanged();
-        notifyObservers();
+        notifyObservers(key);
     }
 
     /**

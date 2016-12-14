@@ -75,7 +75,11 @@ public class SearchAgent implements Observer {
         pResultsPerPage = number;
     }
 
-    public int getResultsPerPage() {
+    /**
+     * Use to get the the number of results shown
+     * @return number of results
+     */
+    public int getResultsNumber() {
         return pResultsPerPage;
     }
 

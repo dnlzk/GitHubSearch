@@ -46,6 +46,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
 
 
+
         //todo: check periodically isCancelled() value
         return null;
     }

@@ -122,4 +122,11 @@ public class Query {
         if(previousRepsonses != null) this.previousResponses = previousRepsonses;
     }*/
 
+    /**
+     * Gets the url from the query
+     * @return url
+     */
+    public URL getURL() {
+        return url;
+    }
 }

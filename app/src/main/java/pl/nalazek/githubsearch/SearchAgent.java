@@ -1,11 +1,9 @@
 package pl.nalazek.githubsearch;
 
 import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,13 +16,15 @@ public class SearchAgent implements Observer {
     enum SearchScope { USERS, REPOSITORIES }
 
     private static SearchAgent instance = new SearchAgent();
-
     private static NestedScrollView scrollViewDisplay;
+    private static final String LOG_TAG = "SearchAgent Class";
     private int pResultsPerPage = 50;
-    private Boolean pScopeUsers = false;
-    private Boolean pScopeRepos = false;
+    private Boolean pScopeUsers = true;
+    private Boolean pScopeRepos = true;
+    private Query.Sort pSorting = null;
+    private Query.Order pOrdering = null;
     private QueryTask actualOnView = null;
-    private QueryTask actualProcessing = null;
+    private QueryTask actualProcessingTask = null;
     private HashSet<Integer> pageCache;
     private QueryHistory queryHistory;
 
@@ -82,6 +82,62 @@ public class SearchAgent implements Observer {
     public int getResultsNumber() {
         return pResultsPerPage;
     }
+
+    /**
+     * Use to start a search.
+     * This method creates a QueryTask, if an earlier QueryTask is still being processed then it is canceled.
+     * @param phrase The string to search for
+     * @param nestedScrollView The view to show the results
+     */
+    public void searchForPhrase(String phrase, NestedScrollView nestedScrollView) {
+
+        // check if an other task is pending and cancel it
+        if(actualProcessingTask != null) actualProcessingTask.cancel(true);
+
+        // QueryTask configuration and execution
+        // Multiple query search
+        if(pScopeUsers && pScopeRepos) {
+
+            Query searchQuery1 = new Query(phrase,SearchScope.REPOSITORIES, nestedScrollView, pResultsPerPage);
+            setQueryOptions(searchQuery1);
+            Query searchQuery2 = new Query(phrase,SearchScope.USERS, nestedScrollView, pResultsPerPage);
+            setQueryOptions(searchQuery2);
+
+            QueryTask queryTask = new QueryTask();
+            actualProcessingTask = queryTask;
+            queryTask.execute(searchQuery1,searchQuery2);
+        }
+
+
+
+        // Search for users only
+        else if (pScopeUsers) { //todo: edit
+            }
+        // Search for repositories only
+        else if (pScopeRepos) { //todo: edit
+            }
+        else { Log.i(LOG_TAG, "No search scope selected"); }
+
+
+
+        //actualProcessingTask = new QueryTask().execute();
+
+
+    }
+
+    /**
+     * This method sets sorting and ordering options for the passed query
+     * @param query The query which the options will be set to
+     */
+    private void setQueryOptions(Query query) {
+        // If default changed, configure sorting and ordering options
+        if(pOrdering != null)
+            query.setOrdering(pOrdering);
+        if(pSorting != null)
+            query.setSorting(pSorting);
+    }
+
+
 
 
     /**

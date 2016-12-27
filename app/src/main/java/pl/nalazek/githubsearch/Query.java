@@ -18,11 +18,10 @@ public class Query {
 
     private static final String LOG_TAG = "Query Class";
     private URL url;
-    private String header;
     private View view;
     private String phrase;
-    private Boolean isSingle = true;
-    private Boolean isLast = true;
+    private Boolean isMultipleQuery = true;
+    private Boolean isLastQuery = true;
     private LinkedList<Response> previousResponses;
     private Sort sort = Sort.BEST;
     private Order order = Order.DESCENDING;
@@ -107,9 +106,20 @@ public class Query {
      * Sets the ordering parameter. By default ascending order is set.
      * @param order ordering type from enum Order
      */
-    public void setOrdering(Order order) {
-        this.order = order;
-    }
+    public void setOrdering(Order order) { this.order = order; }
 
+    /**
+     * Calling this method will set the query as multiple.
+     * This method will be used if the search has two or more scopes (now only REPOSITORIES and USERS scopes are available) and
+     * there are created two or more Query/QueryTask instances.
+     * The parameter indicates the query is the last one.
+     * @param isLastQuery true if the multiple query is the last one, false if otherwise
+     * @param  previousRepsonses previous responses list or null when the multiple query is the first one
+     */
+    public void setMultipleQuery(Boolean isLastQuery, LinkedList<Response> previousRepsonses) {
+        this.isMultipleQuery = true;
+        this.isLastQuery = isLastQuery;
+        if(previousRepsonses != null) this.previousResponses = previousRepsonses;
+    }
 
 }

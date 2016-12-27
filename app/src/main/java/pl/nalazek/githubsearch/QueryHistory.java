@@ -11,14 +11,14 @@ import java.util.Observable;
  */
 public class QueryHistory extends Observable {
 
-    private LinkedHashMap<QueryTask, Response> qHistory;
+    private LinkedHashMap<QueryTask, ResponsePackage> qHistory;
 
     /**
      * Add a new pair
      * @param key QueryTask as the key
-     * @param value Response as the value
+     * @param value ResponsePackage as the value
      */
-    public void put(QueryTask key, Response value) {
+    public void put(QueryTask key, ResponsePackage value) {
         synchronized (this) {
             qHistory.put(key, value);
         }
@@ -29,9 +29,9 @@ public class QueryHistory extends Observable {
     /**
      * Get a pair based on a QueryTask key
      * @param key QueryTask as the key
-     * @return Response as the value
+     * @return ResponsePackage as the value
      */
-    public synchronized Response get(QueryTask key) {
+    public synchronized ResponsePackage get(QueryTask key) {
         return qHistory.get(key);
     }
 }

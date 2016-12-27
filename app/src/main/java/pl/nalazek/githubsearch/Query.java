@@ -22,7 +22,7 @@ public class Query {
     private String phrase;
     //private Boolean isMultipleQuery = true;
     //private Boolean isLastQuery = true;
-    //private LinkedList<Response> previousResponses;
+    //private LinkedList<ResponsePackage> previousResponses;
     private Sort sort = Sort.BEST;
     private Order order = Order.DESCENDING;
     private Integer resultsPerPage;
@@ -116,7 +116,7 @@ public class Query {
      * @param isLastQuery true if the multiple query is the last one, false if otherwise
      * @param  previousRepsonses previous responses list or null when the multiple query is the first one
      */
-    /*public void setMultipleQuery(Boolean isLastQuery, LinkedList<Response> previousRepsonses) {
+    /*public void setMultipleQuery(Boolean isLastQuery, LinkedList<ResponsePackage> previousRepsonses) {
         this.isMultipleQuery = true;
         this.isLastQuery = isLastQuery;
         if(previousRepsonses != null) this.previousResponses = previousRepsonses;

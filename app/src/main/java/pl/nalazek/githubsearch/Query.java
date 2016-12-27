@@ -95,5 +95,21 @@ public class Query {
         }
     }
 
+    /**
+     * Sets the sorting parameter. By default best match sorting is set.
+     * @param sort sorting type form enum Sort
+     */
+    public void setSorting(Sort sort) {
+        this.sort = sort;
+    }
+
+    /**
+     * Sets the ordering parameter. By default ascending order is set.
+     * @param order ordering type from enum Order
+     */
+    public void setOrdering(Order order) {
+        this.order = order;
+    }
+
 
 }

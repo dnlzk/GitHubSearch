@@ -31,18 +31,22 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
         OkHttpClient client = new OkHttpClient();
         ResponsePackage responsePackage = new ResponsePackage();
+        Response response;
 
         // execute all queries
         for(Query query : queries) {
             Request request = new Request.Builder().url(query.getURL()).build();
             try {
-                Response response = client.newCall(request).execute();
-                if(response.isSuccessful()) responsePackage.addResponse(response.body().string());
+                response = client.newCall(request).execute();
+                if(response.isSuccessful()) responsePackage.addResponse(response, query.getType());
                 else responsePackage.addMessage(response.message());
             } catch (IOException e) {
                 Log.e(LOG_TAG, e.getMessage());
             }
         }
+
+
+
 
 
 

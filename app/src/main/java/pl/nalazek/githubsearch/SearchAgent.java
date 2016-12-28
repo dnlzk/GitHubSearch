@@ -26,7 +26,7 @@ public class SearchAgent implements Observer {
     private QueryTask actualOnView = null;
     private QueryTask actualProcessingTask = null;
     private HashSet<Integer> pageCache;
-    private QueryHistory queryHistory;
+    private static QueryHistory queryHistory;
 
 
 
@@ -141,6 +141,7 @@ public class SearchAgent implements Observer {
 
 
     /**
+     * todo: commit
      * Called when a new pair is put into QueryHistory
      * @param observable instance of QueryHistory
      * @param o not used
@@ -149,6 +150,14 @@ public class SearchAgent implements Observer {
     public void update(Observable observable, Object o) {
         QueryHistory qHistory = (QueryHistory) observable;
         QueryTask qTask = (QueryTask) o;
+    }
+
+    /**
+     * In most cases used to access Observable QueryHistory object by QueryTask when it finishes it task
+     * @return QueryHistory
+     */
+    static QueryHistory getQueryHistory() {
+        return queryHistory;
     }
 }
 

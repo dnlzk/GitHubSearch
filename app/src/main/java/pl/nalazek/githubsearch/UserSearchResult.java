@@ -5,13 +5,24 @@ import java.util.List;
 
 /**
  * This class represents a deserialized JSON response for user search
- * Due to one way parsing only getters are provided.
  * @author Daniel Nalazek
  */
 public class UserSearchResult extends JsonObject {
     private Integer totalCount;
     private Boolean incompleteResults;
     private List<Item> items = null;
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public void setIncompleteResults(Boolean incompleteResults) {
+        this.incompleteResults = incompleteResults;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 
     public Integer getTotalCount() {
         return totalCount;
@@ -49,6 +60,78 @@ public class UserSearchResult extends JsonObject {
 
         public String getLogin() {
             return login;
+        }
+
+        public void setLogin(String login) {
+            this.login = login;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public void setAvatarUrl(String avatarUrl) {
+            this.avatarUrl = avatarUrl;
+        }
+
+        public void setGravatarId(String gravatarId) {
+            this.gravatarId = gravatarId;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public void setHtmlUrl(String htmlUrl) {
+            this.htmlUrl = htmlUrl;
+        }
+
+        public void setFollowersUrl(String followersUrl) {
+            this.followersUrl = followersUrl;
+        }
+
+        public void setFollowingUrl(String followingUrl) {
+            this.followingUrl = followingUrl;
+        }
+
+        public void setGistsUrl(String gistsUrl) {
+            this.gistsUrl = gistsUrl;
+        }
+
+        public void setStarredUrl(String starredUrl) {
+            this.starredUrl = starredUrl;
+        }
+
+        public void setSubscriptionsUrl(String subscriptionsUrl) {
+            this.subscriptionsUrl = subscriptionsUrl;
+        }
+
+        public void setOrganizationsUrl(String organizationsUrl) {
+            this.organizationsUrl = organizationsUrl;
+        }
+
+        public void setReposUrl(String reposUrl) {
+            this.reposUrl = reposUrl;
+        }
+
+        public void setEventsUrl(String eventsUrl) {
+            this.eventsUrl = eventsUrl;
+        }
+
+        public void setReceivedEventsUrl(String receivedEventsUrl) {
+            this.receivedEventsUrl = receivedEventsUrl;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public void setSiteAdmin(Boolean siteAdmin) {
+            this.siteAdmin = siteAdmin;
+        }
+
+        public void setScore(Double score) {
+            this.score = score;
         }
 
         public Integer getId() {

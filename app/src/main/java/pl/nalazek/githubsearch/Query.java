@@ -26,11 +26,10 @@ public class Query {
     private Sort sort = Sort.BEST;
     private Order order = Order.DESCENDING;
     private Integer resultsPerPage;
-    private QueryType qType = null;
+    private ExchangeType eType = null;
 
     public enum Sort { STARS, FORKS, UPDATED, BEST }
     public enum Order { ASCENDING, DESCENDING }
-    public enum QueryType { USER_SEARCH, REPOS_SEARCH, USER_PAGE, REPOS_PAGE, USER_EXPAND}
 
     /**
      * Default constructor. Creates a query with parameters. If not set, default is sorting by best match and descending order.
@@ -55,10 +54,10 @@ public class Query {
         // set the proper scope url-string and query type
         switch(scope) {
             case USERS: scopeURLString = SEARCH_FOR_USERS_URL;
-                        qType = QueryType.USER_SEARCH;
+                        eType = ExchangeType.USER_SEARCH;
                 break;
             case REPOSITORIES:  scopeURLString = SEARCH_FOR_REPOS_URL;
-                                qType = QueryType.REPOS_SEARCH;
+                                eType = ExchangeType.REPOS_SEARCH;
                 break;
             default: scopeURLString = "";
         }
@@ -137,7 +136,7 @@ public class Query {
     /**
      * Gets the type of Query
      * @return Type of the query
-     * @see QueryType
+     * @see ExchangeType
      */
-    public QueryType getType() { return qType; }
+    public ExchangeType getType() { return eType; }
 }

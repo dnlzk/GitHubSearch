@@ -1,9 +1,10 @@
 package pl.nalazek.githubsearch;
 
 /**
+ * This class represents a deserialized JSON response for user details
  * @author Daniel Nalazek
  */
-public class UserExpanded extends  JsonObject {
+public class UserExpanded extends JsonObject {
 
     private String login;
     private Integer id;

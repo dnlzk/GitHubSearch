@@ -16,7 +16,6 @@ public class SearchAgent implements Observer {
     enum SearchScope { USERS, REPOSITORIES }
 
     private static SearchAgent instance = new SearchAgent();
-    private static NestedScrollView scrollViewDisplay;
     private static final String LOG_TAG = "SearchAgent Class";
     private int pResultsPerPage = 50;
     private Boolean pScopeUsers = true;
@@ -33,11 +32,9 @@ public class SearchAgent implements Observer {
 
     /**
      * Gets an instance of a single SearchAgent class
-     * @param scrollViewDisplay The scroll view used to show the results of a search query
      * @return Single instance of a SearchAgent class
      */
-    public static SearchAgent getInstance(NestedScrollView scrollViewDisplay) {
-        SearchAgent.scrollViewDisplay = scrollViewDisplay;
+    public static SearchAgent getInstance() {
         return instance;
     }
 
@@ -45,6 +42,7 @@ public class SearchAgent implements Observer {
      * Private constructor
      */
     private SearchAgent() {
+        queryHistory = new QueryHistory();
     }
 
     /**
@@ -150,6 +148,8 @@ public class SearchAgent implements Observer {
     public void update(Observable observable, Object o) {
         QueryHistory qHistory = (QueryHistory) observable;
         QueryTask qTask = (QueryTask) o;
+        ResponsePackage rp = qHistory.get(qTask);
+        Log.i(LOG_TAG, rp.getResponses().iterator().next().getJsonObject().toString());
     }
 
     /**

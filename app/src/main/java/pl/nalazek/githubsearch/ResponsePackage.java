@@ -1,13 +1,8 @@
 package pl.nalazek.githubsearch;
 
 import android.util.Log;
-
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import okhttp3.Response;
 
 /**
@@ -17,7 +12,7 @@ import okhttp3.Response;
 public class ResponsePackage
 {
     private static final String LOG_TAG = "ResponsePackage Class";
-    private ArrayList<ResponsePartitioned> responses;
+    private ArrayList<ResponsePartitioned> responses = new ArrayList<>();
     private String messageHTTP = null;
 
     /**
@@ -52,6 +47,15 @@ public class ResponsePackage
     public String getMessage() {
         if(messageHTTP != null) return messageHTTP;
         else return null;
+    }
+
+    /**
+     * Returns an ArrayList of all responses in that ResponsePackage
+     * @return ArrayList with ResponsePartitioned type parameter
+     * @see ResponsePartitioned
+     */
+    public ArrayList<ResponsePartitioned> getResponses() {
+        return responses;
     }
 
 }

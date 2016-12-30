@@ -16,6 +16,14 @@ public class ResponsePackage
     private String messageHTTP = null;
 
     /**
+     * Constructor. Typically used when QueryTask was cancelled and no responses would be added.
+     * @param message Message to pass
+     */
+    public ResponsePackage(String message) {
+        messageHTTP = message;
+    }
+
+    /**
      * Adds a new response to the responses array
      * @param response Response from OkHttp library to add
      * @return returns the size of the responses array

@@ -139,17 +139,21 @@ public class SearchAgent implements Observer {
 
 
     /**
-     * todo: commit
      * Called when a new pair is put into QueryHistory
      * @param observable instance of QueryHistory
-     * @param o not used
+     * @param o QueryTask instance which accessed the Observable object, here QueryHistory
      */
     @Override
     public void update(Observable observable, Object o) {
         QueryHistory qHistory = (QueryHistory) observable;
         QueryTask qTask = (QueryTask) o;
         ResponsePackage rp = qHistory.get(qTask);
-        Log.i(LOG_TAG, rp.getResponses().iterator().next().getJsonObject().toString());
+
+        // task ended, set value to null
+        if(actualProcessingTask == qTask) actualProcessingTask = null;
+
+        // check if successful and set QueryTask as the one which results are on view
+        if(rp.getMessage() != null) actualOnView = qTask;
     }
 
     /**

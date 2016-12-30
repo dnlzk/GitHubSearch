@@ -3,7 +3,9 @@ package pl.nalazek.githubsearch;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -94,33 +96,38 @@ public class SearchAgent implements Observer {
 
         // QueryTask configuration and execution
         // Multiple query search
-        if(pScopeUsers && pScopeRepos) {
-
-            Query searchQuery1 = new Query(phrase,SearchScope.REPOSITORIES, nestedScrollView, pResultsPerPage);
+        Query searchQuery1 = null, searchQuery2 = null;
+        if(pScopeUsers) {
+            searchQuery1 = new Query(phrase, SearchScope.REPOSITORIES, nestedScrollView, pResultsPerPage);
             setQueryOptions(searchQuery1);
-            Query searchQuery2 = new Query(phrase,SearchScope.USERS, nestedScrollView, pResultsPerPage);
+        }
+        if(pScopeRepos) {
+            searchQuery2 = new Query(phrase, SearchScope.REPOSITORIES, nestedScrollView, pResultsPerPage);
             setQueryOptions(searchQuery2);
-
-            QueryTask queryTask = new QueryTask();
-            actualProcessingTask = queryTask;
-            queryTask.execute(searchQuery1,searchQuery2);
         }
 
+        QueryTask queryTask = new QueryTask();
+        actualProcessingTask = queryTask;
+        Query[] queryList;
 
-
+        // Search for users and repositories
+        if(pScopeUsers && pScopeRepos) {
+            queryList = new Query[]{ searchQuery1,searchQuery2 };
+        }
         // Search for users only
-        else if (pScopeUsers) { //todo: edit
+        else if (pScopeUsers) {
+            queryList = new Query[]{ searchQuery1 };
             }
         // Search for repositories only
-        else if (pScopeRepos) { //todo: edit
+        else if (pScopeRepos) {
+            queryList = new Query[]{ searchQuery2 };
             }
-        else { Log.i(LOG_TAG, "No search scope selected"); }
-
-
-
-        //actualProcessingTask = new QueryTask().execute();
-
-
+        // Other
+        else {
+            queryList = new Query[]{};
+            Log.i(LOG_TAG, "No search scope selected");
+        }
+        queryTask.execute(queryList);
     }
 
     /**

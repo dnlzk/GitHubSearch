@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import okhttp3.Response;
 
 /**
- * todo code edition
+ * This class is used as a response holder. Depending on the amount of passed queries to QueryTask it can hold one or two responses.
+ * In case of errors occurred during th exchange there is an error message available. The response array may be empty
+ * at that time.
  * @author Daniel Nalazek
  */
 public class ResponsePackage
@@ -16,7 +18,12 @@ public class ResponsePackage
     private String messageHTTP = null;
 
     /**
-     * Constructor. Typically used when QueryTask was cancelled and no responses would be added.
+     * Default constructor
+     */
+    public ResponsePackage() {}
+
+    /**
+     * Constructor with String parameter. Typically used when QueryTask was cancelled and no responses would be added.
      * @param message Message to pass
      */
     public ResponsePackage(String message) {

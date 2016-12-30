@@ -22,7 +22,6 @@ public class ResponsePartitioned {
     private ExchangeType exchangeType;
     private JsonObject jsonObject;
     private List<JsonObject> jsonObjectsList;
-    private Gson gson;
 
     /**
      * Constructor. Automatically converts HTML body to JsonObject depending on ExchangeType.
@@ -34,8 +33,8 @@ public class ResponsePartitioned {
         this.body = body;
         this.headers = headers;
         this.exchangeType = exchangeType;
-        gson = createGson(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-        deserializeJSON();
+        Gson gson = createGson(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+        deserializeJSON(gson);
 
     }
 
@@ -72,7 +71,7 @@ public class ResponsePartitioned {
         return jsonObject;
     }
 
-    private void deserializeJSON() {
+    private void deserializeJSON(Gson gson) {
         switch(exchangeType) {
             case USER_SEARCH:
             case USER_PAGE:

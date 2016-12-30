@@ -1,5 +1,7 @@
 package pl.nalazek.githubsearch;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,10 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
+import pl.nalazek.githubsearch.JsonObjects.JsonObject;
+import pl.nalazek.githubsearch.JsonObjects.RepoSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.UserExpanded;
+import pl.nalazek.githubsearch.JsonObjects.UserSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.UserStarred;
 
 /**
  * This class is a holder of a response divided into two parts: headers and body (as a Java class inheriting from JsonObject).
- * The inheriting class is automatically chosen in order to ExchangeType passed into constructor.
+ * The inheriting class is automatically chosen in order to ExchangeType passed in the constructor.
  * @author Daniel Nalazek
  */
 public class ResponsePartitioned {
@@ -91,6 +98,7 @@ public class ResponsePartitioned {
         }
     }
 
+    @NonNull
     private Gson createGson(FieldNamingPolicy fieldNamingPolicy) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(fieldNamingPolicy);

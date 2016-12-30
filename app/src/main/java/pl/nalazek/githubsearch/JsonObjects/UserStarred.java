@@ -1,4 +1,4 @@
-package pl.nalazek.githubsearch;
+package pl.nalazek.githubsearch.JsonObjects;
 
 /**
  * This class represents a deserialized JSON response for starred url

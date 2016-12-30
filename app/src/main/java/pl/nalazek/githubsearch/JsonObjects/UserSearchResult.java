@@ -1,4 +1,4 @@
-package pl.nalazek.githubsearch;
+package pl.nalazek.githubsearch.JsonObjects;
 
 
 import java.util.List;

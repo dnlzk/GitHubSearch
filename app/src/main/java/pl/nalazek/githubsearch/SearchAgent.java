@@ -3,9 +3,7 @@ package pl.nalazek.githubsearch;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,9 +26,6 @@ public class SearchAgent implements Observer {
     private QueryTask actualProcessingTask = null;
     private HashSet<Integer> pageCache;
     private static QueryHistory queryHistory;
-
-
-
 
     /**
      * Gets an instance of a single SearchAgent class
@@ -91,14 +86,48 @@ public class SearchAgent implements Observer {
      */
     public void searchForPhrase(String phrase, NestedScrollView nestedScrollView) {
 
-        // check if an other task is pending and cancel it
+        // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
 
-        // QueryTask configuration and execution
-        // Multiple query search
+        // Create a query list
+        Query[] queryList = getQueryArray(phrase, nestedScrollView);
+
+        // Create and set as actual a new QueryTask
+        QueryTask queryTask = new QueryTask();
+        actualProcessingTask = queryTask;
+
+        //Execute a query task
+        queryTask.execute(queryList);
+    }
+
+    /**
+     * This method sets sorting and ordering options for the passed query
+     * @param query The query which the options will be set to
+     */
+    private void setQueryOptions(Query query) {
+
+        // If default changed, configure sorting and ordering options
+        if(pOrdering != null)
+            query.setOrdering(pOrdering);
+        if(pSorting != null)
+            query.setSorting(pSorting);
+    }
+
+    /**
+     * This method creates a Query array where its quantity depends on the selected search scopes.
+     * @param phrase The string to search for
+     * @param nestedScrollView The view to show the results
+     * @return A query array. The quantity of elements depends on the quantity of selected search scopes.
+     * E.g. when the search scope is selected only to {@link SearchScope#REPOSITORIES}, only one-element array will be returned.
+     * If the search scope is selected to both {@link SearchScope#REPOSITORIES} and {@link SearchScope#USERS}, a two-element array
+     * be returned
+     */
+    private Query[] getQueryArray(String phrase, NestedScrollView nestedScrollView) {
+
+        // Set up search query/queries
         Query searchQuery1 = null, searchQuery2 = null;
         if(pScopeUsers) {
-            searchQuery1 = new Query(phrase, SearchScope.REPOSITORIES, nestedScrollView, pResultsPerPage);
+            searchQuery1 = new Query(phrase, SearchScope.USERS, nestedScrollView, pResultsPerPage);
             setQueryOptions(searchQuery1);
         }
         if(pScopeRepos) {
@@ -106,8 +135,6 @@ public class SearchAgent implements Observer {
             setQueryOptions(searchQuery2);
         }
 
-        QueryTask queryTask = new QueryTask();
-        actualProcessingTask = queryTask;
         Query[] queryList;
 
         // Search for users and repositories
@@ -117,29 +144,17 @@ public class SearchAgent implements Observer {
         // Search for users only
         else if (pScopeUsers) {
             queryList = new Query[]{ searchQuery1 };
-            }
+        }
         // Search for repositories only
         else if (pScopeRepos) {
             queryList = new Query[]{ searchQuery2 };
-            }
-        // Other
+        }
+        // Other - not used
         else {
             queryList = new Query[]{};
             Log.i(LOG_TAG, "No search scope selected");
         }
-        queryTask.execute(queryList);
-    }
-
-    /**
-     * This method sets sorting and ordering options for the passed query
-     * @param query The query which the options will be set to
-     */
-    private void setQueryOptions(Query query) {
-        // If default changed, configure sorting and ordering options
-        if(pOrdering != null)
-            query.setOrdering(pOrdering);
-        if(pSorting != null)
-            query.setSorting(pSorting);
+        return queryList;
     }
 
 

@@ -1,6 +1,8 @@
 package pl.nalazek.githubsearch;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -11,10 +13,11 @@ import java.util.Observable;
  */
 public class QueryHistory extends Observable {
 
-    private LinkedHashMap<QueryTask, ResponsePackage> qHistory;
+    private LinkedHashMap<QueryTask, ResponsePackage> qHistory = new LinkedHashMap<>();
+
 
     /**
-     * Add a new pair
+     * Adds a new pair
      * @param key QueryTask as the key
      * @param value ResponsePackage as the value
      */
@@ -27,11 +30,31 @@ public class QueryHistory extends Observable {
     }
 
     /**
-     * Get a pair based on a QueryTask key
+     * Gets a response value based on a QueryTask key
      * @param key QueryTask as the key
      * @return ResponsePackage as the value
      */
     public synchronized ResponsePackage get(QueryTask key) {
         return qHistory.get(key);
+    }
+
+
+    public synchronized int getHistorySize() {
+        return qHistory.size();
+    }
+
+    /**
+     * Returns last arrived response
+     * @return ResponsePackage or null when no responses are available
+     */
+    public synchronized ResponsePackage getLastResponse() {
+        Iterator<Map.Entry<QueryTask,ResponsePackage>> it = qHistory.entrySet().iterator();
+        ResponsePackage responsePackage = null;
+        while(it.hasNext())
+        {
+            Map.Entry<QueryTask,ResponsePackage> entry = it.next();
+            responsePackage = entry.getValue();
+        }
+        return responsePackage;
     }
 }

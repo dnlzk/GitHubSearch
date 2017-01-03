@@ -47,7 +47,7 @@ public class ResponsePackage
     }
 
     /**
-     * Adds a HTTP status message.
+     * Sets a HTTP status message.
      * @param message the message string
      */
     public void addMessage(String message) {
@@ -57,7 +57,7 @@ public class ResponsePackage
     /**
      * Returns the HTTP status message if response is invalid.
      * Otherwise returns null.
-     * @return String with message or null when response is proper.
+     * @return String with message or null when response/s are valid.
      */
     public String getMessage() {
         if(messageHTTP != null) return messageHTTP;

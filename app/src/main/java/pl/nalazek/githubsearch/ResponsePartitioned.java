@@ -31,7 +31,7 @@ public class ResponsePartitioned {
     private List<JsonObject> jsonObjectsList;
 
     /**
-     * Constructor. Automatically converts HTML body to JsonObject depending on ExchangeType.
+     * Constructor. Automatically converts HTML body to JsonObject depending on the ExchangeType.
      * @param headers Headers of the Response
      * @param body Body of the Response
      * @param exchangeType Type of exchange
@@ -42,7 +42,6 @@ public class ResponsePartitioned {
         this.exchangeType = exchangeType;
         Gson gson = createGson(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
         deserializeJSON(gson);
-
     }
 
     /**

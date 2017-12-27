@@ -1,14 +1,12 @@
 package pl.nalazek.githubsearch;
 
-import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
-
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * This singleton class is responsible for the whole search process and displaying results on a NestedScrollView
+ * This singleton class is responsible for the whole search process and displaying results on a CustomListAdapter
  * @author Daniel Nalazek
  */
 public class SearchAgent implements Observer {
@@ -16,7 +14,7 @@ public class SearchAgent implements Observer {
     enum SearchScope { USERS, REPOSITORIES }
 
     private static SearchAgent instance = new SearchAgent();
-    private static final String LOG_TAG = "SearchAgent Class";
+    private static final String LOG_TAG = "SearchAgent";
     private int pResultsPerPage = 50;
     private Boolean pScopeUsers = true;
     private Boolean pScopeRepos = true;
@@ -82,22 +80,34 @@ public class SearchAgent implements Observer {
      * Use to start a search.
      * This method creates a QueryTask, if an earlier QueryTask is still being processed then it is canceled.
      * @param phrase The string to search for
-     * @param nestedScrollView The view to show the results
+     * @param customListAdapter Adapter to pass the results to
      */
-    public void searchForPhrase(String phrase, NestedScrollView nestedScrollView) {
+    public void searchForPhrase(String phrase, CustomListAdapter customListAdapter) {
 
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
 
         // Create a query list
-        Query[] queryList = getQueryArray(phrase, nestedScrollView);
+        Query[] queryList = getQueryArray(phrase, customListAdapter);
 
-        // Create and set as actual a new QueryTask
+        // Create and set as actual new QueryTask
         QueryTask queryTask = new QueryTask();
         actualProcessingTask = queryTask;
 
         //Execute a query task
         queryTask.execute(queryList);
+    }
+
+    /**
+     * Use to start a search for suggestions
+     * This method creates a QueryTask, if an earlier QueryTask is still being processed then it is canceled.
+     * @param suggestion The suggestion to search for
+     */
+    public void searchForSuggestion(String suggestion) {
+
+        // Check if an other task is pending and cancel it
+        if(actualProcessingTask != null) actualProcessingTask.cancel(true);
+        //todo
     }
 
     /**
@@ -116,22 +126,22 @@ public class SearchAgent implements Observer {
     /**
      * This method creates a Query array where its quantity depends on the selected search scopes.
      * @param phrase The string to search for
-     * @param nestedScrollView The view to show the results
+     * @param customListAdapter The adapter to pass the results to
      * @return A query array. The quantity of elements depends on the quantity of selected search scopes.
      * E.g. when the search scope is selected only to {@link SearchScope#REPOSITORIES}, only one-element array will be returned.
      * If the search scope is selected to both {@link SearchScope#REPOSITORIES} and {@link SearchScope#USERS}, a two-element array
      * be returned
      */
-    private Query[] getQueryArray(String phrase, NestedScrollView nestedScrollView) {
+    private Query[] getQueryArray(String phrase, CustomListAdapter customListAdapter) {
 
         // Set up search query/queries
         Query searchQuery1 = null, searchQuery2 = null;
         if(pScopeUsers) {
-            searchQuery1 = new Query(phrase, SearchScope.USERS, nestedScrollView, pResultsPerPage);
+            searchQuery1 = new Query(phrase, SearchScope.USERS, customListAdapter, pResultsPerPage);
             setQueryOptions(searchQuery1);
         }
         if(pScopeRepos) {
-            searchQuery2 = new Query(phrase, SearchScope.REPOSITORIES, nestedScrollView, pResultsPerPage);
+            searchQuery2 = new Query(phrase, SearchScope.REPOSITORIES, customListAdapter, pResultsPerPage);
             setQueryOptions(searchQuery2);
         }
 

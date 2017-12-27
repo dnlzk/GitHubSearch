@@ -1,11 +1,9 @@
 package pl.nalazek.githubsearch;
 
 import android.util.Log;
-import android.view.View;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.LinkedList;
 
 /**
  * This class is representing a Query.
@@ -18,7 +16,12 @@ public class Query {
 
     private static final String LOG_TAG = "Query Class";
     private URL url;
-    private View view;
+
+    public CustomListAdapter getCustomListAdapter() {
+        return customListAdapter;
+    }
+
+    private CustomListAdapter customListAdapter;
     private String phrase;
     //private Boolean isMultipleQuery = true;
     //private Boolean isLastQuery = true;
@@ -35,14 +38,14 @@ public class Query {
      * Default constructor. Creates a query with parameters. If not set, default is sorting by best match and descending order.
      * @param phrase The string to be searched
      * @param scope The scope of the search
-     * @param view The view that will be passed to QueryTask to show the results
+     * @param customListAdapter The customListAdapter that will be passed to QueryTask to show the results
      * @see pl.nalazek.githubsearch.SearchAgent.SearchScope
      */
-    public Query(String phrase, SearchAgent.SearchScope scope, View view, Integer resultsPerPage) {
+    public Query(String phrase, SearchAgent.SearchScope scope, CustomListAdapter customListAdapter, Integer resultsPerPage) {
 
         this.phrase = phrase;
         this.resultsPerPage = resultsPerPage;
-        this.view = view;
+        this.customListAdapter = customListAdapter;
 
         String scopeURLString;
         String sortURLString;
@@ -119,6 +122,7 @@ public class Query {
      * @param isLastQuery true if the multiple query is the last one, false if otherwise
      * @param  previousRepsonses previous responses list or null when the multiple query is the first one
      */
+
     /*public void setMultipleQuery(Boolean isLastQuery, LinkedList<ResponsePackage> previousRepsonses) {
         this.isMultipleQuery = true;
         this.isLastQuery = isLastQuery;

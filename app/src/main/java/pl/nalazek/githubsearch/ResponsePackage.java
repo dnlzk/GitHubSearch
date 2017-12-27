@@ -7,7 +7,7 @@ import okhttp3.Response;
 
 /**
  * This class is used as a response holder. Depending on the amount of passed queries to QueryTask it can hold one or two responses.
- * In case of errors occurred during th exchange there is an error message available. The response array may be empty
+ * In case of errors occurred during the exchange there is an error message available. The response array may be empty
  * at that time.
  * @author Daniel Nalazek
  */

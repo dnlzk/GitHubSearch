@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Search suggestion customization-->
+        <item name="autoCompleteTextViewStyle">@style/myAutoCompleteTextViewStyle</item>
+        <item name="textAppearanceSearchResultTitle">@style/mySearchResultTitle</item>
+        <item name="textAppearanceSearchResultSubtitle">@style/mySearchResultSubtitle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,5 +21,21 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="myAutoCompleteTextViewStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:popupBackground">#FFFFFF</item>
+    </style>
+
+    <style name="mySearchResultTitle" parent="TextAppearance.AppCompat.SearchResult.Title">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/text_bigger</item>
+    </style>
+
+    <style name="mySearchResultSubtitle" parent="TextAppearance.AppCompat.SearchResult.Title">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
+
 
 </resources>

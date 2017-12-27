@@ -4,10 +4,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pl.nalazek.githubsearch.JsonObjects.RepoSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.UserSearchResult;
 
 /**
  * This class represents a query task that is executed when:
@@ -18,14 +22,25 @@ import okhttp3.Response;
  * <li>app user is switching to a non-cashed page</li>
  * <li>app user is extending data about another user</li>
  * </ul>
- * During the task a query is set on a remote host, when a response is correct, it is parsed.
+ * During the task a query is set on a remote host, when the response is correct, it is parsed.
  * @author Daniel Nalazek
  */
 public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
-    final static String LOG_TAG = "QueryTask";
+    final static String LOG_TAG = "QueryTask Class";
+    private CustomListAdapter customListAdapter = null;
 
-    //todo: add onCanecelled(Object) method (running on UI)
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        SearchAgent.getQueryHistory().put(this,new ResponsePackage("Task cancelled"));
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
     @Override
     protected ResponsePackage doInBackground(Query... queries) {
 
@@ -35,23 +50,71 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
         // execute all queries
         for(Query query : queries) {
+            if(isCancelled()) return null;
+            if(customListAdapter == null) customListAdapter = query.getCustomListAdapter();
             Request request = new Request.Builder().url(query.getURL()).build();
             try {
                 response = client.newCall(request).execute();
                 if(response.isSuccessful()) responsePackage.addResponse(response, query.getType());
                 else responsePackage.addMessage(response.message());
-            } catch (IOException e) {
+            }
+            catch(UnknownHostException e) {
                 Log.e(LOG_TAG, e.getMessage());
+                responsePackage.addMessage("Unable to resolve host. Check connection");
+                return responsePackage;
+            }
+            catch (IOException e) {
+                Log.e(LOG_TAG, e.getMessage());
+                responsePackage.addMessage(e.getMessage());
+                return responsePackage;
             }
         }
+        return responsePackage;
+    }
+
+    @Override
+    protected void onPostExecute(ResponsePackage responsePackage) {
+        super.onPostExecute(responsePackage);
+        SearchAgent.getQueryHistory().put(this,responsePackage);
+        customListAdapter.clear();
+        customListAdapter.addAll(createSeachResultsList(responsePackage));
+    }
+
+    private ArrayList<SearchResult> createSeachResultsList (ResponsePackage responsePackage) {
+        ArrayList<SearchResult> searchResultList = new ArrayList<SearchResult>();
+        ArrayList<ResponsePartitioned> responsePartitioned = responsePackage.getResponses();
+
+        for(ResponsePartitioned response : responsePartitioned) {
+            ExchangeType type = response.getExchangeType();
+
+            //TODO Starred exclusion
+            switch(type) {
+                case USER_SEARCH:
+                case USER_PAGE:
+
+                    UserSearchResult jsonObject0 = (UserSearchResult) response.getJsonObject();
+                    for(UserSearchResult.Item item : jsonObject0.getItems()) {
+                        searchResultList.add(new SearchResult(item.getLogin(), item.getHtmlUrl(), type));
+                    }
 
 
+                    break;
+                case REPOS_SEARCH:
+                case REPOS_PAGE:
+                    RepoSearchResult jsonObject1 = (RepoSearchResult) response.getJsonObject();
+                    for(RepoSearchResult.Item item : jsonObject1.getItems()) {
+                        searchResultList.add(new SearchResult(item.getName(), item.getHtmlUrl(), type));
+                    }
+                    break;
+                case USER_EXPAND:
 
+                    break;
+                case USER_EXPAND_STARS:
 
+                    break;
+            }
 
-
-
-        //todo: check periodically isCancelled() value
-        return null;
+        }
+        return searchResultList;
     }
 }

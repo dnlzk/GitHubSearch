@@ -36,10 +36,19 @@ public class QueryHistory extends Observable {
      * @param key QueryTask as the key
      * @return ResponsePackage as the value
      */
+    public synchronized ResponsePackage get(String key) {
+        QueryTask queryTask = phraseOccurancesTreeMap.get(key);
+        return qHistory.get(queryTask);
+    }
+
+    /**
+     * Gets a response value based on a QueryTask key
+     * @param key QueryTask as the key
+     * @return ResponsePackage as the value
+     */
     public synchronized ResponsePackage get(QueryTask key) {
         return qHistory.get(key);
     }
-
 
     public synchronized int getHistorySize() {
         return qHistory.size();
@@ -58,6 +67,10 @@ public class QueryHistory extends Observable {
             responsePackage = entry.getValue();
         }
         return responsePackage;
+    }
+
+    public synchronized boolean isPhraseInHistory(String phrase) {
+        return phraseOccurancesTreeMap.containsKey(phrase);
     }
 
     private void addPhraseToTreeMap(QueryTask queryTask) {

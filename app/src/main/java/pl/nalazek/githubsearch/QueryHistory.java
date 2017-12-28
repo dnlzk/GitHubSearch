@@ -1,19 +1,20 @@
 package pl.nalazek.githubsearch;
 
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.TreeMap;
 
 /**
- * This class is used to hold all queries and responses. When a new pair has been inserted,
- * the SearchAgent is notified.
+ * This class is used to hold all queries and responses.
  * @author Daniel Nalazek
- * @see SearchAgent
  */
 public class QueryHistory extends Observable {
 
     private LinkedHashMap<QueryTask, ResponsePackage> qHistory = new LinkedHashMap<>();
+    private TreeMap<String, QueryTask> phraseOccurancesTreeMap = new TreeMap<>();
 
 
     /**
@@ -26,6 +27,7 @@ public class QueryHistory extends Observable {
             qHistory.put(key, value);
         }
         setChanged();
+        addPhraseToTreeMap(key);
         notifyObservers(key);
     }
 
@@ -56,5 +58,10 @@ public class QueryHistory extends Observable {
             responsePackage = entry.getValue();
         }
         return responsePackage;
+    }
+
+    private void addPhraseToTreeMap(QueryTask queryTask) {
+        String newPhrase = queryTask.getPhraseString();
+        phraseOccurancesTreeMap.put(newPhrase, queryTask);
     }
 }

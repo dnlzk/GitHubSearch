@@ -33,7 +33,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        SearchAgent.getQueryHistory().put(this,new ResponsePackage("Task cancelled"));
+        SearchAgent.getQueryHistory().put(this,new ResponsePackage("Task interrupted"));
     }
 
     @Override
@@ -55,7 +55,10 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
             Request request = new Request.Builder().url(query.getURL()).build();
             try {
                 response = client.newCall(request).execute();
-                if(response.isSuccessful()) responsePackage.addResponse(response, query.getType());
+                if(response.isSuccessful()) {
+                    responsePackage.addResponse(response, query.getType());
+                    responsePackage.addMessage("Success");
+                }
                 else responsePackage.addMessage(response.message());
             }
             catch(UnknownHostException e) {
@@ -81,7 +84,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
     private ArrayList<SearchResult> createSeachResultsList (ResponsePackage responsePackage) {
-        ArrayList<SearchResult> searchResultList = new ArrayList<SearchResult>();
+        ArrayList<SearchResult> searchResultList = new ArrayList<>();
         ArrayList<ResponsePartitioned> responsePartitioned = responsePackage.getResponses();
 
         for(ResponsePartitioned response : responsePartitioned) {

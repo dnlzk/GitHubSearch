@@ -27,6 +27,10 @@ public class ProgressBarManager implements Observer {
 
     @Override
     public void update(Observable observable, Object data) {
-        setProgressBarUnvisible();
+        QueryHistory queryHistory = (QueryHistory) observable;
+        QueryTask queryTask = (QueryTask) data;
+        ResponsePackage responsePackage = queryHistory.get(queryTask);
+        if(!responsePackage.getMessage().equals("Task interrupted"))
+            setProgressBarUnvisible();
     }
 }

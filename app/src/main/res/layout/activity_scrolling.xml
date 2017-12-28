@@ -39,7 +39,16 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/include_progress"
+        layout="@layout/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="?attr/actionBarSize">
+    </include>
+
+    <include
+        android:id="@+id/include_content_list"
         layout="@layout/content_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

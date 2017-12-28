@@ -143,4 +143,10 @@ public class Query {
      * @see ExchangeType
      */
     public ExchangeType getType() { return eType; }
+
+    /**
+     * Gets the phrase of the query
+     * @return Phrase
+     */
+    public String getPhrase() { return phrase; }
 }

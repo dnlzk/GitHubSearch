@@ -91,7 +91,9 @@ public class SearchAgent implements Observer {
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
 
+        customListAdapter.clear();
         progressBarManager.setProgressBarVisible();
+
 
         // Create a query list
         Query[] queryList = getQueryArray(phrase, customListAdapter);

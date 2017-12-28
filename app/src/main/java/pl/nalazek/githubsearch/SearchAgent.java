@@ -38,6 +38,7 @@ public class SearchAgent implements Observer {
      */
     private SearchAgent() {
         queryHistory = new QueryHistory();
+        queryHistory.addObserver(this);
     }
 
     /**

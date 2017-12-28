@@ -99,7 +99,7 @@ public class SearchAgent implements Observer {
         Query[] queryList = getQueryArray(phrase, customListAdapter);
 
         // Create and set as actual new QueryTask
-        QueryTask queryTask = new QueryTask();
+        QueryTask queryTask = new QueryTask(phrase);
         actualProcessingTask = queryTask;
 
         //Execute a query task

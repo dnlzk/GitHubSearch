@@ -94,6 +94,11 @@ public class SearchAgent implements Observer {
         customListAdapter.clear();
         progressBarManager.setProgressBarVisible();
 
+        if(getQueryHistory().isPhraseInHistory(phrase)) {
+            publishResultsFromHistory(phrase, customListAdapter);
+            progressBarManager.setProgressBarUnvisible();
+            return;
+        }
 
         // Create a query list
         Query[] queryList = getQueryArray(phrase, customListAdapter);
@@ -202,6 +207,10 @@ public class SearchAgent implements Observer {
      */
     static QueryHistory getQueryHistory() {
         return queryHistory;
+    }
+
+    private void publishResultsFromHistory(String phrase, CustomListAdapter customListAdapter) {
+        ResponsePackage responsePackage = getQueryHistory().get(phrase);
     }
 }
 

@@ -14,12 +14,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 public class ScrollingActivity extends AppCompatActivity {
 
     CustomListAdapter customListAdapter;
+    private ProgressBarManager progressBarManager;
     private SearchAgent searchAgent;
 
 
@@ -31,7 +34,7 @@ public class ScrollingActivity extends AppCompatActivity {
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         configureToolbars();
         handleIntent(getIntent());
-        configureListView();
+        configureListViewAndProgressBar();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            searchAgent.searchForPhrase(query, customListAdapter);
+            searchAgent.searchForPhrase(query, customListAdapter, progressBarManager);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             //TODO Enter page
@@ -76,7 +79,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
-    private void configureListView() {
+    private void configureListViewAndProgressBar() {
         customListAdapter = new CustomListAdapter(this, R.layout.item_user_repo, new ArrayList<SearchResult>());
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(customListAdapter);
@@ -85,6 +88,9 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
+        LinearLayout progressBar = (LinearLayout) findViewById(R.id.include_progress);
+        progressBarManager = new ProgressBarManager(progressBar);
+        SearchAgent.getQueryHistory().addObserver(progressBarManager);
     }
 
     private void inflateMenu(Menu menu) {
@@ -98,6 +104,28 @@ public class ScrollingActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(query.length() > 0)
+                    startNewSearchAction(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.length() > 0)
+                    startNewSearchAction(newText);
+                return true;
+            }
+
+            private void startNewSearchAction(String query) {
+                Intent intent = new Intent(ScrollingActivity.this, ScrollingActivity.class);
+                intent.setAction(Intent.ACTION_SEARCH);
+                intent.putExtra(SearchManager.QUERY, query);
+                startActivity(intent);
+            }
+        });
     }
 
 }

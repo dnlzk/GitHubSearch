@@ -15,7 +15,7 @@ public class ResponsePackage
 {
     private static final String LOG_TAG = "ResponsePackage Class";
     private ArrayList<ResponsePartitioned> responses = new ArrayList<>();
-    private String messageHTTP = null;
+    private String message = null;
 
     /**
      * Default constructor
@@ -27,7 +27,7 @@ public class ResponsePackage
      * @param message Message to pass
      */
     public ResponsePackage(String message) {
-        messageHTTP = message;
+        this.message = message;
     }
 
     /**
@@ -47,20 +47,20 @@ public class ResponsePackage
     }
 
     /**
-     * Sets a HTTP status message.
+     * Sets a status message.
      * @param message the message string
      */
     public void addMessage(String message) {
-        messageHTTP = message;
+        this.message = message;
     }
 
     /**
-     * Returns the HTTP status message if response is invalid.
+     * Returns the status message if response is invalid.
      * Otherwise returns null.
      * @return String with message or null when response/s are valid.
      */
     public String getMessage() {
-        if(messageHTTP != null) return messageHTTP;
+        if(message != null) return message;
         else return null;
     }
 

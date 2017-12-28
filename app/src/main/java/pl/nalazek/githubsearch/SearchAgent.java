@@ -1,6 +1,8 @@
 package pl.nalazek.githubsearch;
 
 import android.util.Log;
+import android.view.View;
+
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,6 +26,7 @@ public class SearchAgent implements Observer {
     private QueryTask actualProcessingTask = null;
     private HashSet<Integer> pageCache;
     private static QueryHistory queryHistory;
+
 
     /**
      * Gets an instance of a single SearchAgent class
@@ -83,10 +86,12 @@ public class SearchAgent implements Observer {
      * @param phrase The string to search for
      * @param customListAdapter Adapter to pass the results to
      */
-    public void searchForPhrase(String phrase, CustomListAdapter customListAdapter) {
+    public void searchForPhrase(String phrase, CustomListAdapter customListAdapter, ProgressBarManager progressBarManager) {
 
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
+
+        progressBarManager.setProgressBarVisible();
 
         // Create a query list
         Query[] queryList = getQueryArray(phrase, customListAdapter);

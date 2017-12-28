@@ -29,6 +29,9 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
     final static String LOG_TAG = "QueryTask Class";
     private CustomListAdapter customListAdapter = null;
+    private String phrase;
+
+    public QueryTask(String phrase) { this.phrase = phrase; }
 
     @Override
     protected void onCancelled() {
@@ -120,4 +123,10 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         }
         return searchResultList;
     }
+
+    /**
+     * Returns the phrase for the query task
+     * @return phrase
+     */
+    public String getPhraseString() { return phrase; }
 }

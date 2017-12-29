@@ -26,8 +26,8 @@ public class QueryHistory extends Observable {
         synchronized (this) {
             qHistory.put(key, value);
         }
+        if(value.getMessage().equals("Success")) addPhraseToTreeMap(key);
         setChanged();
-        addPhraseToTreeMap(key);
         notifyObservers(key);
     }
 

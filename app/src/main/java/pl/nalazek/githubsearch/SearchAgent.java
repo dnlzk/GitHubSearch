@@ -211,6 +211,7 @@ public class SearchAgent implements Observer {
 
     private void publishResultsFromHistory(String phrase, CustomListAdapter customListAdapter) {
         ResponsePackage responsePackage = getQueryHistory().get(phrase);
+        customListAdapter.addAll(SearchResultArrayListBuilder.build(responsePackage));
     }
 }
 

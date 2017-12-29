@@ -15,6 +15,8 @@ public class SearchAgent implements Observer {
 
     enum SearchScope { USERS, REPOSITORIES }
 
+    static final String CHECK_IN_HISTORY = "CheckInHistory";
+
     private static SearchAgent instance = new SearchAgent();
     private static final String LOG_TAG = "SearchAgent";
     private int pResultsPerPage = 50;
@@ -84,9 +86,11 @@ public class SearchAgent implements Observer {
      * Use to start a search.
      * This method creates a QueryTask, if an earlier QueryTask is still being processed then it is canceled.
      * @param phrase The string to search for
+     * @param checkInHistory FALSE for beginning a new search, TRUE for checking results in search history and if found present them
      * @param customListAdapter Adapter to pass the results to
+     * @param progressBarManager ProgressBarManager to manage the main screen
      */
-    public void searchForPhrase(String phrase, CustomListAdapter customListAdapter, ProgressBarManager progressBarManager) {
+    public void searchForPhrase(String phrase, boolean checkInHistory, CustomListAdapter customListAdapter, ProgressBarManager progressBarManager) {
 
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
@@ -94,7 +98,7 @@ public class SearchAgent implements Observer {
         customListAdapter.clear();
         progressBarManager.setProgressBarVisible();
 
-        if(getQueryHistory().isPhraseInHistory(phrase)) {
+        if(checkInHistory && getQueryHistory().isPhraseInHistory(phrase)) {
             publishResultsFromHistory(phrase, customListAdapter);
             progressBarManager.setProgressBarUnvisible();
             return;

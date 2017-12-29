@@ -63,7 +63,8 @@ public class ScrollingActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            searchAgent.searchForPhrase(query, customListAdapter, progressBarManager);
+            boolean checkInHistory = intent.getBooleanExtra(SearchAgent.CHECK_IN_HISTORY, false);
+            searchAgent.searchForPhrase(query, checkInHistory, customListAdapter, progressBarManager);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             //TODO Enter page
@@ -108,21 +109,22 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(query.length() > 0)
-                    startNewSearchAction(query);
+                    startNewSearchAction(query, false);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(newText.length() > 0)
-                    startNewSearchAction(newText);
+                    startNewSearchAction(newText, true);
                 return true;
             }
 
-            private void startNewSearchAction(String query) {
+            private void startNewSearchAction(String query, boolean checkInHistory) {
                 Intent intent = new Intent(ScrollingActivity.this, ScrollingActivity.class);
                 intent.setAction(Intent.ACTION_SEARCH);
                 intent.putExtra(SearchManager.QUERY, query);
+                intent.putExtra(SearchAgent.CHECK_IN_HISTORY, checkInHistory);
                 startActivity(intent);
             }
         });

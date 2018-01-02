@@ -19,8 +19,8 @@ public class SearchResultArrayListBuilder{
 
     /**
      * Static method to parse a ResponsePackage into an ArrayList
-     * @param responsePackage
-     * @return
+     * @param responsePackage Input ResponsePackage to convert
+     * @return ArrayList with SearchResult
      */
     public static ArrayList<SearchResult> build(ResponsePackage responsePackage) {
         ArrayList<SearchResult> searchResultList = new ArrayList<>();
@@ -36,7 +36,7 @@ public class SearchResultArrayListBuilder{
 
                     UserSearchResult jsonObject0 = (UserSearchResult) response.getJsonObject();
                     for(UserSearchResult.Item item : jsonObject0.getItems()) {
-                        searchResultList.add(new SearchResult(item.getLogin(), item.getHtmlUrl(), type));
+                        searchResultList.add(new SearchResultUser(item.getLogin(), item.getHtmlUrl(), item.getUrl(), type));
                     }
 
 
@@ -45,7 +45,7 @@ public class SearchResultArrayListBuilder{
                 case REPOS_PAGE:
                     RepoSearchResult jsonObject1 = (RepoSearchResult) response.getJsonObject();
                     for(RepoSearchResult.Item item : jsonObject1.getItems()) {
-                        searchResultList.add(new SearchResult(item.getName(), item.getHtmlUrl(), type));
+                        searchResultList.add(new SearchResultRepo(item.getName(), item.getHtmlUrl(), type));
                     }
                     break;
                 case USER_EXPAND:

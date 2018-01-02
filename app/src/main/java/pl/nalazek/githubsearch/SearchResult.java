@@ -5,26 +5,22 @@ package pl.nalazek.githubsearch;
  * @author Daniel Nalazek
  */
 
-public class SearchResult {
+public abstract class SearchResult {
 
-    private String text;
-    private String description;
-    private ExchangeType exchangeType;
+    protected String title;
+    protected String description;
+    protected ExchangeType exchangeType;
 
-    /**
-     * @param name Name to show on list
-     * @param description Description of the result
-     * @param exchangeType Type of search entry 0-user, 1-repo
-     */
-    public SearchResult(String name, String description, ExchangeType exchangeType) {
-        this.text = name;
+    protected SearchResult() {}
+
+    protected SearchResult(String title, String description, ExchangeType exchangeType ) {
+        this.title = title;
         this.description = description;
         this.exchangeType = exchangeType;
-
     }
 
     public String getName() {
-        return text;
+        return title;
     }
 
     public String getDescription() {

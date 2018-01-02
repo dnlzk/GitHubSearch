@@ -18,4 +18,8 @@ public class SearchResultUser extends SearchResult {
         this.userURL = userURL;
     }
 
+    public String getUserURL() {
+        return userURL;
+    }
+
 }

@@ -5,13 +5,10 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import pl.nalazek.githubsearch.JsonObjects.RepoSearchResult;
-import pl.nalazek.githubsearch.JsonObjects.UserSearchResult;
 
 /**
  * This class represents a query task that is executed when:

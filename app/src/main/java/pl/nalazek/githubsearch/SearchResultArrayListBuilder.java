@@ -2,8 +2,8 @@ package pl.nalazek.githubsearch;
 
 import java.util.ArrayList;
 
-import pl.nalazek.githubsearch.JsonObjects.RepoSearchResult;
-import pl.nalazek.githubsearch.JsonObjects.UserSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.JsonRepoSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.JsonUserSearchResult;
 
 /**
  * This builder class performs conversion from a ResponsePackage object to an ArrayList parametrized by SearchResult.
@@ -34,8 +34,8 @@ public class SearchResultArrayListBuilder{
                 case USER_SEARCH:
                 case USER_PAGE:
 
-                    UserSearchResult jsonObject0 = (UserSearchResult) response.getJsonObject();
-                    for(UserSearchResult.Item item : jsonObject0.getItems()) {
+                    JsonUserSearchResult jsonObject0 = (JsonUserSearchResult) response.getJsonObject();
+                    for(JsonUserSearchResult.Item item : jsonObject0.getItems()) {
                         searchResultList.add(new SearchResultUser(item.getLogin(), item.getHtmlUrl(), item.getUrl(), type));
                     }
 
@@ -43,8 +43,8 @@ public class SearchResultArrayListBuilder{
                     break;
                 case REPOS_SEARCH:
                 case REPOS_PAGE:
-                    RepoSearchResult jsonObject1 = (RepoSearchResult) response.getJsonObject();
-                    for(RepoSearchResult.Item item : jsonObject1.getItems()) {
+                    JsonRepoSearchResult jsonObject1 = (JsonRepoSearchResult) response.getJsonObject();
+                    for(JsonRepoSearchResult.Item item : jsonObject1.getItems()) {
                         searchResultList.add(new SearchResultRepo(item.getName(), item.getHtmlUrl(), type));
                     }
                     break;

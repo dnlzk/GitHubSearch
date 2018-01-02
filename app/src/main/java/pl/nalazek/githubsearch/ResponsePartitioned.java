@@ -13,10 +13,10 @@ import java.util.List;
 
 import okhttp3.Headers;
 import pl.nalazek.githubsearch.JsonObjects.JsonObject;
-import pl.nalazek.githubsearch.JsonObjects.RepoSearchResult;
-import pl.nalazek.githubsearch.JsonObjects.UserExpanded;
-import pl.nalazek.githubsearch.JsonObjects.UserSearchResult;
-import pl.nalazek.githubsearch.JsonObjects.UserStarred;
+import pl.nalazek.githubsearch.JsonObjects.JsonRepoSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.JsonUserExpanded;
+import pl.nalazek.githubsearch.JsonObjects.JsonUserSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.JsonUserStarred;
 
 /**
  * This class is a holder of a response divided into two parts: headers and body (as a Java class inheriting from JsonObject).
@@ -81,17 +81,17 @@ public class ResponsePartitioned {
         switch(exchangeType) {
             case USER_SEARCH:
             case USER_PAGE:
-                jsonObject = gson.fromJson(body, UserSearchResult.class);
+                jsonObject = gson.fromJson(body, JsonUserSearchResult.class);
                 break;
             case REPOS_SEARCH:
             case REPOS_PAGE:
-                jsonObject = gson.fromJson(body, RepoSearchResult.class);
+                jsonObject = gson.fromJson(body, JsonRepoSearchResult.class);
                 break;
             case USER_EXPAND:
-                jsonObject = gson.fromJson(body, UserExpanded.class);
+                jsonObject = gson.fromJson(body, JsonUserExpanded.class);
                 break;
             case USER_EXPAND_STARS:
-                Type userStarredType = new TypeToken<ArrayList<UserStarred>>(){}.getType();
+                Type userStarredType = new TypeToken<ArrayList<JsonUserStarred>>(){}.getType();
                 jsonObjectsList = gson.fromJson(body, userStarredType);
                 break;
         }

@@ -19,7 +19,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ScrollingActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     CustomListAdapter customListAdapter;
     private ProgressBarManager progressBarManager;
@@ -121,7 +121,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
 
             private void startNewSearchAction(String query, boolean checkInHistory) {
-                Intent intent = new Intent(ScrollingActivity.this, ScrollingActivity.class);
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.setAction(Intent.ACTION_SEARCH);
                 intent.putExtra(SearchManager.QUERY, query);
                 intent.putExtra(SearchAgent.CHECK_IN_HISTORY, checkInHistory);

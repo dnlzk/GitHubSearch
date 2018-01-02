@@ -1,7 +1,6 @@
 package pl.nalazek.githubsearch;
 
 import android.util.Log;
-import android.view.View;
 
 import java.util.HashSet;
 import java.util.Observable;
@@ -24,7 +23,7 @@ public class SearchAgent implements Observer {
     private Boolean pScopeRepos = true;
     private Query.Sort pSorting = null;
     private Query.Order pOrdering = null;
-    private QueryTask actualOnView = null;
+    private ResponsePackage actualResponsePackageOnView = null;
     private QueryTask actualProcessingTask = null;
     private HashSet<Integer> pageCache;
     private static QueryHistory queryHistory;
@@ -201,8 +200,8 @@ public class SearchAgent implements Observer {
         // task ended, set value to null
         if(actualProcessingTask == qTask) actualProcessingTask = null;
 
-        // check if successful and set QueryTask as the one which results are on view
-        if(rp.getMessage() != null) actualOnView = qTask;
+        // check if successful and set ResponsePackage as the one which results are on view
+        if(rp.getMessage() != null) actualResponsePackageOnView = rp;
     }
 
     /**
@@ -216,6 +215,7 @@ public class SearchAgent implements Observer {
     private void publishResultsFromHistory(String phrase, CustomListAdapter customListAdapter) {
         ResponsePackage responsePackage = getQueryHistory().get(phrase);
         customListAdapter.addAll(SearchResultArrayListBuilder.build(responsePackage));
+        actualResponsePackageOnView = responsePackage;
     }
 }
 

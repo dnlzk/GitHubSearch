@@ -1,10 +1,30 @@
 package pl.nalazek.githubsearch.JsonObjects;
 
+import java.util.List;
+
 /**
- * This class represents a deserialized JSON response for starred url
+ * This class represents a deserialized JSON response for repositories search
  * @author Daniel Nalazek
  */
-public class UserStarred extends JsonObject {
+public class JsonRepoSearchResult extends JsonObject {
+    private Integer totalCount;
+    private Boolean incompleteResults;
+    private List<Item> items = null;
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public Boolean getIncompleteResults() {
+        return incompleteResults;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public class Item {
+
         private Integer id;
         private String name;
         private String fullName;
@@ -73,6 +93,7 @@ public class UserStarred extends JsonObject {
         private Integer openIssues;
         private Integer watchers;
         private String defaultBranch;
+        private Double score;
 
         public Integer getId() {
             return id;
@@ -618,162 +639,171 @@ public class UserStarred extends JsonObject {
             this.defaultBranch = defaultBranch;
         }
 
-
-
-    public class Owner {
-
-        private String login;
-        private Integer id;
-        private String avatarUrl;
-        private String gravatarId;
-        private String url;
-        private String htmlUrl;
-        private String followersUrl;
-        private String followingUrl;
-        private String gistsUrl;
-        private String starredUrl;
-        private String subscriptionsUrl;
-        private String organizationsUrl;
-        private String reposUrl;
-        private String eventsUrl;
-        private String receivedEventsUrl;
-        private String type;
-        private Boolean siteAdmin;
-
-        public String getLogin() {
-            return login;
+        public Double getScore() {
+            return score;
         }
 
-        public void setLogin(String login) {
-            this.login = login;
+        public void setScore(Double score) {
+            this.score = score;
         }
 
-        public Integer getId() {
-            return id;
-        }
+        public class Owner {
 
-        public void setId(Integer id) {
-            this.id = id;
-        }
+            private String login;
+            private Integer id;
+            private String avatarUrl;
+            private String gravatarId;
+            private String url;
+            private String htmlUrl;
+            private String followersUrl;
+            private String followingUrl;
+            private String gistsUrl;
+            private String starredUrl;
+            private String subscriptionsUrl;
+            private String organizationsUrl;
+            private String reposUrl;
+            private String eventsUrl;
+            private String receivedEventsUrl;
+            private String type;
+            private Boolean siteAdmin;
 
-        public String getAvatarUrl() {
-            return avatarUrl;
-        }
+            public String getLogin() {
+                return login;
+            }
 
-        public void setAvatarUrl(String avatarUrl) {
-            this.avatarUrl = avatarUrl;
-        }
+            public void setLogin(String login) {
+                this.login = login;
+            }
 
-        public String getGravatarId() {
-            return gravatarId;
-        }
+            public Integer getId() {
+                return id;
+            }
 
-        public void setGravatarId(String gravatarId) {
-            this.gravatarId = gravatarId;
-        }
+            public void setId(Integer id) {
+                this.id = id;
+            }
 
-        public String getUrl() {
-            return url;
-        }
+            public String getAvatarUrl() {
+                return avatarUrl;
+            }
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
+            public void setAvatarUrl(String avatarUrl) {
+                this.avatarUrl = avatarUrl;
+            }
 
-        public String getHtmlUrl() {
-            return htmlUrl;
-        }
+            public String getGravatarId() {
+                return gravatarId;
+            }
 
-        public void setHtmlUrl(String htmlUrl) {
-            this.htmlUrl = htmlUrl;
-        }
+            public void setGravatarId(String gravatarId) {
+                this.gravatarId = gravatarId;
+            }
 
-        public String getFollowersUrl() {
-            return followersUrl;
-        }
+            public String getUrl() {
+                return url;
+            }
 
-        public void setFollowersUrl(String followersUrl) {
-            this.followersUrl = followersUrl;
-        }
+            public void setUrl(String url) {
+                this.url = url;
+            }
 
-        public String getFollowingUrl() {
-            return followingUrl;
-        }
+            public String getHtmlUrl() {
+                return htmlUrl;
+            }
 
-        public void setFollowingUrl(String followingUrl) {
-            this.followingUrl = followingUrl;
-        }
+            public void setHtmlUrl(String htmlUrl) {
+                this.htmlUrl = htmlUrl;
+            }
 
-        public String getGistsUrl() {
-            return gistsUrl;
-        }
+            public String getFollowersUrl() {
+                return followersUrl;
+            }
 
-        public void setGistsUrl(String gistsUrl) {
-            this.gistsUrl = gistsUrl;
-        }
+            public void setFollowersUrl(String followersUrl) {
+                this.followersUrl = followersUrl;
+            }
 
-        public String getStarredUrl() {
-            return starredUrl;
-        }
+            public String getFollowingUrl() {
+                return followingUrl;
+            }
 
-        public void setStarredUrl(String starredUrl) {
-            this.starredUrl = starredUrl;
-        }
+            public void setFollowingUrl(String followingUrl) {
+                this.followingUrl = followingUrl;
+            }
 
-        public String getSubscriptionsUrl() {
-            return subscriptionsUrl;
-        }
+            public String getGistsUrl() {
+                return gistsUrl;
+            }
 
-        public void setSubscriptionsUrl(String subscriptionsUrl) {
-            this.subscriptionsUrl = subscriptionsUrl;
-        }
+            public void setGistsUrl(String gistsUrl) {
+                this.gistsUrl = gistsUrl;
+            }
 
-        public String getOrganizationsUrl() {
-            return organizationsUrl;
-        }
+            public String getStarredUrl() {
+                return starredUrl;
+            }
 
-        public void setOrganizationsUrl(String organizationsUrl) {
-            this.organizationsUrl = organizationsUrl;
-        }
+            public void setStarredUrl(String starredUrl) {
+                this.starredUrl = starredUrl;
+            }
 
-        public String getReposUrl() {
-            return reposUrl;
-        }
+            public String getSubscriptionsUrl() {
+                return subscriptionsUrl;
+            }
 
-        public void setReposUrl(String reposUrl) {
-            this.reposUrl = reposUrl;
-        }
+            public void setSubscriptionsUrl(String subscriptionsUrl) {
+                this.subscriptionsUrl = subscriptionsUrl;
+            }
 
-        public String getEventsUrl() {
-            return eventsUrl;
-        }
+            public String getOrganizationsUrl() {
+                return organizationsUrl;
+            }
 
-        public void setEventsUrl(String eventsUrl) {
-            this.eventsUrl = eventsUrl;
-        }
+            public void setOrganizationsUrl(String organizationsUrl) {
+                this.organizationsUrl = organizationsUrl;
+            }
 
-        public String getReceivedEventsUrl() {
-            return receivedEventsUrl;
-        }
+            public String getReposUrl() {
+                return reposUrl;
+            }
 
-        public void setReceivedEventsUrl(String receivedEventsUrl) {
-            this.receivedEventsUrl = receivedEventsUrl;
-        }
+            public void setReposUrl(String reposUrl) {
+                this.reposUrl = reposUrl;
+            }
 
-        public String getType() {
-            return type;
-        }
+            public String getEventsUrl() {
+                return eventsUrl;
+            }
 
-        public void setType(String type) {
-            this.type = type;
-        }
+            public void setEventsUrl(String eventsUrl) {
+                this.eventsUrl = eventsUrl;
+            }
 
-        public Boolean getSiteAdmin() {
-            return siteAdmin;
-        }
+            public String getReceivedEventsUrl() {
+                return receivedEventsUrl;
+            }
 
-        public void setSiteAdmin(Boolean siteAdmin) {
-            this.siteAdmin = siteAdmin;
+            public void setReceivedEventsUrl(String receivedEventsUrl) {
+                this.receivedEventsUrl = receivedEventsUrl;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public Boolean getSiteAdmin() {
+                return siteAdmin;
+            }
+
+            public void setSiteAdmin(Boolean siteAdmin) {
+                this.siteAdmin = siteAdmin;
+            }
+
+
         }
     }
 }

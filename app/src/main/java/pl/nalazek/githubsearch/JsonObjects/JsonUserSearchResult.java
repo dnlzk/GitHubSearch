@@ -7,7 +7,7 @@ import java.util.List;
  * This class represents a deserialized JSON response for user search
  * @author Daniel Nalazek
  */
-public class UserSearchResult extends JsonObject {
+public class JsonUserSearchResult extends JsonObject {
     private Integer totalCount;
     private Boolean incompleteResults;
     private List<Item> items = null;

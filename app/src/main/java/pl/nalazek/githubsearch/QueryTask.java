@@ -26,9 +26,9 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
     final static String LOG_TAG = "QueryTask Class";
     private CustomListAdapter customListAdapter = null;
-    private String phrase;
+    private String phrase = null;
 
-    public QueryTask(String phrase) { this.phrase = phrase; }
+    public QueryTask() {}
 
     @Override
     protected void onCancelled() {
@@ -50,6 +50,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
         // execute all queries
         for(Query query : queries) {
+            if(phrase != null) phrase = query.getPhrase();
             if(isCancelled()) return null;
             if(customListAdapter == null) customListAdapter = query.getCustomListAdapter();
             Request request = new Request.Builder().url(query.getURL()).build();

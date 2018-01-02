@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         searchAgent = SearchAgent.getInstance();
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.activity_main);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         configureToolbars();
         handleIntent(getIntent());

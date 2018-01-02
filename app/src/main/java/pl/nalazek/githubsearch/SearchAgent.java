@@ -107,7 +107,7 @@ public class SearchAgent implements Observer {
         Query[] queryList = getQueryArray(phrase, customListAdapter);
 
         // Create and set as actual new QueryTask
-        QueryTask queryTask = new QueryTask(phrase);
+        QueryTask queryTask = new QueryTask();
         actualProcessingTask = queryTask;
 
         //Execute a query task
@@ -182,9 +182,6 @@ public class SearchAgent implements Observer {
         }
         return queryList;
     }
-
-
-
 
     /**
      * Called when a new pair is put into QueryHistory

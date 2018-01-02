@@ -7,11 +7,9 @@ package pl.nalazek.githubsearch;
 
 public abstract class SearchResult {
 
-    protected String title;
-    protected String description;
-    protected ExchangeType exchangeType;
-
-    protected SearchResult() {}
+    private String title;
+    private String description;
+    private ExchangeType exchangeType;
 
     protected SearchResult(String title, String description, ExchangeType exchangeType ) {
         this.title = title;

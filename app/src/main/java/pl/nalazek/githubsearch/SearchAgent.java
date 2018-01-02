@@ -201,7 +201,7 @@ public class SearchAgent implements Observer {
         if(actualProcessingTask == qTask) actualProcessingTask = null;
 
         // check if successful and set ResponsePackage as the one which results are on view
-        if(rp.getMessage() != null) actualResponsePackageOnView = rp;
+        if(rp.getMessage().equals("Success")) actualResponsePackageOnView = rp;
     }
 
     /**

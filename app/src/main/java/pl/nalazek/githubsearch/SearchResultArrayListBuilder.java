@@ -6,13 +6,22 @@ import pl.nalazek.githubsearch.JsonObjects.RepoSearchResult;
 import pl.nalazek.githubsearch.JsonObjects.UserSearchResult;
 
 /**
+ * This builder class performs conversion from a ResponsePackage object to an ArrayList parametrized by SearchResult.
+ * Note that an object implementing Collection interface is needed to pass into a CustomListAdapter
  * @author Daniel Nalazek
+ * @see SearchResult
+ * @see ResponsePackage
  */
 
 public class SearchResultArrayListBuilder{
 
     private SearchResultArrayListBuilder() {}
 
+    /**
+     * Static method to parse a ResponsePackage into an ArrayList
+     * @param responsePackage
+     * @return
+     */
     public static ArrayList<SearchResult> build(ResponsePackage responsePackage) {
         ArrayList<SearchResult> searchResultList = new ArrayList<>();
         ArrayList<ResponsePartitioned> responsePartitioned = responsePackage.getResponses();

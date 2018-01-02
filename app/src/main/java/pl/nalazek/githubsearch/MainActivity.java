@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             boolean checkInHistory = intent.getBooleanExtra(SearchAgent.CHECK_IN_HISTORY, false);
             searchAgent.searchForPhrase(query, checkInHistory, customListAdapter, progressBarManager);
-        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            Uri data = intent.getData();
-            //TODO Enter page
-            //showResult(data);
         }
     }
 
@@ -86,7 +82,17 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(customListAdapter);
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-            }
+
+                SearchResult searchResult = customListAdapter.getItem(position);
+
+                if(searchResult instanceof SearchResultUser) {
+                    Intent intent = new Intent(MainActivity.this, UserDetailedActivity.class);
+                    intent.setAction(Intent.ACTION_VIEW);
+                    String userUrl = ((SearchResultUser)searchResult).getUserURL();
+                    intent.putExtra("userUrl", userUrl);
+                    startActivity(intent);
+                }
+        }
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
         LinearLayout progressBar = (LinearLayout) findViewById(R.id.include_progress);

@@ -19,12 +19,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import pl.nalazek.githubsearch.ResultObjects.Result;
-import pl.nalazek.githubsearch.ResultObjects.SearchResult;
 import pl.nalazek.githubsearch.ResultObjects.UserSearchResult;
 
 public class MainActivity extends AppCompatActivity {
 
-    CustomListAdapter customListAdapter;
+    SearchResultListAdapter searchResultListAdapter;
     private SearchAgent searchAgent;
 
 
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             boolean checkInHistory = intent.getBooleanExtra(SearchAgent.CHECK_IN_HISTORY, false);
-            searchAgent.searchForPhrase(query, checkInHistory, customListAdapter);
+            searchAgent.searchForPhrase(query, checkInHistory, searchResultListAdapter);
         }
     }
 
@@ -80,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureListViewAndProgressBar() {
         LinearLayout progressBar = (LinearLayout) findViewById(R.id.include_progress);
-        customListAdapter = new CustomListAdapter(this, R.layout.item_user_repo, new ArrayList<Result>(),progressBar);
+        searchResultListAdapter = new SearchResultListAdapter(this, R.layout.item_user_repo, new ArrayList<Result>(),progressBar);
         ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(customListAdapter);
+        listView.setAdapter(searchResultListAdapter);
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
 
-                Result result = customListAdapter.getItem(position);
+                Result result = searchResultListAdapter.getItem(position);
 
                 if(result instanceof UserSearchResult) {
                     Intent intent = new Intent(MainActivity.this, UserDetailedActivity.class);

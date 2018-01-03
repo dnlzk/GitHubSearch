@@ -12,7 +12,7 @@ import pl.nalazek.githubsearch.QueryObjects.SearchQuery;
 import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
 
 /**
- * This singleton class is responsible for the whole search process and displaying results on a CustomListAdapter
+ * This singleton class is responsible for the whole search process and displaying results on a SearchResultListAdapter
  * @author Daniel Nalazek
  */
 public class SearchAgent implements Observer {

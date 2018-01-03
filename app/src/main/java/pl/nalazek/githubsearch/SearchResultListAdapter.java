@@ -24,14 +24,14 @@ import pl.nalazek.githubsearch.ResultObjects.UserSearchResult;
  * This adapter is used to set up the text and view search result list in MainActivity
  * @author Daniel Nalazek
  */
-public class CustomListAdapter extends ArrayAdapter<Result> implements Showable {
+public class SearchResultListAdapter extends ArrayAdapter<Result> implements Showable {
 
     private View progressBarLayout;
     private TextView name;
     private TextView description;
     private TextView type;
 
-    public CustomListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Result> objects, View progressBarLayout) {
+    public SearchResultListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Result> objects, View progressBarLayout) {
         super(context, resource, objects);
         this.progressBarLayout = progressBarLayout;
     }

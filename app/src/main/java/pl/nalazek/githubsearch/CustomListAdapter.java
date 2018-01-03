@@ -44,9 +44,9 @@ public class CustomListAdapter extends ArrayAdapter<Result> implements Showable 
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user_repo, parent, false);
 
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        TextView description = (TextView) convertView.findViewById(R.id.description);
-        TextView type = (TextView) convertView.findViewById(R.id.type);
+        name = (TextView) convertView.findViewById(R.id.name);
+        description = (TextView) convertView.findViewById(R.id.description);
+        type = (TextView) convertView.findViewById(R.id.type);
 
         ExchangeType exchangeType = result.getType();
         SearchResult searchResult;

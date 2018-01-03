@@ -13,11 +13,11 @@ public class QueryBuilder {
 
     private QueryBuilder() {}
     private final static String LOG_TAG = "QueryBuilder";
-    private static SearchQuery.Order ordering = null;
-    private static SearchQuery.Sort sorting = null;
-    private static int resultsPerPage = 50;
+    private SearchQuery.Order ordering = null;
+    private SearchQuery.Sort sorting = null;
+    private int resultsPerPage = 50;
 
-    static public Query[] build(String phrase, Showable showable, boolean scopeUsers, boolean scopeRepos) {
+    public Query[] build(String phrase, Showable showable, boolean scopeUsers, boolean scopeRepos) {
         // Set up search query/queries
         SearchQuery searchQuery1 = null, searchQuery2 = null;
         if(scopeUsers) {
@@ -52,21 +52,21 @@ public class QueryBuilder {
     }
 
     public QueryBuilder setOrdering(SearchQuery.Order ordering) {
-        QueryBuilder.ordering = ordering;
+        this.ordering = ordering;
         return this;
     }
 
     public QueryBuilder setSorting(SearchQuery.Sort sorting) {
-        QueryBuilder.sorting = sorting;
+        this.sorting = sorting;
         return this;
     }
 
     public QueryBuilder setResultsPerPage(int resultsPerPage) {
-        QueryBuilder.resultsPerPage = resultsPerPage;
+        this.resultsPerPage = resultsPerPage;
         return this;
     }
 
-    private static void setQueryOptions(SearchQuery searchQuery) {
+    private void setQueryOptions(SearchQuery searchQuery) {
 
         // If default changed, configure sorting and ordering options
         if(ordering != null)

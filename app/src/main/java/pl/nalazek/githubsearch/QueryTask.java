@@ -51,7 +51,7 @@ public class QueryTask extends AsyncTask<SearchQuery, Void, ResponsePackage> {
 
         // execute all queries
         for(SearchQuery searchQuery : queries) {
-            if(phrase != null) phrase = searchQuery.getPhrase();
+            if(phrase == null) phrase = searchQuery.getPhrase();
             if(isCancelled()) return null;
             showable = searchQuery.getShowable();
             Request request = new Request.Builder().url(searchQuery.getURL()).build();

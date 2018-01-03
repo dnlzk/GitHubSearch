@@ -1,6 +1,9 @@
-package pl.nalazek.githubsearch;
+package pl.nalazek.githubsearch.QueryObjects;
 
 import java.net.URL;
+
+import pl.nalazek.githubsearch.ExchangeType;
+import pl.nalazek.githubsearch.Showable;
 
 /**
  * @author Daniel Nalazek

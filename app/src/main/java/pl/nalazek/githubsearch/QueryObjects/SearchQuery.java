@@ -1,9 +1,13 @@
-package pl.nalazek.githubsearch;
+package pl.nalazek.githubsearch.QueryObjects;
 
 import android.util.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import pl.nalazek.githubsearch.ExchangeType;
+import pl.nalazek.githubsearch.SearchAgent;
+import pl.nalazek.githubsearch.Showable;
 
 /**
  * This class is representing a SearchQuery.

@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pl.nalazek.githubsearch.QueryObjects.Query;
+import pl.nalazek.githubsearch.QueryObjects.SearchQuery;
 import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
 
 /**

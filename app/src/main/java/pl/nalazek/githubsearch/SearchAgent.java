@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
+import pl.nalazek.githubsearch.QueryObjects.SearchQuery;
 import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
 
 /**
@@ -14,7 +15,7 @@ import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
  */
 public class SearchAgent implements Observer {
 
-    enum SearchScope { USERS, REPOSITORIES }
+    public enum SearchScope { USERS, REPOSITORIES }
 
     static final String CHECK_IN_HISTORY = "CheckInHistory";
 

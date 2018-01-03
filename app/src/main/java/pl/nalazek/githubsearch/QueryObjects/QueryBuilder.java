@@ -14,11 +14,13 @@ public class QueryBuilder {
     private final static String LOG_TAG = "QueryBuilder";
     private SearchQuery.Order ordering = null;
     private SearchQuery.Sort sorting = null;
+    private boolean scopeUsers = true;
+    private boolean scopeRepos = true;
     private int resultsPerPage = 50;
 
     public QueryBuilder() {}
 
-    public Query[] build(String phrase, Showable showable, boolean scopeUsers, boolean scopeRepos) {
+    public Query[] build(String phrase, Showable showable) {
         // Set up search query/queries
         SearchQuery searchQuery1 = null, searchQuery2 = null;
         if(scopeUsers) {
@@ -64,6 +66,12 @@ public class QueryBuilder {
 
     public QueryBuilder setResultsPerPage(int resultsPerPage) {
         this.resultsPerPage = resultsPerPage;
+        return this;
+    }
+
+    public QueryBuilder setScope(boolean scopeUsers, boolean scopeRepos) {
+        this.scopeUsers = scopeUsers;
+        this.scopeRepos = scopeRepos;
         return this;
     }
 

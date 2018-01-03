@@ -102,7 +102,8 @@ public class SearchAgent implements Observer {
         Query[] queries = queryBuilder.setOrdering(pOrdering)
                 .setSorting(pSorting)
                 .setResultsPerPage(pResultsPerPage)
-                .build(phrase, showable, pScopeUsers, pScopeRepos);
+                .setScope(pScopeUsers, pScopeRepos)
+                .build(phrase, showable);
 
         // Create and set as actual new QueryTask
         QueryTask queryTask = new QueryTask();

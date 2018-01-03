@@ -3,7 +3,7 @@ package pl.nalazek.githubsearch.ResultObjects;
 import pl.nalazek.githubsearch.ExchangeType;
 
 /**
- * This data class represents a parsed search result used to fill in the CustomListAdapter
+ * This data class represents a parsed search result used to fill in the SearchResultListAdapter
  * @author Daniel Nalazek
  */
 

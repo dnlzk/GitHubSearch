@@ -11,11 +11,12 @@ import pl.nalazek.githubsearch.Showable;
 
 public class QueryBuilder {
 
-    private QueryBuilder() {}
     private final static String LOG_TAG = "QueryBuilder";
     private SearchQuery.Order ordering = null;
     private SearchQuery.Sort sorting = null;
     private int resultsPerPage = 50;
+
+    public QueryBuilder() {}
 
     public Query[] build(String phrase, Showable showable, boolean scopeUsers, boolean scopeRepos) {
         // Set up search query/queries

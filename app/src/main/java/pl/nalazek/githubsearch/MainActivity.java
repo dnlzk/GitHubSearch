@@ -25,7 +25,6 @@ import pl.nalazek.githubsearch.ResultObjects.UserSearchResult;
 public class MainActivity extends AppCompatActivity {
 
     CustomListAdapter customListAdapter;
-    private ProgressBarManager progressBarManager;
     private SearchAgent searchAgent;
 
 

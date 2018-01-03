@@ -9,25 +9,17 @@ import java.net.URL;
  * This class is representing a SearchQuery.
  * @author Daniel Nalazek
  */
-public class SearchQuery {
+public class SearchQuery extends Query {
     final static String GITHUB_HOST_URL = "https://api.github.com";
     final static String SEARCH_FOR_REPOS_URL = "/search/repositories";
     final static String SEARCH_FOR_USERS_URL = "/search/users";
 
     private static final String LOG_TAG = "SearchQuery Class";
-    private URL url;
-
-
-
-    private Showable showable;
     private String phrase;
-    //private Boolean isMultipleQuery = true;
-    //private Boolean isLastQuery = true;
-    //private LinkedList<ResponsePackage> previousResponses;
     private Sort sort = Sort.BEST;
     private Order order = Order.DESCENDING;
     private Integer resultsPerPage;
-    private ExchangeType eType = null;
+
 
     public enum Sort { STARS, FORKS, UPDATED, BEST }
     public enum Order { ASCENDING, DESCENDING }
@@ -121,34 +113,11 @@ public class SearchQuery {
      * @param  previousRepsonses previous responses list or null when the multiple query is the first one
      */
 
-    /*public void setMultipleQuery(Boolean isLastQuery, LinkedList<ResponsePackage> previousRepsonses) {
-        this.isMultipleQuery = true;
-        this.isLastQuery = isLastQuery;
-        if(previousRepsonses != null) this.previousResponses = previousRepsonses;
-    }*/
-
-    /**
-     * Gets the url from the query
-     * @return url
-     */
-    public URL getURL() {
-        return url;
-    }
-
-    /**
-     * Gets the type of SearchQuery
-     * @return Type of the query
-     * @see ExchangeType
-     */
-    public ExchangeType getType() { return eType; }
-
     /**
      * Gets the phrase of the query
      * @return Phrase
      */
     public String getPhrase() { return phrase; }
 
-    public Showable getShowable() {
-        return showable;
-    }
+
 }

@@ -1,15 +1,16 @@
-package pl.nalazek.githubsearch;
+package pl.nalazek.githubsearch.ResultObjects;
+
+import pl.nalazek.githubsearch.ExchangeType;
 
 /**
  * This data class represents a parsed search result used to fill in the CustomListAdapter
  * @author Daniel Nalazek
  */
 
-public abstract class SearchResult {
+public abstract class SearchResult extends Result {
 
     private String title;
     private String description;
-    private ExchangeType exchangeType;
 
     protected SearchResult(String title, String description, ExchangeType exchangeType ) {
         this.title = title;

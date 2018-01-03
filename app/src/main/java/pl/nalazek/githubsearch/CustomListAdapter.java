@@ -10,13 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import pl.nalazek.githubsearch.ResultObjects.Result;
+import pl.nalazek.githubsearch.ResultObjects.SearchResult;
+
 /**
- * This adapter is used to set up the text view result list
+ * This adapter is used to set up the text and view search result list in MainActivity
  * @author Daniel Nalazek
  */
-public class CustomListAdapter extends ArrayAdapter<SearchResult> {
+public class CustomListAdapter extends ArrayAdapter<SearchResult> implements Showable {
+
 
     public CustomListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<SearchResult> objects) {
         super(context, resource, objects);
@@ -52,5 +57,12 @@ public class CustomListAdapter extends ArrayAdapter<SearchResult> {
         description.setText(searchResult.getDescription());
 
         return convertView;
+    }
+
+    @Override
+    public void showResults(ArrayList<? extends Result> resultsArray) {
+        clear();
+        ArrayList<SearchResult> searchResults = (ArrayList<SearchResult>) resultsArray;
+        addAll(searchResults);
     }
 }

@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
+import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
+
 /**
  * This singleton class is responsible for the whole search process and displaying results on a CustomListAdapter
  * @author Daniel Nalazek
@@ -21,8 +23,8 @@ public class SearchAgent implements Observer {
     private int pResultsPerPage = 50;
     private Boolean pScopeUsers = true;
     private Boolean pScopeRepos = true;
-    private Query.Sort pSorting = null;
-    private Query.Order pOrdering = null;
+    private SearchQuery.Sort pSorting = null;
+    private SearchQuery.Order pOrdering = null;
     private ResponsePackage actualResponsePackageOnView = null;
     private QueryTask actualProcessingTask = null;
     private HashSet<Integer> pageCache;
@@ -104,14 +106,14 @@ public class SearchAgent implements Observer {
         }
 
         // Create a query list
-        Query[] queryList = getQueryArray(phrase, customListAdapter);
+        SearchQuery[] searchQueryList = getQueryArray(phrase, customListAdapter);
 
         // Create and set as actual new QueryTask
         QueryTask queryTask = new QueryTask();
         actualProcessingTask = queryTask;
 
         //Execute a query task
-        queryTask.execute(queryList);
+        queryTask.execute(searchQueryList);
     }
 
     /**
@@ -127,20 +129,20 @@ public class SearchAgent implements Observer {
     }
 
     /**
-     * This method sets sorting and ordering options for the passed query
-     * @param query The query which the options will be set to
+     * This method sets sorting and ordering options for the passed searchQuery
+     * @param searchQuery The searchQuery which the options will be set to
      */
-    private void setQueryOptions(Query query) {
+    private void setQueryOptions(SearchQuery searchQuery) {
 
         // If default changed, configure sorting and ordering options
         if(pOrdering != null)
-            query.setOrdering(pOrdering);
+            searchQuery.setOrdering(pOrdering);
         if(pSorting != null)
-            query.setSorting(pSorting);
+            searchQuery.setSorting(pSorting);
     }
 
     /**
-     * This method creates a Query array where its quantity depends on the selected search scopes.
+     * This method creates a SearchQuery array where its quantity depends on the selected search scopes.
      * @param phrase The string to search for
      * @param customListAdapter The adapter to pass the results to
      * @return A query array. The quantity of elements depends on the quantity of selected search scopes.
@@ -148,39 +150,39 @@ public class SearchAgent implements Observer {
      * If the search scope is selected to both {@link SearchScope#REPOSITORIES} and {@link SearchScope#USERS}, a two-element array
      * be returned
      */
-    private Query[] getQueryArray(String phrase, CustomListAdapter customListAdapter) {
+    private SearchQuery[] getQueryArray(String phrase, CustomListAdapter customListAdapter) {
 
         // Set up search query/queries
-        Query searchQuery1 = null, searchQuery2 = null;
+        SearchQuery searchQuery1 = null, searchQuery2 = null;
         if(pScopeUsers) {
-            searchQuery1 = new Query(phrase, SearchScope.USERS, customListAdapter, pResultsPerPage);
+            searchQuery1 = new SearchQuery(phrase, SearchScope.USERS, customListAdapter, pResultsPerPage);
             setQueryOptions(searchQuery1);
         }
         if(pScopeRepos) {
-            searchQuery2 = new Query(phrase, SearchScope.REPOSITORIES, customListAdapter, pResultsPerPage);
+            searchQuery2 = new SearchQuery(phrase, SearchScope.REPOSITORIES, customListAdapter, pResultsPerPage);
             setQueryOptions(searchQuery2);
         }
 
-        Query[] queryList;
+        SearchQuery[] searchQueryList;
 
         // Search for users and repositories
         if(pScopeUsers && pScopeRepos) {
-            queryList = new Query[]{ searchQuery1,searchQuery2 };
+            searchQueryList = new SearchQuery[]{ searchQuery1,searchQuery2 };
         }
         // Search for users only
         else if (pScopeUsers) {
-            queryList = new Query[]{ searchQuery1 };
+            searchQueryList = new SearchQuery[]{ searchQuery1 };
         }
         // Search for repositories only
         else if (pScopeRepos) {
-            queryList = new Query[]{ searchQuery2 };
+            searchQueryList = new SearchQuery[]{ searchQuery2 };
         }
         // Other - not used
         else {
-            queryList = new Query[]{};
+            searchQueryList = new SearchQuery[]{};
             Log.i(LOG_TAG, "No search scope selected");
         }
-        return queryList;
+        return searchQueryList;
     }
 
     /**
@@ -209,9 +211,9 @@ public class SearchAgent implements Observer {
         return queryHistory;
     }
 
-    private void publishResultsFromHistory(String phrase, CustomListAdapter customListAdapter) {
+    private void publishResultsFromHistory(String phrase,Showable showable) {
         ResponsePackage responsePackage = getQueryHistory().get(phrase);
-        customListAdapter.addAll(SearchResultArrayListBuilder.build(responsePackage));
+        showable.showResults(ResultArrayListBuilder.build(responsePackage));
         actualResponsePackageOnView = responsePackage;
     }
 }

@@ -3,7 +3,6 @@ package pl.nalazek.githubsearch;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import pl.nalazek.githubsearch.ResultObjects.SearchResult;
+import pl.nalazek.githubsearch.ResultObjects.UserSearchResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
                 SearchResult searchResult = customListAdapter.getItem(position);
 
-                if(searchResult instanceof SearchResultUser) {
+                if(searchResult instanceof UserSearchResult) {
                     Intent intent = new Intent(MainActivity.this, UserDetailedActivity.class);
                     intent.setAction(Intent.ACTION_VIEW);
-                    String userUrl = ((SearchResultUser)searchResult).getUserURL();
+                    String userUrl = ((UserSearchResult)searchResult).getUserURL();
                     intent.putExtra("userUrl", userUrl);
                     startActivity(intent);
                 }

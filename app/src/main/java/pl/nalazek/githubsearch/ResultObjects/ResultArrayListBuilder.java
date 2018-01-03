@@ -1,29 +1,32 @@
-package pl.nalazek.githubsearch;
+package pl.nalazek.githubsearch.ResultObjects;
 
 import java.util.ArrayList;
 
+import pl.nalazek.githubsearch.ExchangeType;
 import pl.nalazek.githubsearch.JsonObjects.JsonRepoSearchResult;
 import pl.nalazek.githubsearch.JsonObjects.JsonUserSearchResult;
+import pl.nalazek.githubsearch.ResponsePackage;
+import pl.nalazek.githubsearch.ResponsePartitioned;
 
 /**
- * This builder class performs conversion from a ResponsePackage object to an ArrayList parametrized by SearchResult.
- * Note that an object implementing Collection interface is needed to pass into a CustomListAdapter
+ * This builder class performs conversion from a ResponsePackage object to an ArrayList parametrized by Result.
+ * Note that an object implementing ArrayList<> interface is needed to pass into a Showable object
  * @author Daniel Nalazek
  * @see SearchResult
  * @see ResponsePackage
  */
 
-public class SearchResultArrayListBuilder{
+public class ResultArrayListBuilder {
 
-    private SearchResultArrayListBuilder() {}
+    private ResultArrayListBuilder() {}
 
     /**
      * Static method to parse a ResponsePackage into an ArrayList
      * @param responsePackage Input ResponsePackage to convert
      * @return ArrayList with SearchResult
      */
-    public static ArrayList<SearchResult> build(ResponsePackage responsePackage) {
-        ArrayList<SearchResult> searchResultList = new ArrayList<>();
+    public static ArrayList<Result> build(ResponsePackage responsePackage) {
+        ArrayList<Result> resultList = new ArrayList<>();
         ArrayList<ResponsePartitioned> responsePartitioned = responsePackage.getResponses();
 
         for(ResponsePartitioned response : responsePartitioned) {
@@ -36,7 +39,7 @@ public class SearchResultArrayListBuilder{
 
                     JsonUserSearchResult jsonObject0 = (JsonUserSearchResult) response.getJsonObject();
                     for(JsonUserSearchResult.Item item : jsonObject0.getItems()) {
-                        searchResultList.add(new SearchResultUser(item.getLogin(), item.getHtmlUrl(), item.getUrl(), type));
+                        resultList.add(new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), type));
                     }
 
 
@@ -45,7 +48,7 @@ public class SearchResultArrayListBuilder{
                 case REPOS_PAGE:
                     JsonRepoSearchResult jsonObject1 = (JsonRepoSearchResult) response.getJsonObject();
                     for(JsonRepoSearchResult.Item item : jsonObject1.getItems()) {
-                        searchResultList.add(new SearchResultRepo(item.getName(), item.getHtmlUrl(), type));
+                        resultList.add(new RepoSearchResult(item.getName(), item.getHtmlUrl(), type));
                     }
                     break;
                 case USER_EXPAND:
@@ -57,6 +60,6 @@ public class SearchResultArrayListBuilder{
             }
 
         }
-        return searchResultList;
+        return resultList;
     }
 }

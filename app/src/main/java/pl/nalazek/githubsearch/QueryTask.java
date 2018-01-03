@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
 
 /**
  * This class represents a query task that is executed when:
@@ -22,10 +23,10 @@ import okhttp3.Response;
  * During the task a query is set on a remote host, when the response is correct, it is parsed.
  * @author Daniel Nalazek
  */
-public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
+public class QueryTask extends AsyncTask<SearchQuery, Void, ResponsePackage> {
 
     final static String LOG_TAG = "QueryTask Class";
-    private CustomListAdapter customListAdapter = null;
+    private Showable showable;
     private String phrase = null;
 
     public QueryTask() {}
@@ -42,22 +43,22 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
     @Override
-    protected ResponsePackage doInBackground(Query... queries) {
+    protected ResponsePackage doInBackground(SearchQuery... queries) {
 
         OkHttpClient client = new OkHttpClient();
         ResponsePackage responsePackage = new ResponsePackage();
         Response response;
 
         // execute all queries
-        for(Query query : queries) {
-            if(phrase != null) phrase = query.getPhrase();
+        for(SearchQuery searchQuery : queries) {
+            if(phrase != null) phrase = searchQuery.getPhrase();
             if(isCancelled()) return null;
-            if(customListAdapter == null) customListAdapter = query.getCustomListAdapter();
-            Request request = new Request.Builder().url(query.getURL()).build();
+            showable = searchQuery.getShowable();
+            Request request = new Request.Builder().url(searchQuery.getURL()).build();
             try {
                 response = client.newCall(request).execute();
                 if(response.isSuccessful()) {
-                    responsePackage.addResponse(response, query.getType());
+                    responsePackage.addResponse(response, searchQuery.getType());
                     responsePackage.addMessage("Success");
                 }
                 else responsePackage.addMessage(response.message());
@@ -80,8 +81,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     protected void onPostExecute(ResponsePackage responsePackage) {
         super.onPostExecute(responsePackage);
         SearchAgent.getQueryHistory().put(this,responsePackage);
-        customListAdapter.clear();
-        customListAdapter.addAll(SearchResultArrayListBuilder.build(responsePackage));
+        showable.showResults(ResultArrayListBuilder.build(responsePackage));
     }
 
 

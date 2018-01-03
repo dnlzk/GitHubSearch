@@ -6,22 +6,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * This class is representing a Query.
+ * This class is representing a SearchQuery.
  * @author Daniel Nalazek
  */
-public class Query {
+public class SearchQuery {
     final static String GITHUB_HOST_URL = "https://api.github.com";
     final static String SEARCH_FOR_REPOS_URL = "/search/repositories";
     final static String SEARCH_FOR_USERS_URL = "/search/users";
 
-    private static final String LOG_TAG = "Query Class";
+    private static final String LOG_TAG = "SearchQuery Class";
     private URL url;
 
-    public CustomListAdapter getCustomListAdapter() {
-        return customListAdapter;
-    }
 
-    private CustomListAdapter customListAdapter;
+
+    private Showable showable;
     private String phrase;
     //private Boolean isMultipleQuery = true;
     //private Boolean isLastQuery = true;
@@ -38,14 +36,14 @@ public class Query {
      * Default constructor. Creates a query with parameters. If not set, default is sorting by best match and descending order.
      * @param phrase The string to be searched
      * @param scope The scope of the search
-     * @param customListAdapter The customListAdapter that will be passed to QueryTask to show the results
+     * @param showable The Showable object where the results will be passed to
      * @see pl.nalazek.githubsearch.SearchAgent.SearchScope
      */
-    public Query(String phrase, SearchAgent.SearchScope scope, CustomListAdapter customListAdapter, Integer resultsPerPage) {
+    public SearchQuery(String phrase, SearchAgent.SearchScope scope, Showable showable, Integer resultsPerPage) {
 
         this.phrase = phrase;
         this.resultsPerPage = resultsPerPage;
-        this.customListAdapter = customListAdapter;
+        this.showable = showable;
 
         String scopeURLString;
         String sortURLString;
@@ -117,7 +115,7 @@ public class Query {
     /**
      * Calling this method will set the query as multiple.
      * This method will be used if the search has two or more scopes (now only REPOSITORIES and USERS scopes are available) and
-     * there are created two or more Query/QueryTask instances.
+     * there are created two or more SearchQuery/QueryTask instances.
      * The parameter indicates the query is the last one.
      * @param isLastQuery true if the multiple query is the last one, false if otherwise
      * @param  previousRepsonses previous responses list or null when the multiple query is the first one
@@ -138,7 +136,7 @@ public class Query {
     }
 
     /**
-     * Gets the type of Query
+     * Gets the type of SearchQuery
      * @return Type of the query
      * @see ExchangeType
      */
@@ -149,4 +147,8 @@ public class Query {
      * @return Phrase
      */
     public String getPhrase() { return phrase; }
+
+    public Showable getShowable() {
+        return showable;
+    }
 }

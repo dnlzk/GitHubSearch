@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Used to manage progress bar visibility. Implements Observer interface to listen for changes on Query Tasks
+ * Used to manage progress bar visibility. Implements Observer interface to listen for changes on SearchQuery Tasks
  * @author Daniel Nalazek
  */
 

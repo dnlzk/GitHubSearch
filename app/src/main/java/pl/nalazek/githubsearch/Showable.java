@@ -9,5 +9,8 @@ import pl.nalazek.githubsearch.ResultObjects.Result;
  */
 
 public interface Showable {
+
     void showResults(ArrayList<? extends Result> resultsArray);
+
+    void showError(String error);
 }

@@ -65,4 +65,9 @@ public class CustomListAdapter extends ArrayAdapter<SearchResult> implements Sho
         ArrayList<SearchResult> searchResults = (ArrayList<SearchResult>) resultsArray;
         addAll(searchResults);
     }
+
+    @Override
+    public void showError(String error) {
+
+    }
 }

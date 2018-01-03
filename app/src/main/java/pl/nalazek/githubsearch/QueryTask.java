@@ -82,8 +82,12 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     @Override
     protected void onPostExecute(ResponsePackage responsePackage) {
         super.onPostExecute(responsePackage);
-        SearchAgent.getQueryHistory().put(this,responsePackage);
-        showable.showResults(ResultArrayListBuilder.build(responsePackage));
+        if(responsePackage.getMessage().equals("Success")) {
+            SearchAgent.getQueryHistory().put(this,responsePackage);
+            showable.showResults(ResultArrayListBuilder.build(responsePackage));
+        }
+
+
     }
 
 

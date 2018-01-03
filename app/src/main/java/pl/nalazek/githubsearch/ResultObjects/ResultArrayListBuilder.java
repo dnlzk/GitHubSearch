@@ -39,7 +39,7 @@ public class ResultArrayListBuilder {
 
                     JsonUserSearchResult jsonObject0 = (JsonUserSearchResult) response.getJsonObject();
                     for(JsonUserSearchResult.Item item : jsonObject0.getItems()) {
-                        resultList.add(new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), type));
+                        resultList.add(new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), item.getStarredUrl(), type));
                     }
 
 

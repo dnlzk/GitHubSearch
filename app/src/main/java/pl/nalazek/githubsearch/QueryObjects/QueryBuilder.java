@@ -2,6 +2,8 @@ package pl.nalazek.githubsearch.QueryObjects;
 
 import android.util.Log;
 
+import java.net.URL;
+
 import pl.nalazek.githubsearch.SearchAgent;
 import pl.nalazek.githubsearch.Showable;
 
@@ -54,6 +56,11 @@ public class QueryBuilder {
         return searchQueryList;
     }
 
+    public UserDetailedQuerryBuilder buildUserDetailedQuerry() {
+        return new UserDetailedQuerryBuilder();
+    }
+
+
     public QueryBuilder setOrdering(SearchQuery.Order ordering) {
         this.ordering = ordering;
         return this;
@@ -82,5 +89,14 @@ public class QueryBuilder {
             searchQuery.setOrdering(ordering);
         if(sorting != null)
             searchQuery.setSorting(sorting);
+    }
+
+    public class UserDetailedQuerryBuilder{
+
+        public Query[] build(URL userURL, URL userStarredURL, Showable showable) {
+            UserExpandedQuery userExpandedQuery = new UserExpandedQuery(userURL, showable);
+            UserStarredQuery userStarredQuery = new UserStarredQuery(userStarredURL, showable);
+            return new Query[] {userExpandedQuery, userStarredQuery};
+        }
     }
 }

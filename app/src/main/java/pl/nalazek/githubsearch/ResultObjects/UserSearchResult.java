@@ -13,7 +13,7 @@ public class UserSearchResult extends SearchResult {
     /**
      * @param name Name to show on list
      * @param description Description of the result
-     * @param exchangeType Type of search entry 0-user, 1-repo
+     * @param exchangeType Type of search entry
      */
     public UserSearchResult(String name, String description, String userURL, ExchangeType exchangeType) {
         super(name, description, exchangeType);

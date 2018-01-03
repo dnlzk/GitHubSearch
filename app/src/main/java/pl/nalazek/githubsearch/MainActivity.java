@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import pl.nalazek.githubsearch.ResultObjects.Result;
 import pl.nalazek.githubsearch.ResultObjects.SearchResult;
 import pl.nalazek.githubsearch.ResultObjects.UserSearchResult;
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             boolean checkInHistory = intent.getBooleanExtra(SearchAgent.CHECK_IN_HISTORY, false);
-            searchAgent.searchForPhrase(query, checkInHistory, customListAdapter, progressBarManager);
+            searchAgent.searchForPhrase(query, checkInHistory, customListAdapter);
         }
     }
 
@@ -79,27 +80,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void configureListViewAndProgressBar() {
-        customListAdapter = new CustomListAdapter(this, R.layout.item_user_repo, new ArrayList<SearchResult>());
+        LinearLayout progressBar = (LinearLayout) findViewById(R.id.include_progress);
+        customListAdapter = new CustomListAdapter(this, R.layout.item_user_repo, new ArrayList<Result>(),progressBar);
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(customListAdapter);
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
 
-                SearchResult searchResult = customListAdapter.getItem(position);
+                Result result = customListAdapter.getItem(position);
 
-                if(searchResult instanceof UserSearchResult) {
+                if(result instanceof UserSearchResult) {
                     Intent intent = new Intent(MainActivity.this, UserDetailedActivity.class);
                     intent.setAction(Intent.ACTION_VIEW);
-                    String userUrl = ((UserSearchResult)searchResult).getUserURL();
+                    String userUrl = ((UserSearchResult)result).getUserURL();
                     intent.putExtra("userUrl", userUrl);
                     startActivity(intent);
                 }
         }
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
-        LinearLayout progressBar = (LinearLayout) findViewById(R.id.include_progress);
-        progressBarManager = new ProgressBarManager(progressBar);
-        SearchAgent.getQueryHistory().addObserver(progressBarManager);
     }
 
     private void inflateMenu(Menu menu) {

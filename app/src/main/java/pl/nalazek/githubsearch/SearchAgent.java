@@ -88,25 +88,22 @@ public class SearchAgent implements Observer {
      * This method creates a QueryTask, if an earlier QueryTask is still being processed then it is canceled.
      * @param phrase The string to search for
      * @param checkInHistory FALSE for beginning a new search, TRUE for checking results in search history and if found present them
-     * @param customListAdapter Adapter to pass the results to
-     * @param progressBarManager ProgressBarManager to manage the main screen
+     * @param showable Showable object to show results on
      */
-    public void searchForPhrase(String phrase, boolean checkInHistory, CustomListAdapter customListAdapter, ProgressBarManager progressBarManager) {
+    public void searchForPhrase(String phrase, boolean checkInHistory, Showable showable) {
 
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
 
-        customListAdapter.clear();
-        progressBarManager.setProgressBarVisible();
+        showable.showBusy();
 
         if(checkInHistory && getQueryHistory().isPhraseInHistory(phrase)) {
-            publishResultsFromHistory(phrase, customListAdapter);
-            progressBarManager.setProgressBarUnvisible();
+            publishResultsFromHistory(phrase, showable);
             return;
         }
 
         // Create a query list
-        SearchQuery[] searchQueryList = getQueryArray(phrase, customListAdapter);
+        SearchQuery[] searchQueryList = getQueryArray(phrase, showable);
 
         // Create and set as actual new QueryTask
         QueryTask queryTask = new QueryTask();
@@ -144,22 +141,22 @@ public class SearchAgent implements Observer {
     /**
      * This method creates a SearchQuery array where its quantity depends on the selected search scopes.
      * @param phrase The string to search for
-     * @param customListAdapter The adapter to pass the results to
+     * @param showable The Showable to show the results on
      * @return A query array. The quantity of elements depends on the quantity of selected search scopes.
      * E.g. when the search scope is selected only to {@link SearchScope#REPOSITORIES}, only one-element array will be returned.
      * If the search scope is selected to both {@link SearchScope#REPOSITORIES} and {@link SearchScope#USERS}, a two-element array
      * be returned
      */
-    private SearchQuery[] getQueryArray(String phrase, CustomListAdapter customListAdapter) {
+    private SearchQuery[] getQueryArray(String phrase, Showable showable) {
 
         // Set up search query/queries
         SearchQuery searchQuery1 = null, searchQuery2 = null;
         if(pScopeUsers) {
-            searchQuery1 = new SearchQuery(phrase, SearchScope.USERS, customListAdapter, pResultsPerPage);
+            searchQuery1 = new SearchQuery(phrase, SearchScope.USERS, showable, pResultsPerPage);
             setQueryOptions(searchQuery1);
         }
         if(pScopeRepos) {
-            searchQuery2 = new SearchQuery(phrase, SearchScope.REPOSITORIES, customListAdapter, pResultsPerPage);
+            searchQuery2 = new SearchQuery(phrase, SearchScope.REPOSITORIES, showable, pResultsPerPage);
             setQueryOptions(searchQuery2);
         }
 

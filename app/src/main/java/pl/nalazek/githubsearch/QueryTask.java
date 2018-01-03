@@ -27,7 +27,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
     final static String LOG_TAG = "QueryTask Class";
     private Showable showable;
-    private String phrase = null;
+    private String phrase = "";
 
     public QueryTask() {}
 

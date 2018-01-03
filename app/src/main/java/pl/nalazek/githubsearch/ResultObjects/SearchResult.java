@@ -13,9 +13,9 @@ public abstract class SearchResult extends Result {
     private String description;
 
     protected SearchResult(String title, String description, ExchangeType exchangeType ) {
+        super(exchangeType);
         this.title = title;
         this.description = description;
-        this.exchangeType = exchangeType;
     }
 
     public String getName() {

@@ -11,6 +11,10 @@ public abstract class Result {
 
     protected ExchangeType exchangeType;
 
+    protected Result(ExchangeType exchangeType) {
+        this.exchangeType = exchangeType;
+    }
+
     public ExchangeType getType() {
         return exchangeType;
     }

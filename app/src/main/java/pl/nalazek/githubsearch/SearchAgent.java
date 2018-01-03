@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
+import pl.nalazek.githubsearch.QueryObjects.Query;
+import pl.nalazek.githubsearch.QueryObjects.QueryBuilder;
 import pl.nalazek.githubsearch.QueryObjects.SearchQuery;
 import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
 
@@ -38,14 +40,6 @@ public class SearchAgent implements Observer {
      */
     public static SearchAgent getInstance() {
         return instance;
-    }
-
-    /**
-     * Private constructor
-     */
-    private SearchAgent() {
-        queryHistory = new QueryHistory();
-        queryHistory.addObserver(this);
     }
 
     /**
@@ -103,15 +97,19 @@ public class SearchAgent implements Observer {
             return;
         }
 
-        // Create a query list
-        SearchQuery[] searchQueryList = getQueryArray(phrase, showable);
+        // Create a query array
+        QueryBuilder queryBuilder = new QueryBuilder();
+        Query[] queries = queryBuilder.setOrdering(pOrdering)
+                .setSorting(pSorting)
+                .setResultsPerPage(pResultsPerPage)
+                .build(phrase, showable, pScopeUsers, pScopeRepos);
 
         // Create and set as actual new QueryTask
         QueryTask queryTask = new QueryTask();
         actualProcessingTask = queryTask;
 
         //Execute a query task
-        queryTask.execute(searchQueryList);
+        queryTask.execute(queries);
     }
 
     /**
@@ -124,63 +122,6 @@ public class SearchAgent implements Observer {
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
         //todo
-    }
-
-    /**
-     * This method sets sorting and ordering options for the passed searchQuery
-     * @param searchQuery The searchQuery which the options will be set to
-     */
-    private void setQueryOptions(SearchQuery searchQuery) {
-
-        // If default changed, configure sorting and ordering options
-        if(pOrdering != null)
-            searchQuery.setOrdering(pOrdering);
-        if(pSorting != null)
-            searchQuery.setSorting(pSorting);
-    }
-
-    /**
-     * This method creates a SearchQuery array where its quantity depends on the selected search scopes.
-     * @param phrase The string to search for
-     * @param showable The Showable to show the results on
-     * @return A query array. The quantity of elements depends on the quantity of selected search scopes.
-     * E.g. when the search scope is selected only to {@link SearchScope#REPOSITORIES}, only one-element array will be returned.
-     * If the search scope is selected to both {@link SearchScope#REPOSITORIES} and {@link SearchScope#USERS}, a two-element array
-     * be returned
-     */
-    private SearchQuery[] getQueryArray(String phrase, Showable showable) {
-
-        // Set up search query/queries
-        SearchQuery searchQuery1 = null, searchQuery2 = null;
-        if(pScopeUsers) {
-            searchQuery1 = new SearchQuery(phrase, SearchScope.USERS, showable, pResultsPerPage);
-            setQueryOptions(searchQuery1);
-        }
-        if(pScopeRepos) {
-            searchQuery2 = new SearchQuery(phrase, SearchScope.REPOSITORIES, showable, pResultsPerPage);
-            setQueryOptions(searchQuery2);
-        }
-
-        SearchQuery[] searchQueryList;
-
-        // Search for users and repositories
-        if(pScopeUsers && pScopeRepos) {
-            searchQueryList = new SearchQuery[]{ searchQuery1,searchQuery2 };
-        }
-        // Search for users only
-        else if (pScopeUsers) {
-            searchQueryList = new SearchQuery[]{ searchQuery1 };
-        }
-        // Search for repositories only
-        else if (pScopeRepos) {
-            searchQueryList = new SearchQuery[]{ searchQuery2 };
-        }
-        // Other - not used
-        else {
-            searchQueryList = new SearchQuery[]{};
-            Log.i(LOG_TAG, "No search scope selected");
-        }
-        return searchQueryList;
     }
 
     /**
@@ -211,6 +152,14 @@ public class SearchAgent implements Observer {
         ResponsePackage responsePackage = getQueryHistory().get(phrase);
         showable.showResults(ResultArrayListBuilder.build(responsePackage));
         actualResponsePackageOnView = responsePackage;
+    }
+
+    /**
+     * Private constructor
+     */
+    private SearchAgent() {
+        queryHistory = new QueryHistory();
+        queryHistory.addObserver(this);
     }
 }
 

@@ -88,10 +88,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
             showable.showResults(ResultArrayListBuilder.build(responsePackage));
         }
         else showable.showError(message);
-
-
     }
-
 
     /**
      * Returns the phrase for the query task

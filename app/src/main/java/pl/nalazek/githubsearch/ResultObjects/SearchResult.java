@@ -26,7 +26,4 @@ public abstract class SearchResult extends Result {
         return description;
     }
 
-    public ExchangeType getType() {
-        return exchangeType;
-    }
 }

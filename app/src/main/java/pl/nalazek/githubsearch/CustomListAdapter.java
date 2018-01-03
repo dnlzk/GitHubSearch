@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,6 @@ public class CustomListAdapter extends ArrayAdapter<SearchResult> implements Sho
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 }

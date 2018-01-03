@@ -8,5 +8,10 @@ import pl.nalazek.githubsearch.ExchangeType;
  */
 
 public abstract class Result {
+
     protected ExchangeType exchangeType;
+
+    public ExchangeType getType() {
+        return exchangeType;
+    }
 }

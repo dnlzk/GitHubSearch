@@ -23,7 +23,7 @@ import pl.nalazek.githubsearch.ResultObjects.ResultArrayListBuilder;
  * During the task a query is set on a remote host, when the response is correct, it is parsed.
  * @author Daniel Nalazek
  */
-public class QueryTask extends AsyncTask<SearchQuery, Void, ResponsePackage> {
+public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
     final static String LOG_TAG = "QueryTask Class";
     private Showable showable;
@@ -43,22 +43,24 @@ public class QueryTask extends AsyncTask<SearchQuery, Void, ResponsePackage> {
     }
 
     @Override
-    protected ResponsePackage doInBackground(SearchQuery... queries) {
+    protected ResponsePackage doInBackground(Query... queries) {
 
         OkHttpClient client = new OkHttpClient();
         ResponsePackage responsePackage = new ResponsePackage();
         Response response;
 
         // execute all queries
-        for(SearchQuery searchQuery : queries) {
-            if(phrase == null) phrase = searchQuery.getPhrase();
+        for(Query query : queries) {
             if(isCancelled()) return null;
-            showable = searchQuery.getShowable();
-            Request request = new Request.Builder().url(searchQuery.getURL()).build();
+            if(query instanceof SearchQuery) phrase = ((SearchQuery)query).getPhrase();
+            showable = query.getShowable();
+
+            Request request = new Request.Builder().url(query.getURL()).build();
+
             try {
                 response = client.newCall(request).execute();
                 if(response.isSuccessful()) {
-                    responsePackage.addResponse(response, searchQuery.getType());
+                    responsePackage.addResponse(response, query.getType());
                     responsePackage.addMessage("Success");
                 }
                 else responsePackage.addMessage(response.message());
@@ -89,5 +91,5 @@ public class QueryTask extends AsyncTask<SearchQuery, Void, ResponsePackage> {
      * Returns the phrase for the query task
      * @return phrase
      */
-    public String getPhraseString() { return phrase; }
+    public String getPhrase() { return phrase; }
 }

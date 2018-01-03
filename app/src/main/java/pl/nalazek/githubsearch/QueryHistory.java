@@ -74,7 +74,7 @@ public class QueryHistory extends Observable {
     }
 
     private void addPhraseToTreeMap(QueryTask queryTask) {
-        String newPhrase = queryTask.getPhraseString();
+        String newPhrase = queryTask.getPhrase();
         phraseOccurancesTreeMap.put(newPhrase, queryTask);
     }
 }

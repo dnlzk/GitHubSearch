@@ -20,7 +20,7 @@ package pl.nalazek.githubsearch.data;
 import android.support.annotation.NonNull;
 
 /**
- * Singleton class to provide GitHubRepository instance depending on the passed object implementing GitHubRepositoryInterface
+ * Singleton class to provide GitHubRepository instance depending on the passed object implementing GitHubRepositoryAPIInterface
  */
 public class GitHubRepositories {
 
@@ -29,9 +29,9 @@ public class GitHubRepositories {
 
     private static GitHubRepository repository = null;
 
-    public static synchronized GitHubRepository getInstance(@NonNull GitHubRepositoryInterface gitHubRepositoryInterface) {
+    public static synchronized GitHubRepository getInstance(@NonNull GitHubRepositoryAPIInterface gitHubRepositoryAPIInterface) {
         if(repository == null) {
-            repository = new GitHubRepositoryInstance(gitHubRepositoryInterface);
+            repository = new GitHubRepositoryInstance(gitHubRepositoryAPIInterface);
         }
         return repository;
     }

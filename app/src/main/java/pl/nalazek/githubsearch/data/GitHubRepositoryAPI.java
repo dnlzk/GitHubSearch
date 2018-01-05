@@ -4,5 +4,6 @@ package pl.nalazek.githubsearch.data;
  * @author Daniel Nalazek
  */
 
-public interface IGitHubRepository {
+public class GitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
+
 }

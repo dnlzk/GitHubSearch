@@ -5,4 +5,6 @@ package pl.nalazek.githubsearch.search;
  */
 
 public interface SearchContract {
+
+
 }

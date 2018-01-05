@@ -1,5 +1,6 @@
 package pl.nalazek.githubsearch.QueryObjects;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.net.URL;
@@ -93,10 +94,14 @@ public class QueryBuilder {
 
     public class UserDetailedQuerryBuilder{
 
-        public Query[] build(URL userURL, URL userStarredURL, Showable showable) {
+        public Query[] build(URL userURL, URL userStarredURL, @Nullable URL avatarURL, Showable showable) {
             UserExpandedQuery userExpandedQuery = new UserExpandedQuery(userURL, showable);
             UserStarredQuery userStarredQuery = new UserStarredQuery(userStarredURL, showable);
+            //TODO avatar query
             return new Query[] {userExpandedQuery, userStarredQuery};
+        }
+        public Query build(URL nextStarredPage, Showable showable) {
+            return new UserStarredQuery(nextStarredPage, showable);
         }
     }
 }

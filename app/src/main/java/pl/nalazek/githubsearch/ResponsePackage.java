@@ -17,6 +17,8 @@ public class ResponsePackage
     private ArrayList<ResponsePartitioned> responses = new ArrayList<>();
     private String message = null;
 
+    private String nextURL;
+
     /**
      * Default constructor
      */
@@ -33,17 +35,22 @@ public class ResponsePackage
     /**
      * Adds a new response to the responses array
      * @param response Response from OkHttp library to add
-     * @return returns the size of the responses array
+     * @return Returns true if response is complete, false otherway. If false it means that the server want to send the response in parts, divided to pages.
+     * Next page URL can be achieved by calling {@link #getNextURL()} method.
      */
-    public int addResponse(Response response, ExchangeType exchangeType) {
+    //TODO back to int return
+    public boolean addResponse(Response response, ExchangeType exchangeType) {
+        ResponsePartitioned responsePartitioned;
         try {
-            responses.add(new ResponsePartitioned(response.headers(), response.body().string(), exchangeType));
+            responsePartitioned = new ResponsePartitioned(response.headers(), response.body().string(), exchangeType);
+            responses.add(responsePartitioned);
+            return isResponseComplete(responsePartitioned);
         }
         catch(IOException e)
         {
             Log.e(LOG_TAG,e.getMessage());
         }
-        return responses.size();
+        return true;
     }
 
     /**
@@ -73,4 +80,26 @@ public class ResponsePackage
         return responses;
     }
 
+    public String getNextURL() {
+        return parseNextPageURL(nextURL);
+    }
+
+    public boolean isLastResponseComplete() {
+        return isResponseComplete(responses.get(responses.size()-1));
+    }
+    private boolean isResponseComplete(ResponsePartitioned responsePartitioned) {
+        String linkHeaderEntry = responsePartitioned.getHeaders().get("Link");
+        nextURL = linkHeaderEntry;
+        return linkHeaderEntry == null;
+    }
+
+    private String parseNextPageURL(String linkHeaderEntry) {
+        return getFirstUrl(linkHeaderEntry);
+    }
+
+    private String getFirstUrl(String input) {
+        int start = input.indexOf('<');
+        int stop = input.indexOf('>');
+        return input.substring(start+1,stop);
+    }
 }

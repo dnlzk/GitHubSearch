@@ -90,8 +90,13 @@ public class MainActivity extends AppCompatActivity {
                 if(result instanceof UserSearchResult) {
                     Intent intent = new Intent(MainActivity.this, UserDetailedActivity.class);
                     intent.setAction(Intent.ACTION_VIEW);
-                    String userUrl = ((UserSearchResult)result).getUserURL();
+                    UserSearchResult userSearchResult = ((UserSearchResult)result);
+                    String userUrl = userSearchResult.getUserURL();
+                    String starredURL = userSearchResult.getStarredURL();
+                    String avatarURL = userSearchResult.getAvatarURL();
                     intent.putExtra("userUrl", userUrl);
+                    intent.putExtra("starredUrl", starredURL);
+                    intent.putExtra("avatarUrl", avatarURL);
                     startActivity(intent);
                 }
         }

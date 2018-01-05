@@ -1,10 +1,14 @@
 package pl.nalazek.githubsearch.ResultObjects;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pl.nalazek.githubsearch.ExchangeType;
+import pl.nalazek.githubsearch.JsonObjects.JsonObject;
 import pl.nalazek.githubsearch.JsonObjects.JsonRepoSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.JsonUserExpanded;
 import pl.nalazek.githubsearch.JsonObjects.JsonUserSearchResult;
+import pl.nalazek.githubsearch.JsonObjects.JsonUserStarred;
 import pl.nalazek.githubsearch.ResponsePackage;
 import pl.nalazek.githubsearch.ResponsePartitioned;
 
@@ -15,8 +19,12 @@ import pl.nalazek.githubsearch.ResponsePartitioned;
  * @see SearchResult
  * @see ResponsePackage
  */
-
+//TODO Refactor
 public class ResultArrayListBuilder {
+
+    private static String nameBuffer;
+    private static Integer followersBuffer;
+    private static ExchangeType typeBuffer;
 
     private ResultArrayListBuilder() {}
 
@@ -36,14 +44,12 @@ public class ResultArrayListBuilder {
             switch(type) {
                 case USER_SEARCH:
                 case USER_PAGE:
-
                     JsonUserSearchResult jsonObject0 = (JsonUserSearchResult) response.getJsonObject();
                     for(JsonUserSearchResult.Item item : jsonObject0.getItems()) {
-                        resultList.add(new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), item.getStarredUrl(), type));
+                        resultList.add(new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), item.getStarredUrl(), item.getAvatarUrl(), type));
                     }
-
-
                     break;
+
                 case REPOS_SEARCH:
                 case REPOS_PAGE:
                     JsonRepoSearchResult jsonObject1 = (JsonRepoSearchResult) response.getJsonObject();
@@ -51,14 +57,23 @@ public class ResultArrayListBuilder {
                         resultList.add(new RepoSearchResult(item.getName(), item.getHtmlUrl(), type));
                     }
                     break;
+
                 case USER_EXPAND:
-
+                    JsonUserExpanded jsonObject2 = (JsonUserExpanded) response.getJsonObject();
+                    nameBuffer = jsonObject2.getName();
+                    followersBuffer = jsonObject2.getFollowers();
+                    typeBuffer = type;
                     break;
-                case USER_EXPAND_STARS:
 
+                case USER_EXPAND_STARS:
+                    List<JsonObject> jsonObject3 = response.getJsonObjectsList();
+                    int stars = jsonObject3.size();
+                    //TODO null reference
+                    resultList.add(new UserDetailedResult(nameBuffer, followersBuffer, stars, null, typeBuffer));
+                    nameBuffer = "";
+                    followersBuffer = -1;
                     break;
             }
-
         }
         return resultList;
     }

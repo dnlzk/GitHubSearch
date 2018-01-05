@@ -33,6 +33,8 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
     public QueryTask() {}
 
+    public String getPhrase() { return phrase; }
+
     @Override
     protected void onCancelled() {
         super.onCancelled();
@@ -61,6 +63,8 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
 
             try {
                 response = client.newCall(request).execute();
+                //TODO refactor response so each one holds it message
+                //TODO Link option in starred receive
                 if(response.isSuccessful()) {
                     responsePackage.addResponse(response, query.getType());
                     responsePackage.addMessage("Success");
@@ -92,9 +96,5 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         else showable.showError(message);
     }
 
-    /**
-     * Returns the phrase for the query task
-     * @return phrase
-     */
-    public String getPhrase() { return phrase; }
+
 }

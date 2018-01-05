@@ -16,7 +16,7 @@
             android:value=".ScrollingActivity" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".search.SearchActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
@@ -35,18 +35,18 @@
         </activity>
 
         <provider
-            android:name=".GitSuggestionProvider"
+            android:name=".search.GitSuggestionProvider"
             android:authorities="pl.nalazek.githubsearch.provider.GitSuggestionProvider"
             android:exported="false"></provider>
 
         <activity
-            android:name=".UserDetailedActivity"
+            android:name=".userdetails.UserDetailedActivity"
             android:label="@string/title_activity_user_detailed"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".search.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.nalazek.githubsearch.MainActivity" />
+                android:value="pl.nalazek.githubsearch.search.SearchActivity" />
         </activity>
     </application>
 

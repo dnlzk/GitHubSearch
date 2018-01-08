@@ -1,4 +1,4 @@
-package pl.nalazek.githubsearch.data;
+package pl.nalazek.githubsearch.data.QueryObjects;
 
 
 import java.util.Iterator;
@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.TreeMap;
+
+import pl.nalazek.githubsearch.data.ResponsePackage;
 
 /**
  * This class is used to hold all queries and responses.

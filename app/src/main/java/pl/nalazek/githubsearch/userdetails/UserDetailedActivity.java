@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import pl.nalazek.githubsearch.R;
 import pl.nalazek.githubsearch.data.QueryObjects.Query;
 import pl.nalazek.githubsearch.data.QueryObjects.QueryBuilder;
-import pl.nalazek.githubsearch.data.QueryTask;
+import pl.nalazek.githubsearch.data.QueryObjects.QueryTask;
 import pl.nalazek.githubsearch.data.ResultObjects.Result;
 
 public class UserDetailedActivity extends AppCompatActivity {
@@ -24,8 +24,6 @@ public class UserDetailedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_detailed);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //TODO solve null pointer exception
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String userUrl = getIntent().getStringExtra("userUrl");
         String starredUrl = getIntent().getStringExtra("starredUrl");

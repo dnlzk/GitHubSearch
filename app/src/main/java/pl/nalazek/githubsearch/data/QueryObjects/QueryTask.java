@@ -1,4 +1,4 @@
-package pl.nalazek.githubsearch.data;
+package pl.nalazek.githubsearch.data.QueryObjects;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pl.nalazek.githubsearch.data.ResponsePackage;
 import pl.nalazek.githubsearch.search.SearchPresenter;
 import pl.nalazek.githubsearch.Showable;
 import pl.nalazek.githubsearch.data.QueryObjects.Query;

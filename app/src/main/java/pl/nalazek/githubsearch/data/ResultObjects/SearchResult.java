@@ -1,5 +1,8 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
+import android.os.Parcelable;
+import android.support.design.internal.ParcelableSparseArray;
+
 import pl.nalazek.githubsearch.data.ExchangeType;
 
 /**
@@ -7,7 +10,7 @@ import pl.nalazek.githubsearch.data.ExchangeType;
  * @author Daniel Nalazek
  */
 
-public abstract class SearchResult extends Result {
+public abstract class SearchResult extends Result implements Parcelable {
 
     private String title;
     private String description;
@@ -18,7 +21,7 @@ public abstract class SearchResult extends Result {
         this.description = description;
     }
 
-    public String getName() {
+    public String getTitle() {
         return title;
     }
 

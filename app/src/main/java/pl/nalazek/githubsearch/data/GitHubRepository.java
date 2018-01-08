@@ -1,10 +1,7 @@
 package pl.nalazek.githubsearch.data;
 
-import java.util.ArrayList;
-
-import pl.nalazek.githubsearch.data.ResultObjects.Result;
-import pl.nalazek.githubsearch.data.ResultObjects.UserDetailedResult;
-import pl.nalazek.githubsearch.data.ResultObjects.UserSearchResult;
+import java.util.List;
+import pl.nalazek.githubsearch.data.ResultObjects.*;
 
 /**
  * This interface is the main entry point for accessing GitHub repository
@@ -15,16 +12,16 @@ public interface GitHubRepository {
 
     void requestSearch(String phrase, GitHubRepositorySearchOptions searchOptions);
 
-    void requestUserDetailed(UserSearchResult userSearchResult);
+    void requestUserDetailedData(UserSearchResult userSearchResult);
 
     interface SearchResultsCallback {
 
-        void onSearchResultsReady(ArrayList<Result> results);
+        void onSearchResultsReady(List<Result> results);
     }
 
     interface UserDetailedCallback {
 
-        void onUserDetailedResultReady(UserDetailedResult result);
+        void onUserDetailedDataResultReady(UserDetailedResult result);
     }
 
 }

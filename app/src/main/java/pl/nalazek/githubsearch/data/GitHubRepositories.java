@@ -31,7 +31,7 @@ public class GitHubRepositories {
 
     public static synchronized GitHubRepository getInstance(@NonNull GitHubRepositoryAPIInterface gitHubRepositoryAPIInterface) {
         if(repository == null) {
-            repository = new GitHubRepositoryInstance(gitHubRepositoryAPIInterface);
+            repository = new GitHubRepositoryLocal(gitHubRepositoryAPIInterface);
         }
         return repository;
     }

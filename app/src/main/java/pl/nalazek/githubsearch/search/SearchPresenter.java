@@ -5,11 +5,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import pl.nalazek.githubsearch.Showable;
-import pl.nalazek.githubsearch.data.QueryHistory;
+import pl.nalazek.githubsearch.data.GitHubRepositorySearchOptions;
+import pl.nalazek.githubsearch.data.QueryObjects.QueryHistory;
 import pl.nalazek.githubsearch.data.QueryObjects.Query;
 import pl.nalazek.githubsearch.data.QueryObjects.QueryBuilder;
 import pl.nalazek.githubsearch.data.QueryObjects.SearchQuery;
-import pl.nalazek.githubsearch.data.QueryTask;
+import pl.nalazek.githubsearch.data.QueryObjects.QueryTask;
 import pl.nalazek.githubsearch.data.ResponsePackage;
 import pl.nalazek.githubsearch.data.ResultObjects.ResultArrayListBuilder;
 
@@ -91,8 +92,9 @@ public class SearchPresenter implements Observer {
 
         // Check if an other task is pending and cancel it
         if(actualProcessingTask != null) actualProcessingTask.cancel(true);
-
         showable.showBusy();
+
+
 
         if(checkInHistory && getQueryHistory().isPhraseInHistory(phrase)) {
             publishResultsFromHistory(phrase, showable);

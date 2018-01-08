@@ -2,7 +2,6 @@ package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import pl.nalazek.githubsearch.data.ExchangeType;
 
 /**

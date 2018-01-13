@@ -4,10 +4,10 @@ package pl.nalazek.githubsearch.data.JsonObjects;
 import java.util.List;
 
 /**
- * This class represents a deserialized JSON response for user search
+ * This data class is used to keep a deserialized JSON response when searching for users
  * @author Daniel Nalazek
  */
-public class JsonUserSearchResult extends JsonObject {
+public class JsonUserSearchResult extends JsonObject implements Itemable {
     private Integer totalCount;
     private Boolean incompleteResults;
     private List<Item> items = null;
@@ -37,7 +37,7 @@ public class JsonUserSearchResult extends JsonObject {
     }
 
 
-    public class Item {
+    public class Item extends JsonItem {
 
         private String login;
         private Integer id;

@@ -1,10 +1,10 @@
 package pl.nalazek.githubsearch.data.JsonObjects;
 
 /**
- * This class represents a deserialized JSON response for user details
+ * This data class is used to keep a deserialized JSON response when searching for repositories
  * @author Daniel Nalazek
  */
-public class JsonUserExpanded extends JsonObject {
+public class JsonUserDetailed extends JsonObject {
 
     private String login;
     private Integer id;

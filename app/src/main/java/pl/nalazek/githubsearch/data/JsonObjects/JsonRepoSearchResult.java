@@ -3,10 +3,10 @@ package pl.nalazek.githubsearch.data.JsonObjects;
 import java.util.List;
 
 /**
- * This class represents a deserialized JSON response for repositories search
+ * This data class is used to keep a deserialized JSON response when searching for repositories
  * @author Daniel Nalazek
  */
-public class JsonRepoSearchResult extends JsonObject {
+public class JsonRepoSearchResult extends JsonObject implements Itemable {
     private Integer totalCount;
     private Boolean incompleteResults;
     private List<Item> items = null;
@@ -23,7 +23,7 @@ public class JsonRepoSearchResult extends JsonObject {
         return items;
     }
 
-    public class Item {
+    public class Item extends JsonItem {
 
         private Integer id;
         private String name;
@@ -802,7 +802,6 @@ public class JsonRepoSearchResult extends JsonObject {
             public void setSiteAdmin(Boolean siteAdmin) {
                 this.siteAdmin = siteAdmin;
             }
-
 
         }
     }

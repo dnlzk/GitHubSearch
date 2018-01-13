@@ -1,10 +1,10 @@
 package pl.nalazek.githubsearch.data.JsonObjects;
 
 /**
- * This class represents a deserialized JSON response for starred url
+ * This data class is used to keep a deserialized JSON response when searching for user starred repositories
  * @author Daniel Nalazek
  */
-public class JsonUserStarred extends JsonObject {
+public class  JsonUserStarred extends JsonObject {
         private Integer id;
         private String name;
         private String fullName;

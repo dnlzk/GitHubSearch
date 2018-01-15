@@ -1,28 +1,23 @@
 package pl.nalazek.githubsearch.data.QueryObjects;
 
-import java.net.URL;
+import android.support.annotation.Nullable;
 
+import java.net.URL;
 import pl.nalazek.githubsearch.data.ExchangeType;
-import pl.nalazek.githubsearch.Showable;
 
 /**
+ * This abstract class should be inherited by new query types.
  * @author Daniel Nalazek
  */
-
 public abstract class Query {
 
+    protected ExchangeType type;
     protected URL url;
-    protected Showable showable;
-    protected ExchangeType eType = null;
 
-    public URL getURL() {
-        return url;
-    }
+    public abstract String getQueryType();
 
-    public Showable getShowable() {
-        return showable;
-    }
+    public ExchangeType getExchangeType() { return type; }
 
-    public ExchangeType getType() { return eType; }
-
+    @Nullable
+    public URL getURL() { return url; }
 }

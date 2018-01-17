@@ -1,107 +1,105 @@
 package pl.nalazek.githubsearch.data.QueryObjects;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import pl.nalazek.githubsearch.search.SearchPresenter;
-import pl.nalazek.githubsearch.Showable;
+import pl.nalazek.githubsearch.data.ExchangeType;
 
 /**
+ * This builder class is intended to create SearchQueries and UserDetailedQuerries
  * @author Daniel Nalazek
  */
 
 public class QueryBuilder {
 
-    private final static String LOG_TAG = "QueryBuilder";
-    private SearchQuery.Order ordering = null;
-    private SearchQuery.Sort sorting = null;
-    private boolean scopeUsers = true;
-    private boolean scopeRepos = true;
-    private int resultsPerPage = 50;
-
-    public QueryBuilder() {}
-
-    public Query[] build(String phrase, Showable showable) {
-        // Set up search query/queries
-        SearchQuery searchQuery1 = null, searchQuery2 = null;
-        if(scopeUsers) {
-            searchQuery1 = new SearchQuery(phrase, SearchPresenter.SearchScope.USERS, showable, resultsPerPage);
-            setQueryOptions(searchQuery1);
-        }
-        if(scopeRepos) {
-            searchQuery2 = new SearchQuery(phrase, SearchPresenter.SearchScope.REPOSITORIES, showable, resultsPerPage);
-            setQueryOptions(searchQuery2);
-        }
-
-        SearchQuery[] searchQueryList;
-
-        // Search for users and repositories
-        if(scopeUsers && scopeRepos) {
-            searchQueryList = new SearchQuery[]{ searchQuery1,searchQuery2 };
-        }
-        // Search for users only
-        else if (scopeUsers) {
-            searchQueryList = new SearchQuery[]{ searchQuery1 };
-        }
-        // Search for repositories only
-        else if (scopeRepos) {
-            searchQueryList = new SearchQuery[]{ searchQuery2 };
-        }
-        // Other - not used
-        else {
-            searchQueryList = new SearchQuery[]{};
-            Log.i(LOG_TAG, "No search scope selected");
-        }
-        return searchQueryList;
+    public SearchQuerryBuilder buildSearchQuery() {
+        return new SearchQuerryBuilder();
     }
 
     public UserDetailedQuerryBuilder buildUserDetailedQuerry() {
         return new UserDetailedQuerryBuilder();
     }
 
+    public class SearchQuerryBuilder {
 
-    public QueryBuilder setOrdering(SearchQuery.Order ordering) {
-        this.ordering = ordering;
-        return this;
-    }
+        private SearchQuery.Order ordering = null;
+        private SearchQuery.Sort sorting = null;
+        private boolean scopeUsers = true;
+        private boolean scopeRepos = true;
+        private int resultsPerPage = -1;
 
-    public QueryBuilder setSorting(SearchQuery.Sort sorting) {
-        this.sorting = sorting;
-        return this;
-    }
+        public Query[] build(String keyword) throws WhitespaceKeywordException {
+            List<SearchQuery> searchQueryList = createQueriesList(keyword);
+            return searchQueryList.toArray(new Query[0]);
+        }
 
-    public QueryBuilder setResultsPerPage(int resultsPerPage) {
-        this.resultsPerPage = resultsPerPage;
-        return this;
-    }
+        public SearchQuerryBuilder setOrdering(SearchQuery.Order ordering) {
+            this.ordering = ordering;
+            return this;
+        }
 
-    public QueryBuilder setScope(boolean scopeUsers, boolean scopeRepos) {
-        this.scopeUsers = scopeUsers;
-        this.scopeRepos = scopeRepos;
-        return this;
-    }
+        public SearchQuerryBuilder setSorting(SearchQuery.Sort sorting) {
+            this.sorting = sorting;
+            return this;
+        }
 
-    private void setQueryOptions(SearchQuery searchQuery) {
+        public SearchQuerryBuilder setResultsPerPage(int resultsPerPage) {
+            this.resultsPerPage = resultsPerPage;
+            return this;
+        }
 
-        // If default changed, configure sorting and ordering options
-        if(ordering != null)
-            searchQuery.setOrdering(ordering);
-        if(sorting != null)
-            searchQuery.setSorting(sorting);
+        public SearchQuerryBuilder setScope(boolean scopeUsers, boolean scopeRepos) {
+            this.scopeUsers = scopeUsers;
+            this.scopeRepos = scopeRepos;
+            return this;
+        }
+
+        private List<SearchQuery> createQueriesList(String keyword) throws WhitespaceKeywordException{
+
+            List<SearchQuery> searchQueryList = new ArrayList<>();
+
+            if(scopeUsers) {
+                searchQueryList.add(newSearchQuery(keyword, SearchQuery.SearchScope.USERS));
+            }
+            if(scopeRepos) {
+                searchQueryList.add(newSearchQuery(keyword, SearchQuery.SearchScope.REPOSITORIES));
+            }
+
+            return searchQueryList;
+        }
+
+        private SearchQuery newSearchQuery(String keyword, SearchQuery.SearchScope scope) throws WhitespaceKeywordException{
+            SearchQuery searchQuery = new SearchQuery(keyword, scope);
+            configureSearchQuery(searchQuery);
+            return searchQuery;
+        }
+
+        private void configureSearchQuery(SearchQuery searchQuery) {
+
+            if(ordering != null)
+                searchQuery.setOrdering(ordering);
+            if(sorting != null)
+                searchQuery.setSorting(sorting);
+            if(resultsPerPage > -1)
+                searchQuery.setPerPage(resultsPerPage);
+        }
     }
 
     public class UserDetailedQuerryBuilder{
 
-        public Query[] build(URL userURL, URL userStarredURL, @Nullable URL avatarURL, Showable showable) {
-            UserExpandedQuery userExpandedQuery = new UserExpandedQuery(userURL, showable);
-            UserStarredQuery userStarredQuery = new UserStarredQuery(userStarredURL, showable);
-            //TODO avatar query
-            return new Query[] {userExpandedQuery, userStarredQuery};
+        public Query[] build(URL userURL, URL userStarredURL, @Nullable URL avatarURL) {
+            UserDetailedQuery userExpandedQuery = new UserDetailedQuery(userURL, ExchangeType.USER_DETAILED);
+            UserDetailedQuery userStarredQuery = new UserDetailedQuery(userStarredURL, ExchangeType.USER_DETAILED_STARS);
+            UserDetailedQuery userAvatarQuery = new UserDetailedQuery(avatarURL, ExchangeType.USER_DETAILED_AVATAR);
+            return new Query[] {userExpandedQuery, userStarredQuery, userAvatarQuery};
         }
-        public Query build(URL nextStarredPage, Showable showable) {
-            return new UserStarredQuery(nextStarredPage, showable);
+
+        public Query build(URL url, ExchangeType type) {
+            return new UserDetailedQuery(url, type);
         }
     }
+
 }

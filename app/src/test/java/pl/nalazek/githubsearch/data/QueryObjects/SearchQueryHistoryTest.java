@@ -3,8 +3,10 @@ package pl.nalazek.githubsearch.data.QueryObjects;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +19,7 @@ import static org.junit.Assert.*;
 /**
  * @author Daniel Nalazek
  */
+@RunWith(MockitoJUnitRunner.class)
 public class SearchQueryHistoryTest {
 
     SearchQueryHistory history;

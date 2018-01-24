@@ -1,7 +1,5 @@
 package pl.nalazek.githubsearch.data.QueryObjects;
 
-import android.support.annotation.Nullable;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

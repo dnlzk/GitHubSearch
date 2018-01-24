@@ -1,7 +1,7 @@
 package pl.nalazek.githubsearch;
 
 import android.os.Parcel;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.test.suitebuilder.annotation.MediumTest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  * @author Daniel Nalazek
  */
 
-@SmallTest
+@MediumTest
 public class UserSearchResultTest {
 
     UserSearchResult userSearchResult;

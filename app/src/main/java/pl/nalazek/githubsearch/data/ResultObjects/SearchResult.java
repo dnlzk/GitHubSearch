@@ -1,16 +1,18 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.os.Parcelable;
-import android.support.design.internal.ParcelableSparseArray;
 
 import pl.nalazek.githubsearch.data.ExchangeType;
 
 /**
- * This data class represents a parsed search result used to fill in the SearchResultListAdapter
+ * This data class represents a parent for parsed search results.
  * @author Daniel Nalazek
  */
 
 public abstract class SearchResult extends Result implements Parcelable {
+
+    public final static String PARCELABLE_TAG = "searchResult";
+    public final static String TYPE = "SearchResult";
 
     private String title;
     private String description;
@@ -28,5 +30,4 @@ public abstract class SearchResult extends Result implements Parcelable {
     public String getDescription() {
         return description;
     }
-
 }

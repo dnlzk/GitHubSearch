@@ -64,7 +64,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     @Override
     protected ResponsePackage doInBackground(@NonNull Query... queries) {
         assignQueries(queries);
-        return createResponsePackage();
+        return getResponsePackage();
     }
 
     @Override
@@ -74,12 +74,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
     private ResponsePackage createResponsePackageOnCancelled() {
-        try {
-            return new ResponsePackage(firstQuery.getQueryType(), STATE_INTERRUPTED);
-        }
-        catch (IndexOutOfBoundsException e) {
-            return new ResponsePackage(null, STATE_INTERRUPTED);
-        }
+        return new ResponsePackage(firstQuery.getQueryType(), STATE_INTERRUPTED);
     }
 
     private void assignQueries(Query[] queries) {
@@ -88,7 +83,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
     @Nullable
-    private ResponsePackage createResponsePackage() {
+    private ResponsePackage getResponsePackage() {
 
         responsePackage = new ResponsePackage(firstQuery.getQueryType());
         try {
@@ -106,14 +101,14 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     private void executeAllQueries() throws CancellationException, UnsuccessfulResponseException {
 
         while(!queries.isEmpty()) {
-            processingQuery = queries.poll();
             if(isCancelled()) throw new CancellationException();
+            processingQuery = queries.poll();
             executeQuery();
         }
     }
 
     private void executeQuery() throws UnsuccessfulResponseException {
-        URL url = getURLFromQuery(processingQuery);
+        URL url = getURLFromProcessingQuery();
         Request request = new Request.Builder().url(url).build();
         callRequest(request);
     }
@@ -135,7 +130,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         }
     }
 
-    private void checkAndProcessResponse(Response response) throws MalformedURLException, UnsuccessfulResponseException {
+    private void checkAndProcessResponse(Response response) throws UnsuccessfulResponseException {
         if(response.isSuccessful())
             addCorrectResponseToResponsePackage(response);
         else
@@ -147,13 +142,10 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         responsePackage.addMessage(STATE_SUCCESS);
     }
 
-    private URL getURLFromQuery(Query query) throws UnsuccessfulResponseException {
-        try {
-            return processingQuery.getURL();
-        }
-        catch (NullPointerException e) {
-            throw new UnsuccessfulResponseException(STATE_MALFORMED_URL);
-        }
+    private URL getURLFromProcessingQuery() throws UnsuccessfulResponseException {
+        URL url = processingQuery.getURL();
 
+        if(url != null) return url;
+        else throw new UnsuccessfulResponseException(STATE_MALFORMED_URL);
     }
 }

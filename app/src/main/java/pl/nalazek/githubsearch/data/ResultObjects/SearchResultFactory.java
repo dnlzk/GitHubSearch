@@ -9,9 +9,9 @@ import pl.nalazek.githubsearch.data.ResponsePackage;
 import pl.nalazek.githubsearch.data.ResponsePartitioned;
 
 /**
+ * Produces SearchResult's. Do not use directly, to avoid throwing {@link InvalidJsonObjectException}. Instead use {@link ResultCreator}.
  * @author Daniel Nalazek
  */
-
 public class SearchResultFactory implements ResultFactory {
 
     private static final SearchResultFactory instance = new SearchResultFactory();

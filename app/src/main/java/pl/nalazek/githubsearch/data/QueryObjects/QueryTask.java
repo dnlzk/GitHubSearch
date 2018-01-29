@@ -3,6 +3,7 @@ package pl.nalazek.githubsearch.data.QueryObjects;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -53,7 +54,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        callback.onResponseReady(this, createResponsePackageOnCancelled());
+        Log.d("QueryTask", STATE_INTERRUPTED);
     }
 
     @Override
@@ -64,7 +65,17 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     @Override
     protected ResponsePackage doInBackground(@NonNull Query... queries) {
         assignQueries(queries);
-        return getResponsePackage();
+        waitToAvoidQueryFlow();
+        if(isCancelled()) return null;
+        return makeResponsePackage();
+    }
+
+    private synchronized void waitToAvoidQueryFlow() {
+        try {
+            wait(800);
+        } catch (InterruptedException e) {
+            cancel(true);
+        }
     }
 
     @Override
@@ -73,17 +84,13 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         callback.onResponseReady(this, responsePackage);
     }
 
-    private ResponsePackage createResponsePackageOnCancelled() {
-        return new ResponsePackage(firstQuery.getQueryType(), STATE_INTERRUPTED);
-    }
-
     private void assignQueries(Query[] queries) {
         this.queries.addAll(Arrays.asList(queries));
         this.firstQuery = queries[0];
     }
 
     @Nullable
-    private ResponsePackage getResponsePackage() {
+    private ResponsePackage makeResponsePackage() {
 
         responsePackage = new ResponsePackage(firstQuery.getQueryType());
         try {
@@ -93,7 +100,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
             return null;
         }
         catch (UnsuccessfulResponseException e) {
-            responsePackage.addMessage(e.getMessage());
+            responsePackage.addErrorMessageAndQuery(e.getMessage(), processingQuery);
         }
         return responsePackage;
     }
@@ -138,8 +145,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
     private void addCorrectResponseToResponsePackage(Response response) {
-        responsePackage.addResponse(response, processingQuery.getExchangeType());
-        responsePackage.addMessage(STATE_SUCCESS);
+        responsePackage.addResponse(response, STATE_SUCCESS, processingQuery.getExchangeType());
     }
 
     private URL getURLFromProcessingQuery() throws UnsuccessfulResponseException {

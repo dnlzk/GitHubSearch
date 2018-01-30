@@ -78,35 +78,35 @@ public class SearchResultFactoryTest {
 
     @Test
     public void givenResponsePackageWithoutResponsesWhenMakeResultsThenEmptyList() throws Exception {
-        ResponsePackage responsePackage = new ResponsePackage(SearchQuery.TYPE, "");
+        ResponsePackage responsePackage = new ResponsePackage(SearchQuery.TYPE);
         List<SearchResult> list = searchResultFactory.makeResults(responsePackage);
         assertTrue("Results empty list fault", list.isEmpty());
     }
 
     @Test
     public void givenResponsePartitionedUserSearchWhenMakeResultsThenArrayLenghtOne() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, ExchangeType.USER_SEARCH);
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH);
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results array lenght fault", searchResults.length, is(1));
     }
 
     @Test
     public void givenResponsePartitionedRepoSearchWhenMakeResultsThenArrayLenghtOne() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, ExchangeType.REPOS_SEARCH);
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.REPOS_SEARCH);
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results array lenght fault", searchResults.length, is(1));
     }
 
     @Test
     public void givenResponsePartitionedWhenMakeResultsAndGetTitleThenTitle() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, ExchangeType.USER_SEARCH);
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH);
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results title fault", searchResults[0].getTitle(), is(title));
     }
 
     @Test
     public void givenResponsePartitionedWhenMakeResultsAndGetDescriptionThenUrl() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, ExchangeType.USER_SEARCH);
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH);
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results description fault", searchResults[0].getDescription(), is(url));
     }
@@ -129,7 +129,7 @@ public class SearchResultFactoryTest {
         ResponsePackage responsePackage = mock(ResponsePackage.class);
         ArrayList<ResponsePartitioned> list = new ArrayList<> (
                 Collections.singletonList(
-                        new ResponsePartitioned(headers, body, ExchangeType.USER_SEARCH)
+                        new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH)
                 ));
         when(responsePackage.getResponses()).thenReturn(list);
 

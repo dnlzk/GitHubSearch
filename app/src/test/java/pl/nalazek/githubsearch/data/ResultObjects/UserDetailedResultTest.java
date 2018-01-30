@@ -1,7 +1,12 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
+import android.graphics.Bitmap;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -9,12 +14,15 @@ import static org.junit.Assert.*;
 /**
  * @author Daniel Nalazek
  */
+@RunWith(MockitoJUnitRunner.class)
 public class UserDetailedResultTest {
 
     String name = "John";
     int stars = 55;
     int followers = 200;
-    byte[] image = new byte[5];
+
+    @Mock
+    Bitmap image;
 
     UserDetailedResult userDetailedResult;
 

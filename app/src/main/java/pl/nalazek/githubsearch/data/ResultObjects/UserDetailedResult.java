@@ -1,5 +1,8 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
+import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
+
 import pl.nalazek.githubsearch.data.ExchangeType;
 
 /**
@@ -12,7 +15,7 @@ public class UserDetailedResult extends DetailedResult {
     private String userName;
     private int followers;
     private int stars;
-    private byte[] avatarImage;
+    private Bitmap avatarImage;
 
 
     /**
@@ -22,7 +25,8 @@ public class UserDetailedResult extends DetailedResult {
      * @param avatarImage Avatar image
      * @param exchangeType Type of Exchange
      */
-    public UserDetailedResult(String userName, int followers, int stars, byte[] avatarImage, ExchangeType exchangeType) {
+    public UserDetailedResult(String userName, int followers, int stars, Bitmap avatarImage, ExchangeType exchangeType) {
+
         super(exchangeType);
         this.userName = userName;
         this.followers = followers;
@@ -30,19 +34,22 @@ public class UserDetailedResult extends DetailedResult {
         this.avatarImage = avatarImage;
     }
 
+
     /**
      * @param userName Name of user
      * @param followers Count of followers
      * @param stars Count of stars
      * @param avatarImage Avatar image
      */
-    public UserDetailedResult(String userName, int followers, int stars, byte[] avatarImage) {
+    public UserDetailedResult(String userName, int followers, int stars, @Nullable Bitmap avatarImage) {
+
         super(ExchangeType.USER_DETAILED);
         this.userName = userName;
         this.followers = followers;
         this.stars = stars;
         this.avatarImage = avatarImage;
     }
+
 
     public String getUserName() {
         return userName;
@@ -56,7 +63,7 @@ public class UserDetailedResult extends DetailedResult {
         return stars;
     }
 
-    public byte[] getAvatarImage() {
+    public Bitmap getAvatarImage() {
         return avatarImage;
     }
 

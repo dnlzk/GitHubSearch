@@ -16,20 +16,27 @@ public class SearchResultFactory implements ResultFactory {
 
     private static final SearchResultFactory instance = new SearchResultFactory();
 
+
     private SearchResultFactory() {}
+
 
     public static SearchResultFactory getInstance() {
         return instance;
     }
 
+
     @Override
     public SearchResult[] makeResults(ResponsePartitioned responsePartitioned) throws InvalidJsonObjectException {
 
         JsonObject jsonObject = responsePartitioned.getJsonObject();
-        if(jsonObject instanceof Itemable) return createResultsArray((Itemable)jsonObject);
-        else if(jsonObject == null) throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: null");
-        else throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: " + jsonObject.getClass().getName() + ". Try another using another ResultFactory");
+        if(jsonObject instanceof Itemable)
+            return createResultsArray((Itemable)jsonObject);
+        else if(jsonObject == null)
+            throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: null");
+        else
+            throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: " + jsonObject.getClass().getName() + ". Try another using another ResultFactory");
     }
+
 
     @Override
     public List<SearchResult> makeResults(ResponsePackage responsePackage) throws InvalidJsonObjectException {
@@ -42,15 +49,17 @@ public class SearchResultFactory implements ResultFactory {
             List<SearchResult> loopResults = Arrays.asList(searchResults);
             results.addAll(loopResults);
         }
-
         return results;
     }
 
-    private SearchResult[] createResultsArray(Itemable itemable) throws InvalidJsonObjectException {
 
+
+    private SearchResult[] createResultsArray(Itemable itemable) throws InvalidJsonObjectException {
         List<? extends JsonItem> jsonItems = itemable.getItems();
         return iterateOverItemsAndCreateResults(jsonItems);
     }
+
+
 
     private SearchResult[] iterateOverItemsAndCreateResults(List<? extends JsonItem> jsonItems) throws InvalidJsonObjectException {
 
@@ -61,9 +70,9 @@ public class SearchResultFactory implements ResultFactory {
         for(JsonItem item : jsonItems) {
             results[i++] = createResult(item);
         }
-
         return results;
     }
+
 
     private SearchResult createResult(JsonItem item) throws InvalidJsonObjectException {
 
@@ -76,14 +85,17 @@ public class SearchResultFactory implements ResultFactory {
             else throw new InvalidJsonObjectException("JsonItem object not recognized! Got: " + item.getClass().getName());
     }
 
+
+
     private RepoSearchResult createRepoSearchResult(JsonRepoSearchResult.Item item) {
         return new RepoSearchResult(item.getName(), item.getHtmlUrl(), item.getUrl());
     }
 
+
+
     private UserSearchResult createUserSearchResult(JsonUserSearchResult.Item item) {
-        return new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), item.getStarredUrl(), item.getAvatarUrl());
+        String starredURL = item.getStarredUrl().contains("{") ? (item.getStarredUrl().split("\\{"))[0] : item.getStarredUrl();
+        return new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), starredURL, item.getAvatarUrl());
     }
-
-
 }
 

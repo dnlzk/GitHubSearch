@@ -8,7 +8,7 @@ import pl.nalazek.githubsearch.data.ExchangeType;
  */
 public abstract class DetailedResult extends Result {
 
-    public final static String TYPE = "EmptyResult";
+    public final static String TYPE = "EmptyDetailedResult";
 
     protected DetailedResult(ExchangeType exchangeType) {
         super(exchangeType);

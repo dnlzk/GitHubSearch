@@ -12,7 +12,7 @@ import pl.nalazek.githubsearch.data.ExchangeType;
 public abstract class SearchResult extends Result implements Parcelable {
 
     public final static String PARCELABLE_TAG = "searchResult";
-    public final static String TYPE = "SearchResult";
+    public final static String TYPE = "EmptySearchResult";
 
     private String title;
     private String description;

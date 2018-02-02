@@ -116,7 +116,7 @@ public class QueryTaskTest{
         queryTask.onPostExecute(queryTask.doInBackground(queries));
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
         assertThat("QueryTask references fault", queryTaskCaptor.getValue(), is(queryTask));
-        assertThat("ResponsePackage message fault", responsePackageCaptor.getValue().getMessage(), is("Success"));
+        assertThat("ResponsePackage message fault", responsePackageCaptor.getValue().getErrorMessagesMap().isEmpty(), is(true));
         assertThat("ResponsePackage size fault", responsePackageCaptor.getValue().getResponses().size(), is(2));
     }
 
@@ -126,15 +126,7 @@ public class QueryTaskTest{
         when(response.isSuccessful()).thenReturn(false);
         queryTask.onPostExecute(queryTask.doInBackground(queries));
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage error message fault", responsePackageCaptor.getValue().getMessage(), is("Error"));
-    }
-
-    @Test
-    public void whenDoInBackgroundAndCancelledThenResponseMessageInterrupted() throws Exception {
-        queryTask.doInBackground(queries);
-        queryTask.onCancelled();
-        verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage interrupted message fault", responsePackageCaptor.getValue().getMessage(), is(QueryTask.STATE_INTERRUPTED));
+        assertThat("ResponsePackage error message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey("Error"), is(true));
     }
 
     @Test
@@ -143,7 +135,7 @@ public class QueryTaskTest{
         when(call.execute()).thenThrow(new UnknownHostException());
         queryTask.onPostExecute(queryTask.doInBackground(queries));
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage connection error message fault", responsePackageCaptor.getValue().getMessage(), is(QueryTask.STATE_CONNECTION_ERROR));
+        assertThat("ResponsePackage connection error message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey(QueryTask.STATE_CONNECTION_ERROR), is(true));
     }
 
     @Test
@@ -152,7 +144,7 @@ public class QueryTaskTest{
         when(call.execute()).thenThrow(new MalformedURLException());
         queryTask.onPostExecute(queryTask.doInBackground(queries));
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getMessage(), is(QueryTask.STATE_MALFORMED_URL));
+        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey(QueryTask.STATE_MALFORMED_URL), is(true));
     }
 
     @Test
@@ -161,7 +153,7 @@ public class QueryTaskTest{
         when(call.execute()).thenThrow(new IOException("IO Error"));
         queryTask.onPostExecute(queryTask.doInBackground(queries));
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getMessage(), is("IO Error"));
+        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey("IO Error"), is(true));
     }
 
     @Test
@@ -171,6 +163,6 @@ public class QueryTaskTest{
         when(malformedURLQuery.getQueryType()).thenReturn(UserSearchResult.TYPE);
         queryTask.onPostExecute(queryTask.doInBackground(malformedURLQuery));
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getMessage(), is(QueryTask.STATE_MALFORMED_URL));
+        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey(QueryTask.STATE_MALFORMED_URL), is(true));
     }
 }

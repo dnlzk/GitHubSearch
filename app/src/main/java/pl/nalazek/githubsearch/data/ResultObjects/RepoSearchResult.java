@@ -14,6 +14,7 @@ public class RepoSearchResult extends SearchResult {
 
     private String repoURL;
 
+
     /**
      * @param title Name to show on list
      * @param description Description of the result
@@ -25,10 +26,12 @@ public class RepoSearchResult extends SearchResult {
         this.repoURL = repoURL;
     }
 
+
     public RepoSearchResult(String title, String description, String repoURL) {
         super(title, description, ExchangeType.REPOS_SEARCH);
         this.repoURL = repoURL;
     }
+
 
     public static final Parcelable.Creator<RepoSearchResult> CREATOR = new Parcelable.Creator<RepoSearchResult>() {
         public RepoSearchResult createFromParcel(Parcel in) {
@@ -42,14 +45,17 @@ public class RepoSearchResult extends SearchResult {
         }
     };
 
+
     public String getRepoURL() {
         return repoURL;
     }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -65,14 +71,6 @@ public class RepoSearchResult extends SearchResult {
         return TYPE;
     }
 
-    private static RepoSearchResult buildFromParcelData(String[] parcelData) {
-        return new RepoSearchResult(
-                parcelData[0],
-                parcelData[1],
-                parcelData[2],
-                ExchangeType.REPOS_SEARCH
-        );
-    }
 
     @Override
     public int hashCode() {
@@ -84,6 +82,7 @@ public class RepoSearchResult extends SearchResult {
         return result;
     }
 
+
     @Override
     public boolean equals(Object o) {
         return o instanceof RepoSearchResult &&
@@ -91,5 +90,15 @@ public class RepoSearchResult extends SearchResult {
                 getTitle().equals( ((RepoSearchResult)o).getTitle() ) &&
                 getDescription().equals( ((RepoSearchResult)o).getDescription() ) &&
                 getExchangeType().equals( ((RepoSearchResult)o).getExchangeType() );
+    }
+
+
+    private static RepoSearchResult buildFromParcelData(String[] parcelData) {
+        return new RepoSearchResult(
+                parcelData[0],
+                parcelData[1],
+                parcelData[2],
+                ExchangeType.REPOS_SEARCH
+        );
     }
 }

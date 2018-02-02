@@ -1,5 +1,7 @@
 package pl.nalazek.githubsearch.data;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import pl.nalazek.githubsearch.data.ResultObjects.*;
 
@@ -10,18 +12,25 @@ import pl.nalazek.githubsearch.data.ResultObjects.*;
 
 public interface GitHubRepository {
 
-    void requestSearch(String phrase, GitHubRepositorySearchOptions searchOptions);
+    void requestSearch(@NonNull String phrase, @NonNull GitHubRepositorySearchOptions searchOptions, @NonNull SearchResultsCallback searchResultsCallback);
 
-    void requestUserDetailedData(UserSearchResult userSearchResult);
+    void requestDetailedData(@NonNull SearchResult searchResult, @NonNull DetailedResultsCallback detailedResultsCallback);
+
+    void close();
+
+    void stopSearch();
+
+
 
     interface SearchResultsCallback {
-
-        void onSearchResultsReady(List<Result> results);
+        void onSearchResultsReady(List<? extends Result> results);
+        void onError(String message);
     }
 
-    interface UserDetailedCallback {
 
-        void onUserDetailedDataResultReady(UserDetailedResult result);
+
+    interface DetailedResultsCallback {
+        void onDetailedDataResultReady(List<? extends Result> result);
+        void onError(String message);
     }
-
 }

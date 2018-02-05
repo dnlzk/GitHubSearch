@@ -19,6 +19,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import pl.nalazek.githubsearch.data.GitHubRepositoryAPIInterface;
 import pl.nalazek.githubsearch.data.ResponsePackage;
+import pl.nalazek.githubsearch.data.ResultObjects.InvalidJsonObjectException;
 
 /**
  * This class represents a query task that is executed when:
@@ -139,13 +140,13 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         catch(UnknownHostException e) {
             throw new UnsuccessfulResponseException(STATE_CONNECTION_ERROR);
         }
-        catch (IOException e) {
+        catch (IOException | InvalidJsonObjectException e) {
             throw new UnsuccessfulResponseException(e.getMessage());
         }
     }
 
 
-    private void checkAndProcessResponse(Response response) throws UnsuccessfulResponseException {
+    private void checkAndProcessResponse(Response response) throws UnsuccessfulResponseException, InvalidJsonObjectException {
         if(response.isSuccessful())
             addCorrectResponseToResponsePackage(response);
         else
@@ -153,7 +154,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
 
-    private void addCorrectResponseToResponsePackage(Response response) {
+    private void addCorrectResponseToResponsePackage(Response response) throws InvalidJsonObjectException {
         responsePackage.addResponse(response, STATE_SUCCESS, processingQuery.getExchangeType());
     }
 

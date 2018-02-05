@@ -125,7 +125,7 @@ public class SearchResultFactoryTest {
         assertThat("List size fault", list.size(), is(1));
     }
 
-    private ResponsePackage createResponsePackageMock() {
+    private ResponsePackage createResponsePackageMock() throws Exception {
         ResponsePackage responsePackage = mock(ResponsePackage.class);
         ArrayList<ResponsePartitioned> list = new ArrayList<> (
                 Collections.singletonList(

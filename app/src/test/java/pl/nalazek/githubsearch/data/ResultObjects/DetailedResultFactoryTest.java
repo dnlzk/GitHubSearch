@@ -427,7 +427,7 @@ public class DetailedResultFactoryTest {
     }
 
 
-    private void addToResponsePackageFirstPageLastPageStarsResponses() {
+    private void addToResponsePackageFirstPageLastPageStarsResponses() throws Exception {
         responsePackage.addResponses(Arrays.asList(
                 new ResponsePartitioned(headersStarsFirstPage, bodyStarsFirstPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS),
                 new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
@@ -437,7 +437,7 @@ public class DetailedResultFactoryTest {
 
 
 
-    private void addToResponsePackageFirstPageNotLastPageStarsResponses() {
+    private void addToResponsePackageFirstPageNotLastPageStarsResponses() throws Exception {
         responsePackage.addResponses(Arrays.asList(
                 new ResponsePartitioned(headersStarsFirstPage, bodyStarsFirstPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS),
                 new ResponsePartitioned(headersStarsOneButLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
@@ -447,7 +447,7 @@ public class DetailedResultFactoryTest {
 
 
 
-    private void addToResponsePackageSingletonPageStarsResponse() {
+    private void addToResponsePackageSingletonPageStarsResponse() throws Exception {
         responsePackage.addResponses(Collections.singletonList(
                 new ResponsePartitioned(headersStarsSingleton, bodyStarsSingleton, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
                 )
@@ -456,7 +456,7 @@ public class DetailedResultFactoryTest {
 
 
 
-    private void addToResponsePackageAvatarResponse() {
+    private void addToResponsePackageAvatarResponse() throws Exception {
         responsePackage.addResponses(Collections.singletonList(
                 new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_AVATAR)
                 )
@@ -465,7 +465,7 @@ public class DetailedResultFactoryTest {
 
 
 
-    private void addToResponsePackageUserDetailedResponse() {
+    private void addToResponsePackageUserDetailedResponse() throws Exception {
         responsePackage.addResponses(Collections.singletonList(
                 new ResponsePartitioned(headers, bodyUser, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED)
                 )
@@ -474,7 +474,7 @@ public class DetailedResultFactoryTest {
 
 
 
-    private void addToResponsePackageLastPageStarsResponse() {
+    private void addToResponsePackageLastPageStarsResponse() throws Exception {
         responsePackage.addResponses(Collections.singletonList(
                 new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
                 )
@@ -483,7 +483,7 @@ public class DetailedResultFactoryTest {
 
 
 
-    private void addToResponsePackageFirstPageStarsResponse() {
+    private void addToResponsePackageFirstPageStarsResponse() throws Exception {
         responsePackage.addResponses(Collections.singletonList(
                 new ResponsePartitioned(headersStarsFirstPage, bodyStarsFirstPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
                 )

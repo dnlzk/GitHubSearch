@@ -12,6 +12,7 @@ import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import pl.nalazek.githubsearch.data.JsonObjects.JsonRepoSearchResult;
 import pl.nalazek.githubsearch.data.QueryObjects.QueryTask;
+import pl.nalazek.githubsearch.data.ResultObjects.InvalidJsonObjectException;
 import pl.nalazek.githubsearch.util.TextToString;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static pl.nalazek.githubsearch.data.DataPaths.*;
 import static pl.nalazek.githubsearch.data.ExchangeType.REPOS_SEARCH;
+import static pl.nalazek.githubsearch.data.ExchangeType.USER_DETAILED_STARS;
 
 /**
  * @author Daniel Nalazek
@@ -102,5 +104,11 @@ public class ResponsePartitionedReposSearchSingletonTest {
     @Test
     public void whenGetInstanceThenUserJSONRepoResult() throws Exception {
         assertTrue("Class type fault", response.getJsonObject() instanceof JsonRepoSearchResult);
+    }
+
+
+    @Test(expected = InvalidJsonObjectException.class)
+    public void givenResponseWithWrongExchangeTypeWhenGetJsonObjectThenException() throws Exception {
+        response = new ResponsePartitioned(headers, body, QueryTask.STATE_SUCCESS, USER_DETAILED_STARS);
     }
 }

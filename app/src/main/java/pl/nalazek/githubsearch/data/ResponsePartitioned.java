@@ -24,6 +24,8 @@ import okhttp3.ResponseBody;
 import pl.nalazek.githubsearch.data.JsonObjects.*;
 import pl.nalazek.githubsearch.data.ResultObjects.InvalidJsonObjectException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 
 /**
  * A holder class of partitioned response.
@@ -55,12 +57,18 @@ public class ResponsePartitioned {
      * Constructor. Automatically parses {@link ResponseBody} to JsonObject depending on the ExchangeType. Additionally sets up pagination
      * variables from {@link Headers}.
      * @throws InvalidJsonObjectException when an parse error occurs.
+     * @throws NullPointerException when an input argument is <code>null</code>
      */
     public ResponsePartitioned(@NonNull Headers headers,
                                @NonNull ResponseBody body,
                                @NonNull String message,
                                @NonNull ExchangeType exchangeType)
                                 throws InvalidJsonObjectException {
+
+        checkNotNull(headers);
+        checkNotNull(body);
+        checkNotNull(message);
+        checkNotNull(exchangeType);
 
         this.body = body;
         this.headers = headers;

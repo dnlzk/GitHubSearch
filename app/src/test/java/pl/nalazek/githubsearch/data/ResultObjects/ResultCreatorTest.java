@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ResultCreatorTest {
 
-    private final static String JSON_FILE_SEARCH = "testInputs/searchResult.json";
+    private final static String JSON_FILE_SEARCH = "testInputs/searchResultUsers.json";
     private final static String JSON_USER_DETAILED = "testInputs/userDetailedSingleton.json";
     private final static String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER = "testInputs/starLastPage.linkhead";
     private final static String JSON_FILE_STARRED_PAGE_LAST = "testInputs/starLastPage.json";
@@ -54,7 +54,7 @@ public class ResultCreatorTest {
     public ExpectedException exception = ExpectedException.none();
 
 
-    ResultCreator creator = new ResultCreator();
+    private ResultCreator creator = new ResultCreator();
 
 
     @Before

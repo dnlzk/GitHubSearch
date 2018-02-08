@@ -12,10 +12,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 import okhttp3.OkHttpClient;
-import pl.nalazek.githubsearch.data.QueryObjects.WhitespaceKeywordException;
-import pl.nalazek.githubsearch.data.QueryObjects.Query;
-import pl.nalazek.githubsearch.data.QueryObjects.QueryBuilder;
-import pl.nalazek.githubsearch.data.QueryObjects.QueryTask;
+import pl.nalazek.githubsearch.data.QueryObjects.*;
 import pl.nalazek.githubsearch.data.ResultObjects.SearchResult;
 import pl.nalazek.githubsearch.data.ResultObjects.UserSearchResult;
 

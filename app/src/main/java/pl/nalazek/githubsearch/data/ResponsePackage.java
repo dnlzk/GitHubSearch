@@ -1,105 +1,205 @@
 package pl.nalazek.githubsearch.data;
 
-import android.util.Log;
-import java.io.IOException;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
+
+import com.google.common.collect.Iterables;
+
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import okhttp3.Response;
+import pl.nalazek.githubsearch.data.QueryObjects.Query;
+import pl.nalazek.githubsearch.data.ResultObjects.InvalidJsonObjectException;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 
 /**
- * This class is used as a response holder. Depending on the amount of passed queries to QueryTask it can hold one or two responses.
- * In case of errors occurred during the exchange there is an error message available. The response array may be empty
- * at that time.
+ * This class is used as a response holder.
  * @author Daniel Nalazek
  */
 public class ResponsePackage
 {
-    private static final String LOG_TAG = "ResponsePackage Class";
+    private final String queryType;
     private ArrayList<ResponsePartitioned> responses = new ArrayList<>();
-    private String message = null;
+    private ArrayMap<String, Query> errorMessages = new ArrayMap<>();
+    private TreeMap<ExchangeType, ArrayList<ResponsePartitioned>> exchangeTypeMap = new TreeMap<>();
 
-    private String nextURL;
 
-    /**
-     * Default constructor
-     */
-    public ResponsePackage() {}
 
     /**
-     * Constructor with String parameter. Typically used when QueryTask was cancelled and no responses would be added.
-     * @param message Message to pass
+     * @param queryType Type of queries to which this response package is created
+     * @throws NullPointerException when parameter is <code>null</code>
+     * @see pl.nalazek.githubsearch.data.QueryObjects.SearchQuery#TYPE
+     * @see pl.nalazek.githubsearch.data.QueryObjects.UserDetailedQuery#TYPE
      */
-    public ResponsePackage(String message) {
-        this.message = message;
+    public ResponsePackage(@NonNull String queryType) {
+        checkNotNull(queryType);
+        this.queryType = queryType;
     }
 
-    /**
-     * Adds a new response to the responses array
-     * @param response Response from OkHttp library to add
-     * @return Returns true if response is complete, false otherway. If false it means that the server want to send the response in parts, divided to pages.
-     * Next page URL can be achieved by calling {@link #getNextURL()} method.
-     */
-    //TODO back to int return
-    public boolean addResponse(Response response, ExchangeType exchangeType) {
-        ResponsePartitioned responsePartitioned;
-        try {
-            responsePartitioned = new ResponsePartitioned(response.headers(), response.body().string(), exchangeType);
-            responses.add(responsePartitioned);
-            return isResponseComplete(responsePartitioned);
-        }
-        catch(IOException e)
-        {
-            Log.e(LOG_TAG,e.getMessage());
-        }
-        return true;
-    }
+
 
     /**
-     * Sets a status message.
-     * @param message the message string
+     * Adds a new response that will be previously converted to {@link ResponsePartitioned}.
+     * @throws InvalidJsonObjectException when an paring error occurs.
+     * @throws NullPointerException when one of parameters is <code>null</code>
      */
-    public void addMessage(String message) {
-        this.message = message;
+    public ResponsePackage addResponse(@NonNull Response response,
+                                       @NonNull String message,
+                                       @NonNull ExchangeType exchangeType)
+                                        throws InvalidJsonObjectException {
+        checkNotNull(response);
+        checkNotNull(message);
+        checkNotNull(exchangeType);
+
+        ResponsePartitioned responsePartitioned =
+                new ResponsePartitioned(response.headers(), response.body(), message, exchangeType);
+
+        responses.add(responsePartitioned);
+        updateExchangeTypeMap(responsePartitioned);
+
+        return this;
     }
 
-    /**
-     * Returns the status message if response is invalid.
-     * Otherwise returns null.
-     * @return String with message or null when response/s are valid.
-     */
-    public String getMessage() {
-        if(message != null) return message;
-        else return null;
-    }
 
     /**
-     * Returns an ArrayList of all responses in that ResponsePackage
-     * @return ArrayList with ResponsePartitioned type parameter
-     * @see ResponsePartitioned
+     * Adds a new response.
+     * @throws NullPointerException when parameter is <code>null</code>
      */
+    public ResponsePackage addResponse(@NonNull ResponsePartitioned responsePartitioned) {
+
+        checkNotNull(responsePartitioned);
+
+        responses.add(responsePartitioned);
+        updateExchangeTypeMap(responsePartitioned);
+
+        return this;
+    }
+
+
+
+    public ResponsePackage addResponses(List<ResponsePartitioned> responsesPartitioned) {
+
+        responses.addAll(responsesPartitioned);
+        updateExchangeTypeMap(responsesPartitioned);
+        return this;
+    }
+
+
+    public ResponsePackage addErrorMessageAndQuery(String message, Query unsuccessfulQuery) {
+        errorMessages.put(message, unsuccessfulQuery);
+        return this;
+    }
+
+
     public ArrayList<ResponsePartitioned> getResponses() {
         return responses;
     }
 
-    public String getNextURL() {
-        return parseNextPageURL(nextURL);
+
+    public ArrayMap<String, Query> getErrorMessagesMap() {
+        return errorMessages;
     }
 
-    public boolean isLastResponseComplete() {
-        return isResponseComplete(responses.get(responses.size()-1));
-    }
-    private boolean isResponseComplete(ResponsePartitioned responsePartitioned) {
-        String linkHeaderEntry = responsePartitioned.getHeaders().get("Link");
-        nextURL = linkHeaderEntry;
-        return linkHeaderEntry == null;
+
+    @NonNull
+    public String getQueryType() { return queryType; }
+
+
+    /**
+     * @return <code>null</code> when package is empty, otherwise {@link ExchangeType}.
+     */
+    @Nullable
+    public ExchangeType getLastResponseExchangeType() {
+        if(!isEmpty())
+            return responses.get(responses.size()-1).getExchangeType();
+        else return null;
     }
 
-    private String parseNextPageURL(String linkHeaderEntry) {
-        return getFirstUrl(linkHeaderEntry);
+
+    /**
+     * @return <code>null</code> when response not found, otherwise {@link ResponsePartitioned}.
+     */
+    @Nullable
+    public ResponsePartitioned getLastResponseWithExchangeType(ExchangeType exchangeType) {
+        List<ResponsePartitioned> responses = exchangeTypeMap.get(exchangeType);
+        return responses != null ? Iterables.getLast(responses) : null;
     }
 
-    private String getFirstUrl(String input) {
-        int start = input.indexOf('<');
-        int stop = input.indexOf('>');
-        return input.substring(start+1,stop);
+
+
+    /**
+     * @return <code>null</code> when responses not found, otherwise list
+     * of {@link ResponsePartitioned}.
+     */
+    @Nullable
+    public List<ResponsePartitioned> getAllResponsesWith(ExchangeType exchangeType) {
+        return exchangeTypeMap.get(exchangeType);
+    }
+
+
+
+    /**
+     * @throws InvalidObjectException when query types of packages are different
+     * @see #getQueryType()
+     */
+    public void combineResponsePackages(ResponsePackage responsePackage) throws InvalidObjectException{
+
+        checkIfTypeCorrect(responsePackage);
+        responses.addAll(responsePackage.responses);
+        updateExchangeTypeMap(responsePackage.responses);
+        errorMessages.putAll((Map<String,Query>)responsePackage.errorMessages);
+    }
+
+
+
+    private void checkIfTypeCorrect(ResponsePackage responsePackage) throws InvalidObjectException {
+        if(!queryType.equals(responsePackage.queryType))
+            throw new InvalidObjectException("Cannot combine packages. Query type incompatibility!");
+    }
+
+
+    /**
+     * @return <code>true</code> when package has no responses and no error messages,
+     * <code>false</code> otherwise
+     */
+    public boolean isEmpty() {
+        return hasNoResponses() && hasNoErrorMessages();
+    }
+
+
+    public boolean hasNoResponses() {
+        return responses.isEmpty();
+    }
+
+
+    public boolean hasNoErrorMessages() {
+        return errorMessages.isEmpty();
+    }
+
+
+    private void updateExchangeTypeMap(List<ResponsePartitioned> responsesPartitioned) {
+        for(ResponsePartitioned response : responsesPartitioned)
+            updateExchangeTypeMap(response);
+    }
+
+
+    private void updateExchangeTypeMap(ResponsePartitioned responsePartitioned) {
+
+        ExchangeType exchangeType = responsePartitioned.getExchangeType();
+        ArrayList<ResponsePartitioned> responsesList = exchangeTypeMap.get(exchangeType);
+
+        if(responsesList != null)
+            responsesList.add(responsePartitioned);
+        else
+            exchangeTypeMap.put(exchangeType,
+                    new ArrayList<>(Collections.singletonList(responsePartitioned)));
     }
 }

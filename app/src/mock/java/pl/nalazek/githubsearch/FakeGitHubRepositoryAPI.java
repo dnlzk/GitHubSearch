@@ -17,9 +17,12 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
 
     public final static String GENERATE_ERROR_PHRASE = "genError";
     public final static String GENERATE_LONG_TASK = "genLongTask";
+
     private final static int LATENCY = 100;
+
     private Thread queryTaskMock;
     private SearchAPICallback searchAPICallback;
+
 
 
     @Override
@@ -28,6 +31,7 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
                             @NonNull final SearchAPICallback searchAPICallback) {
 
         this.searchAPICallback = searchAPICallback;
+
         queryTaskMock = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -39,8 +43,6 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
             }
         });
         queryTaskMock.start();
-
-
     }
 
 
@@ -60,7 +62,6 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
             }
         });
         queryTaskMock.start();
-
     }
 
 

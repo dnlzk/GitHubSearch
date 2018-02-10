@@ -9,49 +9,55 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.nalazek.githubsearch.R;
-import pl.nalazek.githubsearch.Showable;
 import pl.nalazek.githubsearch.data.ExchangeType;
-import pl.nalazek.githubsearch.data.ResultObjects.RepoSearchResult;
-import pl.nalazek.githubsearch.data.ResultObjects.Result;
-import pl.nalazek.githubsearch.data.ResultObjects.SearchResult;
-import pl.nalazek.githubsearch.data.ResultObjects.UserSearchResult;
+import pl.nalazek.githubsearch.data.ResultObjects.*;
 
 /**
- * This adapter is used to set up the text and view search result list in SearchActivity
+ * This adapter is used to set up search result list in SearchActivity
  * @author Daniel Nalazek
  */
-public class SearchResultListAdapter extends ArrayAdapter<Result> implements Showable {
+public class SearchResultListAdapter extends ArrayAdapter<Result> {
 
-    private View progressBarLayout;
     private TextView name;
     private TextView description;
     private TextView type;
 
-    public SearchResultListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Result> objects, View progressBarLayout) {
+
+
+    public SearchResultListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Result> objects) {
         super(context, resource, objects);
-        this.progressBarLayout = progressBarLayout;
     }
+
+
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         Result result = getItem(position);
+
+        if(result == null)
+            return new View(parent.getContext());
 
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user_repo, parent, false);
 
-        name = (TextView) convertView.findViewById(R.id.name);
-        description = (TextView) convertView.findViewById(R.id.description);
-        type = (TextView) convertView.findViewById(R.id.type);
+        setVariables(convertView);
+        setResultsToView(result);
 
-        //TODO solve null pointer exception
-        ExchangeType exchangeType = result.getType();
+        return convertView;
+    }
+
+
+
+
+    private void setResultsToView(Result result) {
+
+        ExchangeType exchangeType = result.getExchangeType();
         SearchResult searchResult;
 
         switch(exchangeType) {
@@ -60,42 +66,32 @@ public class SearchResultListAdapter extends ArrayAdapter<Result> implements Sho
                 searchResult = (RepoSearchResult) result;
                 setTextForSearchResult(searchResult);
                 break;
+
             case USER_SEARCH:
                 type.setText("U");
                 searchResult = (UserSearchResult) result;
                 setTextForSearchResult(searchResult);
                 break;
+
             default:
                 type.setText("?");
                 break;
         }
-
-
-        return convertView;
     }
 
-    @Override
-    public void showResults(ArrayList<? extends Result> resultsArray) {
-        progressBarLayout.setVisibility(View.GONE);
-        clear();
-        addAll(resultsArray);
+
+
+    private void setVariables(View convertView) {
+
+        name = (TextView) convertView.findViewById(R.id.name);
+        description = (TextView) convertView.findViewById(R.id.description);
+        type = (TextView) convertView.findViewById(R.id.type);
     }
 
-    @Override
-    public void showError(String error) {
-        progressBarLayout.setVisibility(View.GONE);
-        clear();
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void showBusy() {
-        clear();
-        progressBarLayout.setVisibility(View.VISIBLE);
-    }
 
     private void setTextForSearchResult(SearchResult searchResult) {
-        name.setText(searchResult.getName());
+        name.setText(searchResult.getTitle());
         description.setText(searchResult.getDescription());
     }
 }

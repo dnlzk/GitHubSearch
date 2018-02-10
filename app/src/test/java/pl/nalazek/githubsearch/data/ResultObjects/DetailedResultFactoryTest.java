@@ -1,6 +1,8 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
 
+import android.provider.ContactsContract;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,12 +36,29 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DetailedResultFactoryTest {
 
-    private static final String JSON_FILE_STARRED_PAGE_FIRST_LINKHEADER = "testInputs/starFirstPage.linkhead";
-    private static final String JSON_FILE_STARRED_PAGE_FIRST = "testInputs/starFirstPage.json";
-    private static final String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER = "testInputs/starLastPage.linkhead";
-    private static final String JSON_FILE_STARRED_PAGE_LAST = "testInputs/starLastPage.json";
-    private static final String JSON_FILE_STARRED_PAGE_ONEBUTLAST_LINKHEADER = "testInputs/starOneButLastPage.linkhead";
-    private static final String JSON_FILE_STARRED_PAGE_SINGLETON = "testInputs/starSingleton.json";
+    private static final String JSON_FILE_STARRED_PAGE_FIRST_LINKHEADER =
+            DataPaths.JSON_FILE_PATH +
+            DataPaths.JSON_FILE_STARRED_PAGE_FIRST_LINKHEADER;
+
+    private static final String JSON_FILE_STARRED_PAGE_FIRST =
+            DataPaths.JSON_FILE_PATH +
+            DataPaths.JSON_FILE_STARRED_PAGE_FIRST;
+
+    private static final String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER =
+            DataPaths.JSON_FILE_PATH +
+            DataPaths.JSON_FILE_STARRED_PAGE_LAST_LINKHEADER;
+
+    private static final String JSON_FILE_STARRED_PAGE_LAST =
+            DataPaths.JSON_FILE_PATH +
+            DataPaths.JSON_FILE_STARRED_PAGE_LAST;
+
+    private static final String JSON_FILE_STARRED_PAGE_ONEBUTLAST_LINKHEADER =
+            DataPaths.JSON_FILE_PATH +
+            DataPaths.JSON_FILE_STARRED_PAGE_ONEBUTLAST_LINKHEADER;
+
+    private static final String JSON_FILE_STARRED_PAGE_SINGLETON =
+            DataPaths.JSON_FILE_PATH +
+            DataPaths.JSON_FILE_STARRED;
 
 
     @Mock

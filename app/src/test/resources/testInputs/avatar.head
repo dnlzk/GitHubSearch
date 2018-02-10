@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Cache-Control: max-age=300
+Content-Security-Policy: default-src 'none'
+Content-Type: image/png
+Etag: "074cce08dac80900c8a3eb21c5173df34d62e11a"
+Last-Modified: Mon, 14 Jan 2008 14:39:41 GMT
+Strict-Transport-Security: max-age=31557600
+Timing-Allow-Origin: https://github.com
+X-Content-Type-Options: nosniff
+X-Frame-Options: deny
+X-Xss-Protection: 1; mode=block
+X-GitHub-Request-Id: 9290:22347:44D671:4806D3:5A6CCC08
+Content-Length: 1563
+Accept-Ranges: bytes
+Date: Sat, 03 Feb 2018 09:12:43 GMT
+Via: 1.1 varnish
+Connection: keep-alive
+X-Served-By: cache-fra19128-FRA
+X-Cache: HIT
+X-Cache-Hits: 2
+X-Timer: S1517649164.901272,VS0,VE0
+Access-Control-Allow-Origin: *
+X-Fastly-Request-ID: d889b8a36d14db4942504834622b588e0a0305bb
+Expires: Sat, 03 Feb 2018 09:17:43 GMT
+Source-Age: 569604
+Vary: Authorization,Accept-Encoding
+

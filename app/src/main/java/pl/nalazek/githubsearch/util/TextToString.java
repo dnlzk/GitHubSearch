@@ -21,12 +21,22 @@ public class TextToString {
         return s.hasNext() ? s.next() : "";
     }
 
+
+
     public static String read(String filename, Charset charset) throws IOException {
         FileInputStream inputStream = new FileInputStream(filename);
         return CharStreams.toString(new InputStreamReader(inputStream, charset));
     }
 
+
+
     public static void printCurrentDirectory() {
         System.out.println(System.getProperty("user.dir"));
+    }
+
+
+
+    public static String getCurrentDirectory() {
+        return System.getProperty("user.dir");
     }
 }

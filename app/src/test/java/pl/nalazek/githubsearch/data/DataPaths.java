@@ -4,9 +4,9 @@ package pl.nalazek.githubsearch.data;
  * @author Daniel Nalazek
  */
 
-interface DataPaths {
+public interface DataPaths {
 
-    String JSON_FILE_PATH = "testInputs/";
+    String JSON_FILE_PATH = "src/test/resources/testInputs/";
 
     String JSON_FILE_SEARCHUSER = "searchResultUsers.json";
     String JSON_FILE_SEARCHUSER_HEADER = "searchResultUsers.head";

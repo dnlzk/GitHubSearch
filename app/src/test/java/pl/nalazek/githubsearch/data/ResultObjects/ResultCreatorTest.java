@@ -30,10 +30,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ResultCreatorTest {
 
-    private final static String JSON_FILE_SEARCH = "testInputs/searchResultUsers.json";
-    private final static String JSON_USER_DETAILED = "testInputs/userDetailedSingleton.json";
-    private final static String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER = "testInputs/starLastPage.linkhead";
-    private final static String JSON_FILE_STARRED_PAGE_LAST = "testInputs/starLastPage.json";
+    private final static String JSON_FILE_SEARCH = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_SEARCHUSER;
+    private final static String JSON_USER_DETAILED = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_DETAILEDUSER;
+    private final static String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_STARRED_PAGE_LAST_LINKHEADER;
+    private final static String JSON_FILE_STARRED_PAGE_LAST = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_STARRED_PAGE_LAST;
 
     @Mock
     ResponsePartitioned responsePartitioned;

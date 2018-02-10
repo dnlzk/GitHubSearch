@@ -23,16 +23,19 @@ android {
     sourceSets {
         androidTest {
             java {
-                exclude '**/SearchPresenterTest.java'
             }
         }
         test {
             java {
-                exclude '**/QueryHistoryTest.java'
             }
         }
     }
+    //Test android sdk also
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -41,8 +44,10 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.android.support.constraint:constraint-layout:+'
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    compile 'com.google.guava:guava:18.0'
+    testCompile 'org.mockito:mockito-core:2.13.0'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
     androidTestCompile 'com.android.support:support-annotations:23.1.1'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'

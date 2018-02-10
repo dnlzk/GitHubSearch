@@ -18,10 +18,11 @@ import pl.nalazek.githubsearch.FakeGitHubRepositoryAPI;
 import pl.nalazek.githubsearch.Injection;
 import pl.nalazek.githubsearch.data.ResultObjects.Result;
 import pl.nalazek.githubsearch.data.ResultObjects.SearchResult;
+import pl.nalazek.githubsearch.data.ResultObjects.UserSearchResult;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Daniel Nalazek
@@ -32,7 +33,7 @@ public class GitHubRepositoryTest {
 
     private GitHubRepository gitHub;
     private GitHubRepositorySearchOptions.GitHubRepositorySearchOptionsBuilder optionsBuilder;
-    private static final long TIMEOUT = 100;
+    private static final long TIMEOUT = 5000;
     private static final long TESTTIMEOUT = 1000;
 
     @Spy
@@ -47,9 +48,6 @@ public class GitHubRepositoryTest {
     ArgumentCaptor<List<? extends Result>> resultsCaptor;
     @Captor
     ArgumentCaptor<String> errorCaptor;
-    
-    @Rule
-    public Timeout timeout = Timeout.millis(TESTTIMEOUT);
 
 
 
@@ -65,10 +63,10 @@ public class GitHubRepositoryTest {
     public void whenRequestSearchTwiceSameThenCallbackWithErrorEmptyScore() throws Exception {
 
         requestSearch("Test", optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
-        Mockito.verify(searchResultsCallback).onSearchResultsReady(resultsCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onSearchResultsReady(resultsCaptor.capture());
 
         requestSearch("Test", optionsBuilder.forceSearchInHistory(true), searchResultsCallback);
-        Mockito.verify(searchResultsCallback).onError(errorCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onError(errorCaptor.capture());
 
         assertTrue("Empty score error", errorCaptor.getValue().contains("Returned empty score"));
     }
@@ -79,10 +77,10 @@ public class GitHubRepositoryTest {
     public void whenRequestSearchTwiceOtherThenCallback() throws Exception {
 
         requestSearch("Test", optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
-        Mockito.verify(searchResultsCallback).onSearchResultsReady(resultsCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onSearchResultsReady(resultsCaptor.capture());
 
         requestSearch("Test1", optionsBuilder.forceSearchInHistory(true), searchResultsCallback);
-        Mockito.verify(searchResultsCallback, times(2)).onSearchResultsReady(resultsCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onSearchResultsReady(resultsCaptor.capture());
     }
 
 
@@ -92,7 +90,7 @@ public class GitHubRepositoryTest {
     public void whenRequestSearchThenCallback() throws Exception {
 
         requestSearch("Test", optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
-        Mockito.verify(searchResultsCallback).onSearchResultsReady(resultsCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onSearchResultsReady(resultsCaptor.capture());
     }
 
 
@@ -102,7 +100,7 @@ public class GitHubRepositoryTest {
 
         requestSearch(FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE,
                 optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
-        Mockito.verify(searchResultsCallback).onError(errorCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onError(errorCaptor.capture());
     }
 
 
@@ -114,9 +112,8 @@ public class GitHubRepositoryTest {
                 optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
 
         gitHub.stopSearch();
-        waitForThreadStabilized();
 
-        Mockito.verify(searchResultsCallback).onError(errorCaptor.capture());
+        Mockito.verify(searchResultsCallback, timeout(TIMEOUT)).onError(errorCaptor.capture());
         assertTrue("Interrupted error value error", errorCaptor.getValue().equals("Interrupted task"));
     }
 
@@ -125,12 +122,10 @@ public class GitHubRepositoryTest {
     @Test
     public void givenSearchResultWithEmptyTitleWhenRequestDetailedDataThenCallback() throws Exception {
 
-        when(searchResult.getTitle()).thenReturn("");
-
+        searchResult = new UserSearchResult("","","http://a.com","http://a.com","http://a.com");
         gitHub.requestDetailedData(searchResult, detailedResultsCallback);
-        waitForThreadStabilized();
 
-        Mockito.verify(detailedResultsCallback).onDetailedDataResultReady(resultsCaptor.capture());
+        Mockito.verify(detailedResultsCallback, timeout(TIMEOUT)).onDetailedDataResultReady(resultsCaptor.capture());
     }
 
 
@@ -138,12 +133,10 @@ public class GitHubRepositoryTest {
     @Test
     public void givenSearchResultWithErrorTriggerWhenRequestDetailedThenErrorCallback() throws Exception {
 
-        when(searchResult.getTitle()).thenReturn(FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE);
-
+        searchResult = new UserSearchResult(FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE,"","http://a.com","http://a.com","http://a.com");
         gitHub.requestDetailedData(searchResult, detailedResultsCallback);
-        waitForThreadStabilized();
 
-        Mockito.verify(detailedResultsCallback).onError(errorCaptor.capture());
+        Mockito.verify(detailedResultsCallback, timeout(TIMEOUT)).onError(errorCaptor.capture());
     }
 
 
@@ -154,15 +147,6 @@ public class GitHubRepositoryTest {
                                 throws InterruptedException {
 
         gitHub.requestSearch(test, searchOptions, searchResultsCallback);
-        waitForThreadStabilized();
-    }
-
-
-
-    private void waitForThreadStabilized() throws InterruptedException {
-        synchronized (this) {
-            wait(TIMEOUT);
-        }
     }
 
 

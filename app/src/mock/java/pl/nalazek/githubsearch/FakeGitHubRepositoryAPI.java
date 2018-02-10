@@ -35,8 +35,8 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
         queryTaskMock = new Thread(new Runnable() {
             @Override
             public void run() {
-                generateLatency(LATENCY);
 
+                generateLatency(LATENCY);
                 if(phrase.equals(GENERATE_ERROR_PHRASE)) searchAPICallback.onError("Generated error");
                 else if(phrase.equals(GENERATE_LONG_TASK)) generateLatency(10000);
                 else searchAPICallback.onResultsReady(new ResponsePackage(SearchQuery.TYPE));
@@ -54,8 +54,8 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
         queryTaskMock = new Thread(new Runnable() {
             @Override
             public void run() {
-                generateLatency(LATENCY);
 
+                generateLatency(LATENCY);
                 if(searchResult.getTitle().equals(GENERATE_ERROR_PHRASE))
                     detailedDataCallback.onError("Generated error");
                 else

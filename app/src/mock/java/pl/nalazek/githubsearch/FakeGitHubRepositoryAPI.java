@@ -18,7 +18,7 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
     public final static String GENERATE_ERROR_PHRASE = "genError";
     public final static String GENERATE_LONG_TASK = "genLongTask";
 
-    private final static int LATENCY = 100;
+    private final static int LATENCY = 50;
 
     private Thread queryTaskMock;
     private SearchAPICallback searchAPICallback;
@@ -55,6 +55,7 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
             @Override
             public void run() {
                 generateLatency(LATENCY);
+
                 if(searchResult.getTitle().equals(GENERATE_ERROR_PHRASE))
                     detailedDataCallback.onError("Generated error");
                 else
@@ -74,6 +75,7 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
 
     @Override
     public void stopLastTask() {
+
         if(queryTaskMock.isAlive()) {
             queryTaskMock.interrupt();
             searchAPICallback.onError("Interrupted task");

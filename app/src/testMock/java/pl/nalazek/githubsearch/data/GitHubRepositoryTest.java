@@ -1,8 +1,9 @@
 package pl.nalazek.githubsearch.data;
 
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -31,7 +32,8 @@ public class GitHubRepositoryTest {
 
     private GitHubRepository gitHub;
     private GitHubRepositorySearchOptions.GitHubRepositorySearchOptionsBuilder optionsBuilder;
-    private static final long TIMEOUT = 200;
+    private static final long TIMEOUT = 100;
+    private static final long TESTTIMEOUT = 1000;
 
     @Spy
     GitHubRepository.SearchResultsCallback searchResultsCallback;
@@ -45,6 +47,9 @@ public class GitHubRepositoryTest {
     ArgumentCaptor<List<? extends Result>> resultsCaptor;
     @Captor
     ArgumentCaptor<String> errorCaptor;
+    
+    @Rule
+    public Timeout timeout = Timeout.millis(TESTTIMEOUT);
 
 
 
@@ -95,7 +100,8 @@ public class GitHubRepositoryTest {
     @Test
     public void givenErrorTriggerWhenRequestSearchThenErrorCallback() throws Exception {
 
-        requestSearch(FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE, optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
+        requestSearch(FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE,
+                optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
         Mockito.verify(searchResultsCallback).onError(errorCaptor.capture());
     }
 
@@ -104,7 +110,8 @@ public class GitHubRepositoryTest {
     @Test
     public void givenLongTaskTriggerWhenRequestSearchAndStopThenStopCall() throws Exception {
 
-        requestSearch(FakeGitHubRepositoryAPI.GENERATE_LONG_TASK, optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
+        requestSearch(FakeGitHubRepositoryAPI.GENERATE_LONG_TASK,
+                optionsBuilder.forceSearchInHistory(false), searchResultsCallback);
 
         gitHub.stopSearch();
         waitForThreadStabilized();
@@ -142,7 +149,10 @@ public class GitHubRepositoryTest {
 
 
 
-    private void requestSearch(String test, GitHubRepositorySearchOptions searchOptions, GitHubRepository.SearchResultsCallback searchResultsCallback) throws InterruptedException {
+    private void requestSearch(String test, GitHubRepositorySearchOptions searchOptions,
+                               GitHubRepository.SearchResultsCallback searchResultsCallback)
+                                throws InterruptedException {
+
         gitHub.requestSearch(test, searchOptions, searchResultsCallback);
         waitForThreadStabilized();
     }

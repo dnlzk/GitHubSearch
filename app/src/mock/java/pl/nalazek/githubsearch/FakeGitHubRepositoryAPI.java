@@ -20,9 +20,9 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
 
     private final static int LATENCY = 50;
 
-    private Thread queryTaskMock;
     private SearchAPICallback searchAPICallback;
 
+    private static Thread queryTaskMock;
     private static FakeGitHubRepositoryAPI instance = null;
 
 
@@ -33,6 +33,7 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
 
     public static FakeGitHubRepositoryAPI getInstance() {
         if(instance == null)
+            queryTaskMock = new Thread();
             instance = new FakeGitHubRepositoryAPI();
         return instance;
     }

@@ -109,7 +109,7 @@ public class GitHubRepositorySearchOptions {
         public GitHubRepositorySearchOptionsBuilder setResultsPerPage(short resultsPerPage) throws
                                                                         IllegalArgumentException {
 
-            if(resultsPerPage < 1 && resultsPerPage > 100)
+            if(resultsPerPage < 1 || resultsPerPage > 100)
                 throw new IllegalArgumentException("Acceptable value is between 1-100");
 
             this.resultsPerPage = resultsPerPage;

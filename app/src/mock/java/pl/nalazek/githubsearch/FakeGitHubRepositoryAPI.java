@@ -23,6 +23,20 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
     private Thread queryTaskMock;
     private SearchAPICallback searchAPICallback;
 
+    private static FakeGitHubRepositoryAPI instance = null;
+
+
+
+    private FakeGitHubRepositoryAPI() {}
+
+
+
+    public static FakeGitHubRepositoryAPI getInstance() {
+        if(instance == null)
+            instance = new FakeGitHubRepositoryAPI();
+        return instance;
+    }
+
 
 
     @Override

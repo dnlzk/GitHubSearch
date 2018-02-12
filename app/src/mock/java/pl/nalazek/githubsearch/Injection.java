@@ -9,6 +9,6 @@ import pl.nalazek.githubsearch.data.GitHubRepository;
 public class Injection {
 
     public static GitHubRepository provideGitHubRepository() {
-        return GitHubRepositories.getInstance(new FakeGitHubRepositoryAPI());
+        return GitHubRepositories.getInstance(FakeGitHubRepositoryAPI.getInstance());
     }
 }

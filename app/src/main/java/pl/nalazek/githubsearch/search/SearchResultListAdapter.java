@@ -17,7 +17,7 @@ import pl.nalazek.githubsearch.data.ExchangeType;
 import pl.nalazek.githubsearch.data.ResultObjects.*;
 
 /**
- * This adapter is used to set up search result list in SearchActivity
+ * This adapter is used to set up search result list in {@link SearchActivity}
  * @author Daniel Nalazek
  */
 public class SearchResultListAdapter extends ArrayAdapter<Result> {

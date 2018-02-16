@@ -118,11 +118,21 @@ public class GitHubRepositorySearchOptionsTest {
 
     @Test
     public void givenAlsoInvalidPerPageWhenBuildThenException() throws Exception {
+
         short[] perPageArray = {-2, 0, 101, 200};
+        boolean failed = false;
+
         for(short perPage : perPageArray) {
-            exception.expect(IllegalArgumentException.class);
-            exception.expectMessage("Acceptable value is between 1-100");
-            builder.setResultsPerPage(perPage).forceSearchInHistory(false);
+
+            try {
+                builder.setResultsPerPage(perPage).forceSearchInHistory(false);
+            }
+            catch (IllegalArgumentException e) {
+                failed = true;
+            }
+
+            if(!failed) throw new RuntimeException("No expected exception thrown!");
+            else failed = false;
         }
     }
 

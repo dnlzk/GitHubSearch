@@ -10,6 +10,7 @@ import pl.nalazek.githubsearch.data.ExchangeType;
 
 public class UserSearchResult extends SearchResult {
 
+    public final static String PARCELABLE_TAG = "userSearchResult";
     public final static String TYPE = "UserSearchResult";
 
     private String userURL;

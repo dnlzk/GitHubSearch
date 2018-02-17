@@ -12,7 +12,7 @@ import pl.nalazek.githubsearch.data.ResultObjects.*;
 
 public interface GitHubRepository {
 
-    void requestSearch(@NonNull String phrase, @NonNull GitHubRepositorySearchOptions searchOptions, @NonNull SearchResultsCallback searchResultsCallback);
+    void requestSearch(@NonNull String keyword, @NonNull GitHubRepositorySearchOptions searchOptions, @NonNull SearchResultsCallback searchResultsCallback);
 
     void requestDetailedData(@NonNull SearchResult searchResult, @NonNull DetailedResultsCallback detailedResultsCallback);
 

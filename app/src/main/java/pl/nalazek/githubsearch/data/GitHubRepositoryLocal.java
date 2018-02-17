@@ -147,8 +147,8 @@ public class GitHubRepositoryLocal implements GitHubRepository {
 
 
 
-    private List<? extends Result> getSearchResultsFromHistory(String phrase) {
-        ResponsePackage responsePackage = searchQueryHistory.get(phrase);
+    private List<? extends Result> getSearchResultsFromHistory(String keyword) {
+        ResponsePackage responsePackage = searchQueryHistory.get(keyword);
         return makeResults(responsePackage);
     }
 

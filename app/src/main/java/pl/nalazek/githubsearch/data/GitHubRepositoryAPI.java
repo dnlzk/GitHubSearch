@@ -155,14 +155,14 @@ public class GitHubRepositoryAPI implements GitHubRepositoryAPIInterface,
 
 
 
-    private Query[] buildSearchQueries(String phrase, GitHubRepositorySearchOptions options)
+    private Query[] buildSearchQueries(String keyword, GitHubRepositorySearchOptions options)
             throws WhitespaceKeywordException {
 
         return queryBuilder.buildSearchQuery().setOrdering(options.getOrder())
                 .setSorting(options.getSorting())
                 .setResultsPerPage(options.getResultsPerPage())
                 .setScope(options.isScopeUsers(), options.isScopeRepos())
-                .build(phrase);
+                .build(keyword);
     }
 
 

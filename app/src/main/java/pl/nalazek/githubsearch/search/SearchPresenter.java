@@ -91,11 +91,11 @@ public class SearchPresenter implements SearchContract.UserActionListener {
 
 
     @Override
-    public void requestSearch(String phrase, boolean searchInHistory) {
+    public void requestSearch(String keyword, boolean searchInHistory) {
 
         this.searchInHistory = searchInHistory;
         showable.showBusy();
-        createSearchRequest(phrase, options);
+        createSearchRequest(keyword, options);
     }
 
 
@@ -109,9 +109,9 @@ public class SearchPresenter implements SearchContract.UserActionListener {
 
 
 
-    private void createSearchRequest(String phrase, GitHubRepositorySearchOptions options) {
+    private void createSearchRequest(String keyword, GitHubRepositorySearchOptions options) {
 
-        gitHubRepository.requestSearch(phrase, options,
+        gitHubRepository.requestSearch(keyword, options,
                 new GitHubRepository.SearchResultsCallback() {
 
                     @Override

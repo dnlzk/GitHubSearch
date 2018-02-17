@@ -7,7 +7,6 @@ import pl.nalazek.githubsearch.data.ResultObjects.Result;
 /**
  * @author Daniel Nalazek
  */
-
 public interface SearchContract {
 
     interface Showable {
@@ -26,12 +25,12 @@ public interface SearchContract {
     interface UserActionListener {
 
         /**
-         * Requests search for phrase
+         * Requests search for keyword
          * @param checkInHistory Determines if an initial check in search history shoul be performed.
          *                       If result is found, no new request to external database will
          *                       be established. Result will be obtained form cache.
          */
-        void requestSearch(String phrase, boolean checkInHistory);
+        void requestSearch(String keyword, boolean checkInHistory);
 
 
         /**

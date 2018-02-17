@@ -11,7 +11,7 @@ import pl.nalazek.githubsearch.data.ResultObjects.SearchResult;
 
 public interface GitHubRepositoryAPIInterface {
 
-    void startSearch(@NonNull String phrase,
+    void startSearch(@NonNull String keyword,
                      @NonNull GitHubRepositorySearchOptions searchOptions,
                      @NonNull SearchAPICallback res);
 

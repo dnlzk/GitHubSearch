@@ -17,6 +17,7 @@
 
 package pl.nalazek.githubsearch;
 
+import okhttp3.OkHttpClient;
 import pl.nalazek.githubsearch.data.GitHubRepositories;
 import pl.nalazek.githubsearch.data.GitHubRepository;
 import pl.nalazek.githubsearch.data.GitHubRepositoryAPI;
@@ -27,6 +28,10 @@ import pl.nalazek.githubsearch.data.GitHubRepositoryAPI;
 public class Injection {
 
     public static GitHubRepository provideGitHubRepository() {
-        return GitHubRepositories.getInstance(new GitHubRepositoryAPI());
+        return GitHubRepositories.getInstance(new GitHubRepositoryAPI(provideOkHttpClient()));
+    }
+
+    public static OkHttpClient provideOkHttpClient() {
+        return new OkHttpClient();
     }
 }

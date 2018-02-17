@@ -27,6 +27,9 @@ public interface SearchContract {
 
         void requestSearch(String phrase, boolean checkInHistory);
 
+        /**
+         * Closes all connections with external databases.
+         */
         void finish();
 
         void stopSearch();

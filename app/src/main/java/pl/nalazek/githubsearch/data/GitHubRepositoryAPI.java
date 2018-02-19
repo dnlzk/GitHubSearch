@@ -149,6 +149,7 @@ public class GitHubRepositoryAPI implements GitHubRepositoryAPIInterface,
             return buildSearchQueries(keyword, options);
         }
         catch (WhitespaceKeywordException e) {
+            callback.onResultsReady(new ResponsePackage(SearchQuery.TYPE));
             return null;
         }
     }

@@ -56,7 +56,8 @@ public class UserDetailsPresenterTest {
                 "description",
                 "userURL",
                 "starredURL",
-                "avatarURL");
+                "avatarURL",
+                15);
 
         userPresenter.requestDetailedData(searchResult);
 
@@ -74,7 +75,8 @@ public class UserDetailsPresenterTest {
                 "description",
                 "userURL",
                 "starredURL",
-                "avatarURL");
+                "avatarURL",
+                15);
 
         userPresenter.requestDetailedData(searchResult);
 

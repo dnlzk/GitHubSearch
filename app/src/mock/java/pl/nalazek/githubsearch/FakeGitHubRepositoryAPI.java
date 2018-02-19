@@ -26,7 +26,6 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
     private static FakeGitHubRepositoryAPI instance = null;
 
 
-
     private FakeGitHubRepositoryAPI() {}
 
 
@@ -52,9 +51,13 @@ public class FakeGitHubRepositoryAPI implements GitHubRepositoryAPIInterface {
             public void run() {
 
                 generateLatency(LATENCY);
-                if(phrase.equals(GENERATE_ERROR_PHRASE)) searchAPICallback.onError("Generated error");
-                else if(phrase.equals(GENERATE_LONG_TASK)) generateLatency(10000);
-                else searchAPICallback.onResultsReady(new ResponsePackage(SearchQuery.TYPE));
+
+                if(phrase.equals(GENERATE_ERROR_PHRASE))
+                    searchAPICallback.onError("Generated error");
+                else if(phrase.equals(GENERATE_LONG_TASK))
+                    generateLatency(10000);
+                else
+                    searchAPICallback.onResultsReady(new ResponsePackage(SearchQuery.TYPE));
             }
         });
         queryTaskMock.start();

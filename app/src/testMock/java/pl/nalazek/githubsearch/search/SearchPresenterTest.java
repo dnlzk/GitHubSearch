@@ -57,6 +57,7 @@ public class SearchPresenterTest {
 
     @Test
     public void whenGetSearchOptionsThenDefaults() throws Exception {
+
         GitHubRepositorySearchOptions options = searchPresenter.getSearchOptions();
 
         assertThat("Order fault", options.getOrder(), is(SearchQuery.Order.ASCENDING));
@@ -73,11 +74,13 @@ public class SearchPresenterTest {
     public void whenSetWrongPerPageValueThenShowableOnErrorAndDefault() throws Exception {
 
         short[] wrongValues = {-5,0,102};
+
         for(short value : wrongValues) {
             searchPresenter.setResultsNumber(value);
             assertThat("Default per page fault", searchPresenter.getSearchOptions().getResultsPerPage(),
                     is(DEFAULT_PER_PAGE_VALUE));
         }
+
         Mockito.verify(showable, times(3)).showError(errorCaptor.capture());
     }
 

@@ -1,9 +1,7 @@
 package pl.nalazek.githubsearch.data;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -22,10 +20,10 @@ import pl.nalazek.githubsearch.data.ResultObjects.UserSearchResult;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.times;
 
 /**
  * @author Daniel Nalazek
+ *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class GitHubRepositoryTest {
@@ -85,7 +83,6 @@ public class GitHubRepositoryTest {
 
 
 
-
     @Test
     public void whenRequestSearchThenCallback() throws Exception {
 
@@ -122,7 +119,7 @@ public class GitHubRepositoryTest {
     @Test
     public void givenSearchResultWithEmptyTitleWhenRequestDetailedDataThenCallback() throws Exception {
 
-        searchResult = new UserSearchResult("","","http://a.com","http://a.com","http://a.com");
+        searchResult = new UserSearchResult("","","http://a.com","http://a.com","http://a.com",15);
         gitHub.requestDetailedData(searchResult, detailedResultsCallback);
 
         Mockito.verify(detailedResultsCallback, timeout(TIMEOUT)).onDetailedDataResultReady(resultsCaptor.capture());
@@ -133,7 +130,14 @@ public class GitHubRepositoryTest {
     @Test
     public void givenSearchResultWithErrorTriggerWhenRequestDetailedThenErrorCallback() throws Exception {
 
-        searchResult = new UserSearchResult(FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE,"","http://a.com","http://a.com","http://a.com");
+        searchResult = new UserSearchResult(
+                FakeGitHubRepositoryAPI.GENERATE_ERROR_PHRASE,
+                "",
+                "http://a.com",
+                "http://a.com",
+                "http://a.com",
+                15);
+
         gitHub.requestDetailedData(searchResult, detailedResultsCallback);
 
         Mockito.verify(detailedResultsCallback, timeout(TIMEOUT)).onError(errorCaptor.capture());

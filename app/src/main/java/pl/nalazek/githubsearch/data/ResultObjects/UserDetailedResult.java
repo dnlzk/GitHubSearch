@@ -29,6 +29,7 @@ public class UserDetailedResult extends DetailedResult {
     private int followers;
     private int stars;
     private Bitmap avatarImage;
+    private String login;
 
 
     /**
@@ -39,6 +40,7 @@ public class UserDetailedResult extends DetailedResult {
      * @param exchangeType Type of Exchange
      */
     public UserDetailedResult(String userName,
+                              String login,
                               int followers,
                               int stars,
                               Bitmap avatarImage,
@@ -50,6 +52,7 @@ public class UserDetailedResult extends DetailedResult {
         this.followers = followers;
         this.stars = stars;
         this.avatarImage = avatarImage;
+        this.login = login;
     }
 
 
@@ -60,6 +63,7 @@ public class UserDetailedResult extends DetailedResult {
      * @param avatarImage Avatar image
      */
     public UserDetailedResult(String userName,
+                              String login,
                               int followers,
                               int stars,
                               @Nullable Bitmap avatarImage,
@@ -70,6 +74,7 @@ public class UserDetailedResult extends DetailedResult {
         this.followers = followers;
         this.stars = stars;
         this.avatarImage = avatarImage;
+        this.login = login;
     }
 
 
@@ -88,6 +93,8 @@ public class UserDetailedResult extends DetailedResult {
     public Bitmap getAvatarImage() {
         return avatarImage;
     }
+
+    public String getLogin() { return login;}
 
     @Override
     public String getResultType() {

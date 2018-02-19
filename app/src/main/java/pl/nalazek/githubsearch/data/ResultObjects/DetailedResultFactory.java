@@ -196,6 +196,7 @@ class DetailedResultFactory implements ResultFactory {
         DetailedResult[] results = new DetailedResult[1];
         results[0] = new UserDetailedResult(
                 jsonObject.getName(),
+                jsonObject.getLogin(),
                 jsonObject.getFollowers(),
                 countStars(),
                 bitmap,

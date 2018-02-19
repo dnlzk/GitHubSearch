@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 public class UserDetailedResultTest {
 
     String name = "John";
+    String login = "dfed";
     int stars = 55;
     int followers = 200;
     int id = 3423;
@@ -31,6 +32,7 @@ public class UserDetailedResultTest {
     public void before() {
         userDetailedResult = new UserDetailedResult(
                 name,
+                login,
                 followers,
                 stars,
                 image,

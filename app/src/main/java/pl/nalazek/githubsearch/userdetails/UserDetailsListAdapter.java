@@ -92,7 +92,12 @@ public class UserDetailsListAdapter extends ArrayAdapter<Result> {
 
     private void setResultsToView(UserDetailedResult userDetailedResult) {
 
-        userName.setText(userDetailedResult.getUserName());
+        String userNameLogin =
+                userDetailedResult.getUserName() != null ?
+                        userDetailedResult.getUserName() :
+                        userDetailedResult.getLogin();
+
+        userName.setText(userNameLogin);
         stars.setText(String.valueOf(userDetailedResult.getStars()));
         followers.setText(String.valueOf(userDetailedResult.getFollowers()));
         Bitmap bitmap = userDetailedResult.getAvatarImage();

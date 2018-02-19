@@ -16,6 +16,8 @@
 
 package pl.nalazek.githubsearch.search;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import pl.nalazek.githubsearch.data.GitHubRepository;
@@ -40,6 +42,7 @@ public class SearchPresenter implements SearchContract.UserActionListener {
     private Boolean scopeRepos = true;
     private SearchQuery.Sort sorting = SearchQuery.Sort.BEST;
     private SearchQuery.Order ordering = SearchQuery.Order.ASCENDING;
+    private Boolean sortById = true;
     private boolean searchInHistory = false;
     private GitHubRepositorySearchOptions options;
 
@@ -132,12 +135,27 @@ public class SearchPresenter implements SearchContract.UserActionListener {
 
                     @Override
                     public void onSearchResultsReady(List<? extends Result> results) {
-                        showable.showResults(results);
+                        if(sortById) showable.showResults(getSortedById(results));
+                        else showable.showResults(results);
                     }
+
+
 
                     @Override
                     public void onError(String message) {
                         showable.showError(message);
+                    }
+
+
+
+                    private List<? extends Result> getSortedById(List<? extends Result> results) {
+
+                        Collections.sort(results, new Comparator<Result>() {
+                            public int compare(Result r1, Result r2) {
+                                return Integer.compare(r1.getId() , r2.getId());
+                            }
+                        });
+                        return results;
                     }
                 });
     }

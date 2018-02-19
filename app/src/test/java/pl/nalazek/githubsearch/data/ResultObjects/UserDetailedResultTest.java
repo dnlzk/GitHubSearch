@@ -20,6 +20,7 @@ public class UserDetailedResultTest {
     String name = "John";
     int stars = 55;
     int followers = 200;
+    int id = 3423;
 
     @Mock
     Bitmap image;
@@ -32,7 +33,8 @@ public class UserDetailedResultTest {
                 name,
                 followers,
                 stars,
-                image);
+                image,
+                id);
     }
 
     @Test
@@ -59,5 +61,11 @@ public class UserDetailedResultTest {
     public void whenGetAvatarImageThenAvatarImage() throws Exception {
         assertThat("Avatar image fault", userDetailedResult.getAvatarImage(), is(image));
     }
+
+    @Test
+    public void whenGetIdThenID() throws Exception {
+        assertThat("Id fault", userDetailedResult.getId(), is(id));
+    }
+
 
 }

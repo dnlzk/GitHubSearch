@@ -1,13 +1,11 @@
 package pl.nalazek.githubsearch;
 
 import android.os.Parcel;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import pl.nalazek.githubsearch.data.ResultObjects.UserSearchResult;
 
@@ -26,6 +24,7 @@ public class UserSearchResultTest {
     private String exampleStarredUrl = "http://s.pl";
     private String exampleAvatarUrl = "http://a.pl";
     private Parcel parcel;
+
 
 
     @Before

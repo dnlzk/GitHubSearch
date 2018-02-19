@@ -24,7 +24,9 @@ public class SearchQueryWhitespacesTest {
     @Parameterized.Parameter()
     public static String keyword;
 
+
     public SearchQuery searchQuery;
+
 
     @Test
     public void whenNewSearchQueryInstanceGivenWhitespaceKeywordThenException()  throws  WhitespaceKeywordException {

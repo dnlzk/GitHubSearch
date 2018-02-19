@@ -38,6 +38,8 @@ public class SearchResultFactoryTest {
     String url = "https://github.com/dzharii";
     SearchResultFactory searchResultFactory;
 
+
+
     @Before
     public void before() throws Exception {
         searchResultFactory = SearchResultFactory.getInstance();
@@ -70,11 +72,15 @@ public class SearchResultFactoryTest {
                 "}\n");
     }
 
+
+
     @Test
     public void whenGetInstanceThenSameReference() throws Exception {
         SearchResultFactory searchResultFactoryForCompare = SearchResultFactory.getInstance();
         assertThat("Static reference fault", searchResultFactory, is(searchResultFactoryForCompare));
     }
+
+
 
     @Test
     public void givenResponsePackageWithoutResponsesWhenMakeResultsThenEmptyList() throws Exception {
@@ -83,49 +89,91 @@ public class SearchResultFactoryTest {
         assertTrue("Results empty list fault", list.isEmpty());
     }
 
+
+
     @Test
     public void givenResponsePartitionedUserSearchWhenMakeResultsThenArrayLenghtOne() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headers,
+                body,
+                "Success",
+                ExchangeType.USER_SEARCH);
+
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results array lenght fault", searchResults.length, is(1));
     }
+
+
 
     @Test
     public void givenResponsePartitionedRepoSearchWhenMakeResultsThenArrayLenghtOne() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.REPOS_SEARCH);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headers,
+                body,
+                "Success",
+                ExchangeType.REPOS_SEARCH);
+
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results array lenght fault", searchResults.length, is(1));
     }
 
+
+
     @Test
     public void givenResponsePartitionedWhenMakeResultsAndGetTitleThenTitle() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headers,
+                body,
+                "Success",
+                ExchangeType.USER_SEARCH);
+
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
         assertThat("Results title fault", searchResults[0].getTitle(), is(title));
     }
 
+
+
     @Test
     public void givenResponsePartitionedWhenMakeResultsAndGetDescriptionThenUrl() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, body, "Success", ExchangeType.USER_SEARCH);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headers,
+                body,
+                "Success",
+                ExchangeType.USER_SEARCH);
+
         SearchResult[] searchResults = searchResultFactory.makeResults(responsePartitioned);
+
         assertThat("Results description fault", searchResults[0].getDescription(), is(url));
     }
 
+
+
     @Test(expected = InvalidJsonObjectException.class)
     public void givenResponsePartitionedWhenMakeResultsThenInvalidJSONObjectException() throws Exception {
+
         ResponsePartitioned responsePartitioned = mock(ResponsePartitioned.class);
         when(responsePartitioned.getJsonObject()).thenReturn(new JsonUserDetailed());
         searchResultFactory.makeResults(responsePartitioned);
     }
 
+
+
     @Test
     public void givenResponsePackageWithMessagesWhenMakeResultsThenSizeIsOne() throws Exception {
+
         ResponsePackage responsePackage = createResponsePackageMock();
         List<SearchResult> list = searchResultFactory.makeResults(responsePackage);
         assertThat("List size fault", list.size(), is(1));
     }
 
+
+
     private ResponsePackage createResponsePackageMock() throws Exception {
+
         ResponsePackage responsePackage = mock(ResponsePackage.class);
         ArrayList<ResponsePartitioned> list = new ArrayList<> (
                 Collections.singletonList(

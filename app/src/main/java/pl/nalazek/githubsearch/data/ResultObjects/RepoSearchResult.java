@@ -18,7 +18,6 @@ package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.StrictMode;
 
 import pl.nalazek.githubsearch.data.ExchangeType;
 
@@ -36,10 +35,16 @@ public class RepoSearchResult extends SearchResult {
      * @param repoURL URL of repositorium
      * @param exchangeType Type of Exchange
      */
-    public RepoSearchResult(String title, String description, String repoURL, ExchangeType exchangeType, int id) {
+    public RepoSearchResult(String title,
+                            String description,
+                            String repoURL,
+                            ExchangeType exchangeType,
+                            int id) {
+
         super(title, description, exchangeType, id);
         this.repoURL = repoURL;
     }
+
 
 
     public RepoSearchResult(String title, String description, String repoURL, int id) {
@@ -48,17 +53,23 @@ public class RepoSearchResult extends SearchResult {
     }
 
 
-    public static final Parcelable.Creator<RepoSearchResult> CREATOR = new Parcelable.Creator<RepoSearchResult>() {
+
+    public static final Parcelable.Creator<RepoSearchResult> CREATOR =
+                                                        new Parcelable.Creator<RepoSearchResult>() {
+
         public RepoSearchResult createFromParcel(Parcel in) {
             String[] parcelData = new String[4];
             in.readStringArray(parcelData);
             return buildFromParcelData(parcelData);
         }
 
+
         public RepoSearchResult[] newArray(int size) {
             return new RepoSearchResult[size];
         }
+
     };
+
 
 
     public String getRepoURL() {
@@ -66,10 +77,12 @@ public class RepoSearchResult extends SearchResult {
     }
 
 
+
     @Override
     public int describeContents() {
         return 0;
     }
+
 
 
     @Override
@@ -82,10 +95,13 @@ public class RepoSearchResult extends SearchResult {
         });
     }
 
+
+
     @Override
     public String getResultType() {
         return TYPE;
     }
+
 
 
     @Override
@@ -98,6 +114,7 @@ public class RepoSearchResult extends SearchResult {
         result *= getId();
         return result;
     }
+
 
 
     @Override

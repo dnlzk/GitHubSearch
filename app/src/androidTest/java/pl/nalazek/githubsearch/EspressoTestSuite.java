@@ -12,7 +12,8 @@ import pl.nalazek.githubsearch.search.SearchActivityWhitespaceRecordTest;
  * @author Daniel Nalazek
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SearchActivityTest.class,
+@Suite.SuiteClasses({
+        SearchActivityTest.class,
         SearchActivityWhitespaceRecordTest.class,
         SearchActivityToUserDetailedActivityUserInputRecordTest.class})
 public class EspressoTestSuite {

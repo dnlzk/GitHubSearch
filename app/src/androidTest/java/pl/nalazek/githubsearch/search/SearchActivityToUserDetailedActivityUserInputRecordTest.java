@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import pl.nalazek.githubsearch.R;
 
@@ -38,7 +36,8 @@ import static org.hamcrest.Matchers.allOf;
 public class SearchActivityToUserDetailedActivityUserInputRecordTest {
 
     @Rule
-    public ActivityTestRule<SearchActivity> mActivityTestRule = new ActivityTestRule<>(SearchActivity.class);
+    public ActivityTestRule<SearchActivity> mActivityTestRule =
+            new ActivityTestRule<>(SearchActivity.class);
 
 
 
@@ -50,7 +49,9 @@ public class SearchActivityToUserDetailedActivityUserInputRecordTest {
 
 
         ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.action_search), withText("Search"), withContentDescription("Search"), isDisplayed()));
+                allOf(withId(R.id.action_search), withText("Search"),
+                        withContentDescription("Search"), isDisplayed()));
+
         actionMenuItemView.perform(click());
 
         ViewInteraction searchAutoComplete = onView(
@@ -79,14 +80,7 @@ public class SearchActivityToUserDetailedActivityUserInputRecordTest {
                                 0),
                         isDisplayed()));
         textView2.check(matches(isDisplayed()));
-
-        ViewInteraction linearLayout2 = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.list_view),
-                                withParent(withId(R.id.include_content_list))),
-                        3),
-                        isDisplayed()));
-        linearLayout2.perform(click());
+        textView2.perform(click());
 
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.textStars), withText("1"),

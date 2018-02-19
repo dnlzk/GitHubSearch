@@ -63,10 +63,12 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     private GitHubRepositoryAPIInterface.QueryTaskCallback callback;
 
 
+
     public QueryTask(OkHttpClient client, GitHubRepositoryAPIInterface.QueryTaskCallback callback) {
         this.callback = callback;
         this.client = client;
     }
+
 
 
     @Override
@@ -75,18 +77,19 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
         Log.d("QueryTask", STATE_INTERRUPTED);
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
+
 
     @Override
     protected ResponsePackage doInBackground(@NonNull Query... queries) {
+
         assignQueries(queries);
         waitToAvoidQueryFlow();
+
         if(isCancelled()) return null;
         return makeResponsePackage();
     }
+
+
 
     @Override
     protected void onPostExecute(ResponsePackage responsePackage) {
@@ -95,10 +98,13 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
 
+
     private void assignQueries(Query[] queries) {
         this.queries.addAll(Arrays.asList(queries));
         this.firstQuery = queries[0];
     }
+
+
 
     private synchronized void waitToAvoidQueryFlow() {
         try {
@@ -107,6 +113,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
             cancel(true);
         }
     }
+
 
 
     @Nullable
@@ -126,6 +133,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
 
+
     private void executeAllQueries() throws CancellationException, UnsuccessfulResponseException {
 
         while(!queries.isEmpty()) {
@@ -136,11 +144,13 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
 
+
     private void executeQuery() throws UnsuccessfulResponseException {
         URL url = getURLFromProcessingQuery();
         Request request = new Request.Builder().url(url).build();
         callRequest(request);
     }
+
 
 
     private void callRequest(Request request) throws UnsuccessfulResponseException {
@@ -161,6 +171,7 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
 
+
     private void checkAndProcessResponse(Response response) throws UnsuccessfulResponseException, InvalidJsonObjectException {
         if(response.isSuccessful())
             addCorrectResponseToResponsePackage(response);
@@ -169,12 +180,15 @@ public class QueryTask extends AsyncTask<Query, Void, ResponsePackage> {
     }
 
 
+
     private void addCorrectResponseToResponsePackage(Response response) throws InvalidJsonObjectException {
         responsePackage.addResponse(response, STATE_SUCCESS, processingQuery.getExchangeType());
     }
 
 
+
     private URL getURLFromProcessingQuery() throws UnsuccessfulResponseException {
+
         URL url = processingQuery.getURL();
 
         if(url != null) return url;

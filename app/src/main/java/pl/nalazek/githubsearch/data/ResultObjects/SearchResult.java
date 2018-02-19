@@ -23,7 +23,6 @@ import pl.nalazek.githubsearch.data.ExchangeType;
 /**
  * This data class represents a parent for parsed search results.
  */
-
 public abstract class SearchResult extends Result implements Parcelable {
 
     public final static String TYPE = "EmptySearchResult";
@@ -31,15 +30,21 @@ public abstract class SearchResult extends Result implements Parcelable {
     private String title;
     private String description;
 
+
+
     protected SearchResult(String title, String description, ExchangeType exchangeType, int id) {
         super(exchangeType, id);
         this.title = title;
         this.description = description;
     }
 
+
+
     public String getTitle() {
         return title;
     }
+
+
 
     public String getDescription() {
         return description;

@@ -84,6 +84,7 @@ public class ResponsePackage
     }
 
 
+
     /**
      * Adds a new response.
      * @throws NullPointerException when parameter is <code>null</code>
@@ -101,11 +102,11 @@ public class ResponsePackage
 
 
     public ResponsePackage addResponses(List<ResponsePartitioned> responsesPartitioned) {
-
         responses.addAll(responsesPartitioned);
         updateExchangeTypeMap(responsesPartitioned);
         return this;
     }
+
 
 
     public ResponsePackage addErrorMessageAndQuery(String message, Query unsuccessfulQuery) {
@@ -114,9 +115,11 @@ public class ResponsePackage
     }
 
 
+
     public ArrayList<ResponsePartitioned> getResponses() {
         return responses;
     }
+
 
 
     public ArrayMap<String, Query> getErrorMessagesMap() {
@@ -124,8 +127,10 @@ public class ResponsePackage
     }
 
 
+
     @NonNull
     public String getQueryType() { return queryType; }
+
 
 
     /**
@@ -137,6 +142,7 @@ public class ResponsePackage
             return responses.get(responses.size()-1).getExchangeType();
         else return null;
     }
+
 
 
     /**
@@ -181,6 +187,7 @@ public class ResponsePackage
     }
 
 
+
     /**
      * @return <code>true</code> when package has no responses and no error messages,
      * <code>false</code> otherwise
@@ -190,9 +197,11 @@ public class ResponsePackage
     }
 
 
+
     public boolean hasNoResponses() {
         return responses.isEmpty();
     }
+
 
 
     public boolean hasNoErrorMessages() {
@@ -200,10 +209,12 @@ public class ResponsePackage
     }
 
 
+
     private void updateExchangeTypeMap(List<ResponsePartitioned> responsesPartitioned) {
         for(ResponsePartitioned response : responsesPartitioned)
             updateExchangeTypeMap(response);
     }
+
 
 
     private void updateExchangeTypeMap(ResponsePartitioned responsePartitioned) {

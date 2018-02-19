@@ -35,7 +35,13 @@ public class GitHubRepositorySearchOptions {
     private final boolean searchInHistory;
 
 
-    private GitHubRepositorySearchOptions(SearchQuery.Order order, SearchQuery.Sort sorting, boolean scopeUsers, boolean scopeRepos, short resultsPerPage, boolean searchInHistory) {
+    private GitHubRepositorySearchOptions(SearchQuery.Order order,
+                                          SearchQuery.Sort sorting,
+                                          boolean scopeUsers,
+                                          boolean scopeRepos,
+                                          short resultsPerPage,
+                                          boolean searchInHistory) {
+
         this.order = order;
         this.sorting = sorting;
         this.scopeUsers = scopeUsers;
@@ -45,9 +51,11 @@ public class GitHubRepositorySearchOptions {
     }
 
 
+
     public SearchQuery.Order getOrder() {
         return order;
     }
+
 
 
     public SearchQuery.Sort getSorting() {
@@ -55,9 +63,11 @@ public class GitHubRepositorySearchOptions {
     }
 
 
+
     public boolean isScopeUsers() {
         return scopeUsers;
     }
+
 
 
     public boolean isScopeRepos() {
@@ -65,9 +75,11 @@ public class GitHubRepositorySearchOptions {
     }
 
 
+
     public short getResultsPerPage() {
         return resultsPerPage;
     }
+
 
 
     public boolean isForcedSearchInHistory() {
@@ -75,9 +87,11 @@ public class GitHubRepositorySearchOptions {
     }
 
 
+
     public static GitHubRepositorySearchOptionsBuilder build() {
         return new GitHubRepositorySearchOptionsBuilder();
     }
+
 
 
     /**
@@ -98,10 +112,12 @@ public class GitHubRepositorySearchOptions {
         private short resultsPerPage = RESULTS_PER_PAGE_DEFAULT;
 
 
+
         public GitHubRepositorySearchOptionsBuilder setOrdering(SearchQuery.Order order) {
             this.order = order;
             return this;
         }
+
 
 
         public GitHubRepositorySearchOptionsBuilder setSorting(SearchQuery.Sort sorting) {
@@ -110,11 +126,13 @@ public class GitHubRepositorySearchOptions {
         }
 
 
+
         public GitHubRepositorySearchOptionsBuilder setScope(boolean scopeUsers, boolean scopeRepos) {
             this.scopeUsers = scopeUsers;
             this.scopeRepos = scopeRepos;
             return this;
         }
+
 
 
         /**
@@ -130,6 +148,7 @@ public class GitHubRepositorySearchOptions {
             this.resultsPerPage = resultsPerPage;
             return this;
         }
+
 
 
         public GitHubRepositorySearchOptions forceSearchInHistory(boolean forceSearchInHistory) {

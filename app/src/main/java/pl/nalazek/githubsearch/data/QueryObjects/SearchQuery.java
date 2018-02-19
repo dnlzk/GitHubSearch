@@ -46,6 +46,7 @@ public class SearchQuery extends Query {
     private Sort sort = Sort.BEST;
     private Order order = Order.DESCENDING;
 
+
     /**
      * Default constructor. Creates a query with parameters. If not set, default is sorting by best match and descending order.
      * @param keyword The search keyword. It should contain at least one alphanumeric character.
@@ -62,6 +63,8 @@ public class SearchQuery extends Query {
         buildURL();
     }
 
+
+
     /**
      * Sets the sorting parameter. By default is set {@link Sort#BEST}
      * @param sort Sorting parameter {@link Sort}.
@@ -71,6 +74,8 @@ public class SearchQuery extends Query {
         buildURL();
     }
 
+
+
     /**
      * Sets the ordering parameter. By default ascending order is set.
      * @param order ordering type from enum Order
@@ -79,6 +84,8 @@ public class SearchQuery extends Query {
         this.order = order;
         buildURL();
     }
+
+
 
     /**
      * Sets the amount of results per page
@@ -93,18 +100,25 @@ public class SearchQuery extends Query {
 
     String getKeyword() { return keyword; }
 
+
     @Override
     public String getQueryType() {
         return TYPE;
     }
 
+
+
     private boolean areOnlyWhitespaces(String keyword) {
         return !keyword.matches(".*\\S.*");
     }
 
+
+
     private void buildURL() {
         url = new URLBuilder().build();
     }
+
+
 
     private class URLBuilder {
 
@@ -128,17 +142,25 @@ public class SearchQuery extends Query {
             return constructURL();
         }
 
+
+
         private boolean isPerPageValueOutOfRange() {
             return !(perPage > 0 && perPage <=100);
         }
+
+
 
         private void setPerPageValueToDefault() {
             perPage = DEFAULT_PER_PAGE;
         }
 
+
+
         private void setPerPageURLString() {
             pageFieldString = "&per_page=" + Integer.toString(perPage);
         }
+
+
 
         private void setScopeURLStringAndExchangeType() {
 
@@ -153,6 +175,8 @@ public class SearchQuery extends Query {
                     break;
             }
         }
+
+
 
         private void setSortURLString() {
             switch(sort) {
@@ -170,6 +194,8 @@ public class SearchQuery extends Query {
             }
         }
 
+
+
         private void setOrderURLString() {
 
             switch(order) {
@@ -180,6 +206,8 @@ public class SearchQuery extends Query {
                     orderFieldString = "";
             }
         }
+
+
 
         @Nullable
         private URL constructURL() {

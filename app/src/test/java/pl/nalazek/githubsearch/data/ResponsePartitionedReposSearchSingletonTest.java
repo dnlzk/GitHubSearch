@@ -41,9 +41,11 @@ public class ResponsePartitionedReposSearchSingletonTest {
     @Before
     public void before() throws Exception {
         when(headers.get("Link")).thenReturn(null);
-        when(body.string()).thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_SEARCHREPOS, Charsets.UTF_16));
+        when(body.string()).thenReturn(TextToString
+                .read(JSON_FILE_PATH + JSON_FILE_SEARCHREPOS, Charsets.UTF_16));
         response = new ResponsePartitioned(headers, body, QueryTask.STATE_SUCCESS, REPOS_SEARCH);
     }
+
 
 
     @Test
@@ -101,10 +103,12 @@ public class ResponsePartitionedReposSearchSingletonTest {
     }
 
 
+
     @Test
     public void whenGetInstanceThenUserJSONRepoResult() throws Exception {
         assertTrue("Class type fault", response.getJsonObject() instanceof JsonRepoSearchResult);
     }
+
 
 
     @Test(expected = InvalidJsonObjectException.class)

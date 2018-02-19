@@ -30,9 +30,13 @@ public class LayoutWithListBehavior extends CoordinatorLayout.Behavior<RelativeL
 
     private static Integer initialMenuPosition = 0;
 
+
+
     public LayoutWithListBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, RelativeLayout child, View dependency) {
@@ -40,8 +44,11 @@ public class LayoutWithListBehavior extends CoordinatorLayout.Behavior<RelativeL
         return dependency instanceof AppBarLayout;
     }
 
+
+
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, RelativeLayout child, View dependency) {
+
         if(dependency instanceof AppBarLayout) {
             AppBarLayout appBarLayout = (AppBarLayout) dependency;
 

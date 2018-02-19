@@ -1,7 +1,5 @@
 package pl.nalazek.githubsearch.data;
 
-import android.support.annotation.NonNull;
-
 import com.google.common.base.Charsets;
 
 import org.junit.Before;
@@ -11,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.InvalidObjectException;
-import java.nio.charset.Charset;
 import java.util.Collections;
 
 import okhttp3.Headers;
@@ -51,6 +48,7 @@ public class ResponsePackageTest {
     private Headers headers;
     @Mock
     private Query query;
+
 
 
     @Before
@@ -192,16 +190,26 @@ public class ResponsePackageTest {
 
 
     private void setupOkResponse() throws Exception {
-        when(okResponse.body()).thenReturn(body);
-        when(okResponse.headers()).thenReturn(headers);
-        when(body.string()).thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_STARRED, Charsets.UTF_16));
-        when(headers.get("Link")).thenReturn(null);
+
+        when(okResponse.body())
+                .thenReturn(body);
+        when(okResponse.headers())
+                .thenReturn(headers);
+        when(body.string())
+                .thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_STARRED, Charsets.UTF_16));
+        when(headers.get("Link"))
+                .thenReturn(null);
     }
 
+
+
     private void setupNotParsableOkResponse() throws Exception {
-        when(okResponse.body()).thenReturn(body);
-        when(okResponse.headers()).thenReturn(headers);
-        when(body.string()).thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_STARRED));
+        when(okResponse.body())
+                .thenReturn(body);
+        when(okResponse.headers())
+                .thenReturn(headers);
+        when(body.string())
+                .thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_STARRED));
     }
 
 

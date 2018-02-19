@@ -1,8 +1,5 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
-
-import android.provider.ContactsContract;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -172,6 +169,7 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     @Test
     public void givenResponsePackageWithStarsAndAvatarAndUserResponseWhenMakeResultsThenResultSizeOne() throws Exception {
 
@@ -184,6 +182,7 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     @Test
     public void givenResponsePackageWithStarsAndAvatarAndUserResponseWhenMakeResultsThenTypeUserDetailedResult() throws Exception {
 
@@ -194,6 +193,7 @@ public class DetailedResultFactoryTest {
         List<DetailedResult> results = detailedResultFactory.makeResults(responsePackage);
         assertTrue("Result type fault", results.get(0) instanceof UserDetailedResult);
     }
+
 
 
     @Test
@@ -210,6 +210,7 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     @Test
     public void givenResponsePackageWithStarsIncompleteOnlyLastPageAndAvatarAndUserResponseWhenMakeResultsThenException() throws Exception {
 
@@ -222,6 +223,7 @@ public class DetailedResultFactoryTest {
 
         detailedResultFactory.makeResults(responsePackage);
     }
+
 
 
     @Test
@@ -245,7 +247,6 @@ public class DetailedResultFactoryTest {
 
 
 
-
     @Test
     public void givenResponsePackageWithStarsAndAvatarAndUserResponseWhenMakeResultsThenStarsCount() throws Exception {
 
@@ -256,6 +257,7 @@ public class DetailedResultFactoryTest {
         UserDetailedResult result = (UserDetailedResult) detailedResultFactory.makeResults(responsePackage).get(0);
         assertThat("Result stars count fault", result.getStars(), is(130));
     }
+
 
 
     @Test
@@ -270,6 +272,7 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     @Test
     public void givenResponsePackageWithStarsAndAvatarAndUserResponseWhenMakeResultsThenFollowersCount() throws Exception {
 
@@ -280,6 +283,7 @@ public class DetailedResultFactoryTest {
         UserDetailedResult result = (UserDetailedResult) detailedResultFactory.makeResults(responsePackage).get(0);
         assertThat("Result followers fault", result.getFollowers(), is(Integer.valueOf(followers)));
     }
+
 
 
     @Test
@@ -294,6 +298,7 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     @Test
     public void givenResponsePackageWithStarsAndAvatarAndUserResponseWhenMakeResultsThenAvatarNull() throws Exception {
 
@@ -306,6 +311,7 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     @Test
     public void givenResponsePackageWithStarsAndAvatarAndUserResponseWhenMakeResultThenResultType() throws Exception {
 
@@ -316,6 +322,7 @@ public class DetailedResultFactoryTest {
         UserDetailedResult result = (UserDetailedResult) detailedResultFactory.makeResults(responsePackage).get(0);
         assertThat("Result type fault", result.getResultType(), is(UserDetailedResult.TYPE));
     }
+
 
 
     @Test
@@ -368,7 +375,12 @@ public class DetailedResultFactoryTest {
 
     @Test(expected = InvalidJsonObjectException.class)
     public void givenResponsePartitionedSearchWhenMakeResultsThenException() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, bodyUser, QueryTask.STATE_SUCCESS, ExchangeType.USER_SEARCH);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headers,
+                bodyUser,
+                QueryTask.STATE_SUCCESS,
+                ExchangeType.USER_SEARCH);
         detailedResultFactory.makeResults(responsePartitioned);
     }
 
@@ -376,19 +388,29 @@ public class DetailedResultFactoryTest {
 
     @Test
     public void givenResponsePartionedAvatarWhenMakeResultsThenResultAndTypeEmpty() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_AVATAR);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headersStarsLastPage,
+                bodyStarsLastPage,
+                QueryTask.STATE_SUCCESS,
+                ExchangeType.USER_DETAILED_AVATAR);
         DetailedResult[] result = detailedResultFactory.makeResults(responsePartitioned);
         assertThat("Avatar result error", result[0].getResultType(), is(DetailedResult.TYPE));
     }
 
 
+
     @Test
     public void givenResponsePartionedStarsWhenMakeResultsThenEmptyArray() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headersStarsLastPage,
+                bodyStarsLastPage,
+                QueryTask.STATE_SUCCESS,
+                ExchangeType.USER_DETAILED_STARS);
         DetailedResult[] result = detailedResultFactory.makeResults(responsePartitioned);
         assertThat("Avatar result error", result.length, is(10));
     }
-
 
 
 
@@ -427,13 +449,20 @@ public class DetailedResultFactoryTest {
                 "  \"updated_at\": \"2018-01-01T15:12:27Z\"\n" +
                 "}");
 
-        when(headersStarsFirstPage.get("Link")).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_FIRST_LINKHEADER, Charsets.UTF_16));
-        when(bodyStarsFirstPage.string()).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_FIRST, Charsets.UTF_16));
-        when(headersStarsLastPage.get("Link")).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST_LINKHEADER, Charsets.UTF_16));
-        when(bodyStarsLastPage.string()).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST, Charsets.UTF_16));
-        when(headersStarsOneButLastPage.get("Link")).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_ONEBUTLAST_LINKHEADER, Charsets.UTF_16));
-        when(headersStarsSingleton.get("Link")).thenReturn(null);
-        when(bodyStarsSingleton.string()).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_SINGLETON, Charsets.UTF_16));
+        when(headersStarsFirstPage.get("Link"))
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_FIRST_LINKHEADER, Charsets.UTF_16));
+        when(bodyStarsFirstPage.string())
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_FIRST, Charsets.UTF_16));
+        when(headersStarsLastPage.get("Link"))
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST_LINKHEADER, Charsets.UTF_16));
+        when(bodyStarsLastPage.string())
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST, Charsets.UTF_16));
+        when(headersStarsOneButLastPage.get("Link"))
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_ONEBUTLAST_LINKHEADER, Charsets.UTF_16));
+        when(headersStarsSingleton.get("Link"))
+                .thenReturn(null);
+        when(bodyStarsSingleton.string())
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_SINGLETON, Charsets.UTF_16));
 
     }
 
@@ -446,10 +475,19 @@ public class DetailedResultFactoryTest {
     }
 
 
+
     private void addToResponsePackageFirstPageLastPageStarsResponses() throws Exception {
         responsePackage.addResponses(Arrays.asList(
-                new ResponsePartitioned(headersStarsFirstPage, bodyStarsFirstPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS),
-                new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
+                new ResponsePartitioned(
+                        headersStarsFirstPage,
+                        bodyStarsFirstPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS),
+                new ResponsePartitioned(
+                        headersStarsLastPage,
+                        bodyStarsLastPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS)
                 )
         );
     }
@@ -458,8 +496,16 @@ public class DetailedResultFactoryTest {
 
     private void addToResponsePackageFirstPageNotLastPageStarsResponses() throws Exception {
         responsePackage.addResponses(Arrays.asList(
-                new ResponsePartitioned(headersStarsFirstPage, bodyStarsFirstPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS),
-                new ResponsePartitioned(headersStarsOneButLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
+                new ResponsePartitioned(
+                        headersStarsFirstPage,
+                        bodyStarsFirstPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS),
+                new ResponsePartitioned(
+                        headersStarsOneButLastPage,
+                        bodyStarsLastPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS)
                 )
         );
     }
@@ -467,8 +513,13 @@ public class DetailedResultFactoryTest {
 
 
     private void addToResponsePackageSingletonPageStarsResponse() throws Exception {
+
         responsePackage.addResponses(Collections.singletonList(
-                new ResponsePartitioned(headersStarsSingleton, bodyStarsSingleton, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
+                new ResponsePartitioned(
+                        headersStarsSingleton,
+                        bodyStarsSingleton,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS)
                 )
         );
     }
@@ -476,8 +527,13 @@ public class DetailedResultFactoryTest {
 
 
     private void addToResponsePackageAvatarResponse() throws Exception {
+
         responsePackage.addResponses(Collections.singletonList(
-                new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_AVATAR)
+                new ResponsePartitioned(
+                        headersStarsLastPage,
+                        bodyStarsLastPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_AVATAR)
                 )
         );
     }
@@ -485,8 +541,13 @@ public class DetailedResultFactoryTest {
 
 
     private void addToResponsePackageUserDetailedResponse() throws Exception {
+
         responsePackage.addResponses(Collections.singletonList(
-                new ResponsePartitioned(headers, bodyUser, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED)
+                new ResponsePartitioned(
+                        headers,
+                        bodyUser,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED)
                 )
         );
     }
@@ -494,8 +555,13 @@ public class DetailedResultFactoryTest {
 
 
     private void addToResponsePackageLastPageStarsResponse() throws Exception {
+
         responsePackage.addResponses(Collections.singletonList(
-                new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
+                new ResponsePartitioned(
+                        headersStarsLastPage,
+                        bodyStarsLastPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS)
                 )
         );
     }
@@ -503,8 +569,13 @@ public class DetailedResultFactoryTest {
 
 
     private void addToResponsePackageFirstPageStarsResponse() throws Exception {
+
         responsePackage.addResponses(Collections.singletonList(
-                new ResponsePartitioned(headersStarsFirstPage, bodyStarsFirstPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
+                new ResponsePartitioned(
+                        headersStarsFirstPage,
+                        bodyStarsFirstPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS)
                 )
         );
     }
@@ -512,7 +583,12 @@ public class DetailedResultFactoryTest {
 
 
     private DetailedResult[] givenResponsePartionedUserDetailedWhenMakeResults() throws Exception {
-        ResponsePartitioned responsePartitioned = new ResponsePartitioned(headers, bodyUser, QueryTask.STATE_SUCCESS ,ExchangeType.USER_DETAILED);
+
+        ResponsePartitioned responsePartitioned = new ResponsePartitioned(
+                headers,
+                bodyUser,
+                QueryTask.STATE_SUCCESS,
+                ExchangeType.USER_DETAILED);
         return detailedResultFactory.makeResults(responsePartitioned);
     }
 

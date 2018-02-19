@@ -1,14 +1,11 @@
 package pl.nalazek.githubsearch;
 
 import android.os.Parcel;
-import android.support.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import pl.nalazek.githubsearch.data.ResultObjects.RepoSearchResult;
 
@@ -26,6 +23,7 @@ public class RepoSearchResultTest {
     private String description = "evaluate description";
     private String exampleRepoUrl = "http://u.pl";
     private Parcel parcel;
+
 
     @Before
     public void beforeConstructor() {

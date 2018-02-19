@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 @RunWith(value = Parameterized.class)
 public class QueryBuilderTest {
 
+
     @Parameterized.Parameters
     public static Iterable<Object> testData() {
         return Arrays.asList(new Object[]{
@@ -26,11 +27,15 @@ public class QueryBuilderTest {
         });
     }
 
+
     @Parameterized.Parameter(value = 0)
     public static String keyword;
 
+
     QueryBuilder queryBuilder;
     URL[] examplaryURLs;
+
+
 
     @Before
     public void beforeConstructor() throws Exception {
@@ -38,11 +43,15 @@ public class QueryBuilderTest {
         examplaryURLs = new URL[]{new URL("http://a.com"), new URL("http://a.com"), new URL("http://a.com")};
     }
 
+
+
     @Test
     public void whenBuildingQueriesWithKeywordOnlyThenArraySizeIsTwo() throws Exception {
         Query[] queries = queryBuilder.buildSearchQuery().build(keyword);
         assertThat("Query[] size fault", queries.length, is(2));
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithKeywordOnlyThenArrayContainsSearchQueryTypeObjects() throws Exception {
@@ -52,6 +61,8 @@ public class QueryBuilderTest {
         }
     }
 
+
+
     @Test
     public void whenBuildingQueriesWithKeywordOnlyThenQueriesURLsContainKeyword() throws Exception {
         Query[] queries = queryBuilder.buildSearchQuery().build(keyword);
@@ -59,6 +70,8 @@ public class QueryBuilderTest {
             assertThat("Query keyword url fault", query.getURL().toString(), containsString("q=" + keyword));
         }
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithSortingThenQueriesURLsContainsAdditionallySortingString() throws Exception {
@@ -68,6 +81,8 @@ public class QueryBuilderTest {
         }
     }
 
+
+
     @Test
     public void whenBuildingQueriesWithOrderingThenQueriesURLsContainsAdditionallyOrderingString() throws Exception {
         Query[] queries = queryBuilder.buildSearchQuery().setOrdering(SearchQuery.Order.ASCENDING).build(keyword);
@@ -75,6 +90,8 @@ public class QueryBuilderTest {
             assertThat("Query keyword url fault", query.getURL().toString(), containsString("&order=asc"));
         }
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithPaginationThenQueriesURLsContainsAdditionallyPaginationString() throws Exception {
@@ -84,11 +101,15 @@ public class QueryBuilderTest {
         }
     }
 
+
+
     @Test
     public void whenBuildingQueriesWithScopeUsersAndReposThenArraySizeIsTwo() throws Exception {
         Query[] queries = queryBuilder.buildSearchQuery().setScope(true, true).build(keyword);
         assertThat("Query[] size fault", queries.length, is(2));
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithScopeUsersThenArraySizeIsOne() throws Exception {
@@ -96,17 +117,23 @@ public class QueryBuilderTest {
         assertThat("Query[] size fault", queries.length, is(1));
     }
 
+
+
     @Test
     public void whenBuildingQueriesWithScopeReposThenArraySizeIsOne() throws Exception {
         Query[] queries = queryBuilder.buildSearchQuery().setScope(false, true).build(keyword);
         assertThat("Query[] size fault", queries.length, is(1));
     }
 
+
+
     @Test
     public void whenBuildingQueriesWithScopeUsersAndRepos() throws Exception {
         Query[] queries = queryBuilder.buildSearchQuery().setResultsPerPage(45).build(keyword);
         assertThat("Query[] size fault", queries.length, is(2));
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithThreeURLThenArraySizeIsThree() throws Exception {
@@ -115,6 +142,8 @@ public class QueryBuilderTest {
                 examplaryURLs[2]);
         assertThat("Query[] size fault", queries.length, is(3));
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithThreeURLThenArrayContainsUserDetailedQueryTypeObjects() throws Exception {
@@ -125,6 +154,8 @@ public class QueryBuilderTest {
             assertThat("Query class fault", query, is(instanceOf(UserDetailedQuery.class)));
         }
     }
+
+
 
     @Test
     public void whenBuildingQueriesWithOneURLAndMultipleExchangeTypesThenQueryTypeIsUserDetailedQuery() throws Exception {

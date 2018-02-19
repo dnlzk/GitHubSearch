@@ -51,8 +51,6 @@ public class SearchPresenter implements SearchContract.UserActionListener {
 
 
 
-
-
     public SearchPresenter(GitHubRepository gitHubRepository, SearchContract.Showable showable) {
         this.gitHubRepository = gitHubRepository;
         this.showable = showable;
@@ -149,7 +147,6 @@ public class SearchPresenter implements SearchContract.UserActionListener {
 
 
                     private List<? extends Result> getSortedById(List<? extends Result> results) {
-
                         Collections.sort(results, new Comparator<Result>() {
                             public int compare(Result r1, Result r2) {
                                 return Integer.compare(r1.getId() , r2.getId());

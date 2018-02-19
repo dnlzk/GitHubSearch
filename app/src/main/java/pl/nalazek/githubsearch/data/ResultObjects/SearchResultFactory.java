@@ -41,6 +41,7 @@ public class SearchResultFactory implements ResultFactory {
     }
 
 
+
     @Override
     public SearchResult[] makeResults(ResponsePartitioned responsePartitioned) throws InvalidJsonObjectException {
 
@@ -50,8 +51,11 @@ public class SearchResultFactory implements ResultFactory {
         else if(jsonObject == null)
             throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: null");
         else
-            throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: " + jsonObject.getClass().getName() + ". Try another using another ResultFactory");
+            throw new InvalidJsonObjectException("Expected Itemable JsonObject! Got: "
+                    + jsonObject.getClass().getName()
+                    + ". Try another using another ResultFactory");
     }
+
 
 
     @Override
@@ -90,6 +94,7 @@ public class SearchResultFactory implements ResultFactory {
     }
 
 
+
     private SearchResult createResult(JsonItem item) throws InvalidJsonObjectException {
 
             if (item instanceof JsonRepoSearchResult.Item) {
@@ -110,8 +115,17 @@ public class SearchResultFactory implements ResultFactory {
 
 
     private UserSearchResult createUserSearchResult(JsonUserSearchResult.Item item) {
-        String starredURL = item.getStarredUrl().contains("{") ? (item.getStarredUrl().split("\\{"))[0] : item.getStarredUrl();
-        return new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), starredURL, item.getAvatarUrl(), item.getId());
+
+        String starredURL = item.getStarredUrl().contains("{") ?
+                (item.getStarredUrl().split("\\{"))[0] : item.getStarredUrl();
+
+        return new UserSearchResult(
+                item.getLogin(),
+                item.getHtmlUrl(),
+                item.getUrl(),
+                starredURL,
+                item.getAvatarUrl(),
+                item.getId());
     }
 }
 

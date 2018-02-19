@@ -37,7 +37,8 @@ public class ResultCreator implements ResultFactory {
 
     /**
      * Creates results depending on passed {@link ResponsePartitioned}.
-     * @return {@link SearchResult} or {@link DetailedResult} arrays. If passed a response with an unrecognized exchange type,
+     * @return {@link SearchResult} or {@link DetailedResult} arrays.
+     * If passed a response with an unrecognized exchange type,
      * an empty array will be returned.
      */
     @Override

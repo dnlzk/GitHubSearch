@@ -38,32 +38,44 @@ public class SearchQueryTest {
     public SearchQuery searchQuery;
     public ExchangeType type;
 
+
+
     @Before
     public void beforeConstructor() throws WhitespaceKeywordException {
         searchQuery = new SearchQuery(keyword, scope);
         setExchangeType(scope);
     }
 
+
+
     @Test
     public void whenGetQueryTypeMethodThenTypeString() {
         assertEquals("Type fault",SearchQuery.TYPE,searchQuery.getQueryType());
     }
+
+
 
     @Test
     public void whenGetQueryKeywordThenKeywordVariable() {
         assertEquals("Keyword fault",keyword,searchQuery.getKeyword());
     }
 
+
+
     @Test
     public void whenGetExchangeTypeThenTypeVariable() {
         assertEquals("Exchange Type fault",type,searchQuery.getExchangeType());
     }
+
+
 
     @Test
     public void whenGetURLThenURL() {
         URL url = createDefaultURLForCompare();
         assertEquals("URL fault",url,searchQuery.getURL());
     }
+
+
 
     @Test
     public void whenSetSortingThenURL() {
@@ -77,6 +89,8 @@ public class SearchQueryTest {
         }
     }
 
+
+
     @Test
     public void whenSetOrderThenURL() {
 
@@ -89,6 +103,8 @@ public class SearchQueryTest {
         }
     }
 
+
+
     @Test
     public void whenSetPaginationInRangeThenURL() {
         int[] inRangeValues = {1,20,64,22};
@@ -98,6 +114,8 @@ public class SearchQueryTest {
                     searchQuery.getURL().toString());
         }
     }
+
+
 
     @Test
     public void whenSetPaginationNotInRangeThenDefaultURL() {
@@ -109,6 +127,8 @@ public class SearchQueryTest {
                     searchQuery.getURL());
         }
     }
+
+
 
     @Test
     public void whenSetPaginationAndOrderAndSortingThenURL() {
@@ -131,6 +151,8 @@ public class SearchQueryTest {
             }
     }
 
+
+
     private URL createDefaultURLForCompare() {
 
         String scopePath = getScopePathAndSetExchangeType(scope);
@@ -142,6 +164,8 @@ public class SearchQueryTest {
         }
     }
 
+
+
     private URL createWitoutDefaultPaginationURLForCompare() {
 
         String scopePath = getScopePathAndSetExchangeType(scope);
@@ -152,6 +176,8 @@ public class SearchQueryTest {
             return null;
         }
     }
+
+
 
     private void setExchangeType(SearchQuery.SearchScope scope) {
 
@@ -165,6 +191,8 @@ public class SearchQueryTest {
             default: type = null; break;
         }
     }
+
+
 
     private String getScopePathAndSetExchangeType(SearchQuery.SearchScope scope) {
 
@@ -181,6 +209,8 @@ public class SearchQueryTest {
         return scopePath;
     }
 
+
+
     private String getSortingString(SearchQuery.Sort sorting) {
 
         switch(sorting) {
@@ -196,6 +226,8 @@ public class SearchQueryTest {
         }
     }
 
+
+
     private String getOrderString(SearchQuery.Order ordering) {
 
         switch (ordering) {
@@ -206,6 +238,8 @@ public class SearchQueryTest {
                 return "";
         }
     }
+
+
 
     private String createPaginationStringAndSetPerPage(int perPage) {
 

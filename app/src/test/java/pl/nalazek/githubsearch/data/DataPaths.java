@@ -3,7 +3,6 @@ package pl.nalazek.githubsearch.data;
 /**
  * @author Daniel Nalazek
  */
-
 public interface DataPaths {
 
     String JSON_FILE_PATH = "src/test/resources/testInputs/";

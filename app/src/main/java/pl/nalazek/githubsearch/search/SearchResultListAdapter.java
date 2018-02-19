@@ -97,7 +97,6 @@ public class SearchResultListAdapter extends ArrayAdapter<Result> {
 
 
     private void setVariables(View convertView) {
-
         name = (TextView) convertView.findViewById(R.id.name);
         description = (TextView) convertView.findViewById(R.id.description);
         type = (TextView) convertView.findViewById(R.id.type);

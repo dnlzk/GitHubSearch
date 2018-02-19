@@ -39,10 +39,13 @@ public class ResponsePartitionedStarredResultSingletonTest {
 
     @Before
     public void before() throws Exception {
-        when(headers.get("Link")).thenReturn(null);
-        when(body.string()).thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_STARRED, Charsets.UTF_16));
+        when(headers.get("Link"))
+                .thenReturn(null);
+        when(body.string())
+                .thenReturn(TextToString.read(JSON_FILE_PATH + JSON_FILE_STARRED, Charsets.UTF_16));
         response = new ResponsePartitioned(headers, body, QueryTask.STATE_SUCCESS, USER_DETAILED_STARS);
     }
+
 
 
     @Test
@@ -98,6 +101,7 @@ public class ResponsePartitionedStarredResultSingletonTest {
     public void whenGetNextPageURLThenNull() throws Exception {
         assertTrue("Next page url fault", response.getNextPageURL() == null);
     }
+
 
 
     @Test

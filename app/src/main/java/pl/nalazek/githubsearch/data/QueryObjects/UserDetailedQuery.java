@@ -26,12 +26,15 @@ import pl.nalazek.githubsearch.data.ExchangeType;
 
 public class UserDetailedQuery extends Query {
 
+
     public static final String TYPE = "Detailed";
+
 
     public UserDetailedQuery(URL url, ExchangeType exchangeType) {
         this.url = url;
         this.type = exchangeType;
     }
+
 
     @Override
     public String getQueryType() {

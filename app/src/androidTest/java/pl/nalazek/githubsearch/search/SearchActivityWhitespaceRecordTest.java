@@ -3,7 +3,6 @@ package pl.nalazek.githubsearch.search;
 
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import pl.nalazek.githubsearch.R;
 
@@ -35,14 +33,18 @@ import static org.hamcrest.Matchers.allOf;
 public class SearchActivityWhitespaceRecordTest {
 
     @Rule
-    public ActivityTestRule<SearchActivity> mActivityTestRule = new ActivityTestRule<>(SearchActivity.class);
+    public ActivityTestRule<SearchActivity> mActivityTestRule =
+            new ActivityTestRule<>(SearchActivity.class);
 
 
 
     @Test
     public void searchActivityWhitespaceRecordTest() {
         ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.action_search), withText("Search"), withContentDescription("Search"), isDisplayed()));
+                allOf(withId(R.id.action_search),
+                        withText("Search"),
+                        withContentDescription("Search"),
+                        isDisplayed()));
         actionMenuItemView.perform(click());
 
         ViewInteraction searchAutoComplete = onView(

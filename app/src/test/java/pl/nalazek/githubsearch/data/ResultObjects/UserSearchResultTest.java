@@ -21,51 +21,71 @@ public class UserSearchResultTest {
     String exampleAvatarUrl = "http://a.pl";
     int id = 34;
 
+
+
     @Before
     public void beforeConstructor() {
         userSearchResult = new UserSearchResult(name, description, exampleUserUrl, exampleStarredUrl,
                 exampleAvatarUrl, id);
     }
 
+
+
     @Test
     public void whenGetTitleThenName() throws Exception {
         assertThat("Title fault", userSearchResult.getTitle(), is(name));
     }
+
+
 
     @Test
     public void whenGetDescriptionThenDescription() throws Exception {
         assertThat("Description fault", userSearchResult.getDescription(), is(description));
     }
 
+
+
     @Test
     public void whenGetExchangeThenUserSearch() throws Exception {
         assertThat("Exchange type fault", userSearchResult.getExchangeType(), is(ExchangeType.USER_SEARCH));
     }
+
+
 
     @Test
     public void whenGetTypeThenUserSearchType() throws Exception {
         assertThat("Type fault", userSearchResult.getResultType(), is(UserSearchResult.TYPE));
     }
 
+
+
     @Test
     public void whenGetUserURLThenUserUrl() throws Exception {
         assertThat("Type fault", userSearchResult.getUserURL(), is(exampleUserUrl));
     }
+
+
 
     @Test
     public void whenGetAvatarURLThenAvatarUrl() throws Exception {
         assertThat("Type fault", userSearchResult.getAvatarURL(), is(exampleAvatarUrl));
     }
 
+
+
     @Test
     public void whenGetIdThenId() throws Exception {
         assertThat("Type fault", userSearchResult.getId(), is(id));
     }
 
+
+
     @Test
     public void whenGetStarredURLThenStarredUrl() throws Exception {
         assertThat("Type fault", userSearchResult.getStarredURL(), is(exampleStarredUrl));
     }
+
+
 
     @Test
     public void givenNewUserSearchResultSameValuesWhenEqualsThenEqual() throws Exception {
@@ -74,6 +94,8 @@ public class UserSearchResultTest {
         assertTrue(userSearchResult.equals(newUserSearchResult));
     }
 
+
+
     @Test
     public void givenNewUserSearchResultSameValuesWhenHashCodeEqualityCheckThenEqual() throws Exception {
         UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl,
@@ -81,12 +103,16 @@ public class UserSearchResultTest {
         assertTrue(userSearchResult.hashCode() == newUserSearchResult.hashCode());
     }
 
+
+
     @Test
     public void givenNewUserSearchResultDifferentValuesWhenEqualsThenNotEqual() throws Exception {
         UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl,
                 exampleStarredUrl, "other", id);
         assertFalse(userSearchResult.equals(newUserSearchResult));
     }
+
+
 
     @Test
     public void givenNewUserSearchResultDifferentValuesWhenHashCodeEqualityCheckThenNotEqual() throws Exception {

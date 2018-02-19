@@ -26,5 +26,6 @@ package pl.nalazek.githubsearch.data;
  * <li>{@link #REPOS_SEARCH} used when searching for repositories</li>
  * <li>{@link #REPOS_PAGE} used when requesting a page from a repository search</li>
  **/
-public enum ExchangeType { USER_SEARCH, REPOS_SEARCH, USER_PAGE, REPOS_PAGE, USER_DETAILED, USER_DETAILED_STARS, USER_DETAILED_AVATAR
+public enum ExchangeType { USER_SEARCH, REPOS_SEARCH, USER_PAGE,
+    REPOS_PAGE, USER_DETAILED, USER_DETAILED_STARS, USER_DETAILED_AVATAR
 }

@@ -18,7 +18,6 @@ package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.StrictMode;
 
 import pl.nalazek.githubsearch.data.ExchangeType;
 
@@ -53,13 +52,21 @@ public class UserSearchResult extends SearchResult {
         this.avatarURL = avatarURL;
     }
 
+
+
     public String getUserURL() {
         return userURL;
     }
 
+
+
     public String getStarredURL() { return starredURL; }
 
+
+
     public String getAvatarURL() { return avatarURL; }
+
+
 
     public static final Parcelable.Creator<UserSearchResult> CREATOR =
             new Parcelable.Creator<UserSearchResult>() {
@@ -75,10 +82,14 @@ public class UserSearchResult extends SearchResult {
         }
     };
 
+
+
     @Override
     public int describeContents() {
         return 0;
     }
+
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -92,6 +103,8 @@ public class UserSearchResult extends SearchResult {
         });
     }
 
+
+
     private static UserSearchResult buildFromParcelData(String[] parcelData) {
         return new UserSearchResult(
                 parcelData[0],
@@ -103,10 +116,14 @@ public class UserSearchResult extends SearchResult {
         );
     }
 
+
+
     @Override
     public String getResultType() {
         return TYPE;
     }
+
+
 
     @Override
     public int hashCode() {
@@ -120,6 +137,8 @@ public class UserSearchResult extends SearchResult {
         result *= getId();
         return result;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

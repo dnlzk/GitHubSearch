@@ -1,4 +1,5 @@
 package pl.nalazek.githubsearch.util;
+
 import com.google.common.base.Charsets;
 
 import org.junit.Test;
@@ -19,8 +20,11 @@ public class TextToStringTest {
     private final static String FILE_UTF8 = DataPaths.JSON_FILE_PATH + "test_UTF-8.txt";
     private String WORD = "test";
 
+
+
     @Test
     public void givenCharsetwhenReadThenStringIsWord() throws Exception {
+
         TextToString.printCurrentDirectory();
         String test;
 
@@ -34,8 +38,11 @@ public class TextToStringTest {
         assertThat("Test word fault", test, is(WORD));
     }
 
+
+
     @Test
     public void whenReadThenStringIsWord() throws Exception {
+
         TextToString.printCurrentDirectory();
         String test;
         try {

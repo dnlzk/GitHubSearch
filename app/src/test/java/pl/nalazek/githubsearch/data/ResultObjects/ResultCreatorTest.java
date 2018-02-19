@@ -30,10 +30,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ResultCreatorTest {
 
-    private final static String JSON_FILE_SEARCH = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_SEARCHUSER;
-    private final static String JSON_USER_DETAILED = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_DETAILEDUSER;
-    private final static String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_STARRED_PAGE_LAST_LINKHEADER;
-    private final static String JSON_FILE_STARRED_PAGE_LAST = DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_STARRED_PAGE_LAST;
+    private final static String JSON_FILE_SEARCH =
+            DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_SEARCHUSER;
+    private final static String JSON_USER_DETAILED =
+            DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_DETAILEDUSER;
+    private final static String JSON_FILE_STARRED_PAGE_LAST_LINKHEADER =
+            DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_STARRED_PAGE_LAST_LINKHEADER;
+    private final static String JSON_FILE_STARRED_PAGE_LAST =
+            DataPaths.JSON_FILE_PATH + DataPaths.JSON_FILE_STARRED_PAGE_LAST;
 
     @Mock
     ResponsePartitioned responsePartitioned;
@@ -77,7 +81,11 @@ public class ResultCreatorTest {
     @Test
     public void givenResponsePartionedExchangeUserSearchWhenMakeResultsThenArrayLenghtEight() throws Exception {
 
-        ResponsePartitioned response = new ResponsePartitioned(headers, body, QueryTask.STATE_SUCCESS, ExchangeType.USER_SEARCH);
+        ResponsePartitioned response = new ResponsePartitioned(
+                headers,
+                body,
+                QueryTask.STATE_SUCCESS,
+                ExchangeType.USER_SEARCH);
 
         Result[] results = creator.makeResults(response);
         assertThat("Result size fault", results.length, is(8));
@@ -88,7 +96,11 @@ public class ResultCreatorTest {
     @Test
     public void givenResponsePartionedExchangeUserDetailedWhenMakeResultsThenArrayLenghtOne() throws Exception {
 
-        ResponsePartitioned response = new ResponsePartitioned(headers, bodyUserDetailed, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED);
+        ResponsePartitioned response = new ResponsePartitioned(
+                headers,
+                bodyUserDetailed,
+                QueryTask.STATE_SUCCESS,
+                ExchangeType.USER_DETAILED);
 
         Result[] results = creator.makeResults(response);
         assertThat("Result size fault", results.length, is(1));
@@ -98,6 +110,7 @@ public class ResultCreatorTest {
 
     @Test
     public void givenResponsePartionedExchangeSearchWhenMakeResultsThenArrayLenghtZero() throws Exception {
+
         when(responsePartitioned.getExchangeType()).thenReturn(ExchangeType.USER_SEARCH);
         when(responsePartitioned.getJsonObject()).thenReturn(null);
 
@@ -141,7 +154,11 @@ public class ResultCreatorTest {
 
         responsePackage = new ResponsePackage(UserDetailedQuery.TYPE);
         responsePackage.addResponses(Collections.singletonList(
-                new ResponsePartitioned(headersStarsLastPage, bodyStarsLastPage, QueryTask.STATE_SUCCESS, ExchangeType.USER_DETAILED_STARS)
+                new ResponsePartitioned(
+                        headersStarsLastPage,
+                        bodyStarsLastPage,
+                        QueryTask.STATE_SUCCESS,
+                        ExchangeType.USER_DETAILED_STARS)
                 )
         );
 
@@ -153,10 +170,15 @@ public class ResultCreatorTest {
 
     private void setupMocks() throws Exception {
 
-        when(body.string()).thenReturn(TextToString.read(JSON_FILE_SEARCH, Charsets.UTF_16));
-        when(bodyUserDetailed.string()).thenReturn(TextToString.read(JSON_USER_DETAILED, Charsets.UTF_16));
-        when(headers.get("Link")).thenReturn(null);
-        when(headersStarsLastPage.get("Link")).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST_LINKHEADER, Charsets.UTF_16));
-        when(bodyStarsLastPage.string()).thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST, Charsets.UTF_16));
+        when(body.string())
+                .thenReturn(TextToString.read(JSON_FILE_SEARCH, Charsets.UTF_16));
+        when(bodyUserDetailed.string())
+                .thenReturn(TextToString.read(JSON_USER_DETAILED, Charsets.UTF_16));
+        when(headers.get("Link"))
+                .thenReturn(null);
+        when(headersStarsLastPage.get("Link"))
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST_LINKHEADER, Charsets.UTF_16));
+        when(bodyStarsLastPage.string())
+                .thenReturn(TextToString.read(JSON_FILE_STARRED_PAGE_LAST, Charsets.UTF_16));
     }
 }

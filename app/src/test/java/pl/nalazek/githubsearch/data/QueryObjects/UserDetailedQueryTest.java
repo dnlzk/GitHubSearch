@@ -30,21 +30,29 @@ public class UserDetailedQueryTest {
     public UserDetailedQuery userDetailedQuery;
     public URL url;
 
+
+
     @Before
     public void beforeConstructor() throws Exception {
         url = new URL("http://a.com");
         userDetailedQuery = new UserDetailedQuery(url, eType);
     }
 
+
+
     @Test
     public void whenGetQueryTypeThenType() throws Exception {
         assertThat("getQueryType method fault", userDetailedQuery.getQueryType(), is("Detailed"));
     }
 
+
+
     @Test
     public void whenGetExchangeTypeThenExchangeType() throws Exception {
         assertThat("getExchangeType method fault", userDetailedQuery.getExchangeType(), is(eType));
     }
+
+
 
     @Test
     public void whenGetURLThenURL() throws Exception {

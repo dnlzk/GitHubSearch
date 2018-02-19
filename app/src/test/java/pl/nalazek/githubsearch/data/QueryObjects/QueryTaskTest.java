@@ -90,7 +90,6 @@ public class QueryTaskTest{
                 "    }\n" +
                 "  ]\n" +
                 "}\n");
-        //when(body.bytes()).thenReturn(new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0});
         when(headers.get("Link")).thenReturn(null);
         when(response.body()).thenReturn(body);
         when(response.headers()).thenReturn(headers);
@@ -111,58 +110,109 @@ public class QueryTaskTest{
         queries = queryBuilder.buildSearchQuery().build("test");
     }
 
+
+
     @Test
     public void whenDoInBackgroundAndOnPostExecuteThenCallbackAndVariablesCheck() throws Exception {
+
         queryTask.onPostExecute(queryTask.doInBackground(queries));
+
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
+
         assertThat("QueryTask references fault", queryTaskCaptor.getValue(), is(queryTask));
         assertThat("ResponsePackage message fault", responsePackageCaptor.getValue().getErrorMessagesMap().isEmpty(), is(true));
         assertThat("ResponsePackage size fault", responsePackageCaptor.getValue().getResponses().size(), is(2));
     }
 
+
+
     @Test
     public void whenDoInBackgroundAndOnPostExecuteAndResponseIsNotSuccesfulThenResponseMessageError() throws Exception {
+
         when(response.message()).thenReturn("Error");
         when(response.isSuccessful()).thenReturn(false);
+
         queryTask.onPostExecute(queryTask.doInBackground(queries));
+
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage error message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey("Error"), is(true));
+
+        assertThat("ResponsePackage error message fault", responsePackageCaptor
+                .getValue()
+                .getErrorMessagesMap()
+                .containsKey("Error"), is(true));
     }
+
+
 
     @Test
     public void whenDoInBackgroundAndConnectionErrorThenResponseMessageConnectionError() throws Exception {
+
         when(client.newCall(any(Request.class))).thenReturn(call);
         when(call.execute()).thenThrow(new UnknownHostException());
+
         queryTask.onPostExecute(queryTask.doInBackground(queries));
+
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage connection error message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey(QueryTask.STATE_CONNECTION_ERROR), is(true));
+
+        assertThat("ResponsePackage connection error message fault", responsePackageCaptor
+                .getValue()
+                .getErrorMessagesMap()
+                .containsKey(QueryTask.STATE_CONNECTION_ERROR), is(true));
     }
+
+
 
     @Test
     public void whenDoInBackgroundAndMalformedURLThenResponseMessageMalformedURL() throws Exception {
+
         when(client.newCall(any(Request.class))).thenReturn(call);
         when(call.execute()).thenThrow(new MalformedURLException());
+
         queryTask.onPostExecute(queryTask.doInBackground(queries));
+
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey(QueryTask.STATE_MALFORMED_URL), is(true));
+
+        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor
+                .getValue()
+                .getErrorMessagesMap()
+                .containsKey(QueryTask.STATE_MALFORMED_URL), is(true));
     }
+
+
 
     @Test
     public void whenDoInBackgroundAndIOExceptionThenResponseMessageIOError() throws Exception {
+
         when(client.newCall(any(Request.class))).thenReturn(call);
         when(call.execute()).thenThrow(new IOException("IO Error"));
+
         queryTask.onPostExecute(queryTask.doInBackground(queries));
+
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey("IO Error"), is(true));
+
+        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor
+                .getValue()
+                .getErrorMessagesMap()
+                .containsKey("IO Error"), is(true));
     }
+
+
 
     @Test
     public void givenMalformedURLQueryAsNullWhenDoInBackgroundThenResponseMessageMalformedURL() throws Exception {
+
         Query malformedURLQuery = Mockito.mock(Query.class);
+
         when(malformedURLQuery.getURL()).thenReturn(null);
         when(malformedURLQuery.getQueryType()).thenReturn(UserSearchResult.TYPE);
+
         queryTask.onPostExecute(queryTask.doInBackground(malformedURLQuery));
+
         verify(callback).onResponseReady(queryTaskCaptor.capture(), responsePackageCaptor.capture());
-        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor.getValue().getErrorMessagesMap().containsKey(QueryTask.STATE_MALFORMED_URL), is(true));
+
+        assertThat("ResponsePackage malformed url message fault", responsePackageCaptor
+                .getValue()
+                .getErrorMessagesMap()
+                .containsKey(QueryTask.STATE_MALFORMED_URL), is(true));
     }
 }

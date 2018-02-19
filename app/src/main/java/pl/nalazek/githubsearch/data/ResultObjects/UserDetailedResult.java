@@ -32,29 +32,6 @@ public class UserDetailedResult extends DetailedResult {
     private String login;
 
 
-    /**
-     * @param userName Name of user
-     * @param followers Count of followers
-     * @param stars Count of stars
-     * @param avatarImage Avatar image
-     * @param exchangeType Type of Exchange
-     */
-    public UserDetailedResult(String userName,
-                              String login,
-                              int followers,
-                              int stars,
-                              Bitmap avatarImage,
-                              ExchangeType exchangeType,
-                              int id) {
-
-        super(exchangeType, id);
-        this.userName = userName;
-        this.followers = followers;
-        this.stars = stars;
-        this.avatarImage = avatarImage;
-        this.login = login;
-    }
-
 
     /**
      * @param userName Name of user
@@ -78,23 +55,29 @@ public class UserDetailedResult extends DetailedResult {
     }
 
 
+
     public String getUserName() {
         return userName;
     }
+
 
     public int getFollowers() {
         return followers;
     }
 
+
     public int getStars() {
         return stars;
     }
+
 
     public Bitmap getAvatarImage() {
         return avatarImage;
     }
 
+
     public String getLogin() { return login;}
+
 
     @Override
     public String getResultType() {

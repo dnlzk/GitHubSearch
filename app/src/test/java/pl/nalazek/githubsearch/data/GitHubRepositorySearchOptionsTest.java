@@ -21,6 +21,7 @@ public class GitHubRepositorySearchOptionsTest {
     public ExpectedException exception;
 
 
+
     @Before
     public void before() {
         builder = new GitHubRepositorySearchOptions.GitHubRepositorySearchOptionsBuilder();
@@ -95,6 +96,7 @@ public class GitHubRepositorySearchOptionsTest {
     }
 
 
+
     @Test
     public void givenAlsoSortingWhenBuildThenSortingValue() throws Exception {
         for(SearchQuery.Sort sort : SearchQuery.Sort.values()) {
@@ -149,6 +151,7 @@ public class GitHubRepositorySearchOptionsTest {
         for(boolean[] state : states) {
             GitHubRepositorySearchOptions options = builder.setScope(state[0], state[1])
                     .forceSearchInHistory(false);
+
             assertThat("Scope users fault", options.isScopeUsers(), is(state[0]));
             assertThat("Scope repos fault", options.isScopeRepos(), is(state[1]));
         }

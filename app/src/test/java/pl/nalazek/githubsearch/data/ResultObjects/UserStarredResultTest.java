@@ -25,12 +25,14 @@ public class UserStarredResultTest {
 
     @Test
     public void whenGetResultTypeThenResultType() throws Exception {
-        assertThat("Result type fault", userStarredResult.getResultType(), is(UserStarredResult.TYPE));
+        assertThat("Result type fault", userStarredResult.getResultType(),
+                is(UserStarredResult.TYPE));
     }
 
     @Test
     public void whenGetExchangeTypeThenUserStarredExchange() throws Exception {
-        assertThat("Exchange type fault", userStarredResult.getExchangeType(), is(ExchangeType.USER_DETAILED_STARS));
+        assertThat("Exchange type fault", userStarredResult.getExchangeType(),
+                is(ExchangeType.USER_DETAILED_STARS));
     }
 
 

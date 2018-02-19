@@ -21,9 +21,7 @@ import android.support.annotation.Nullable;
 import java.net.URL;
 import pl.nalazek.githubsearch.data.ExchangeType;
 
-/**
- * This abstract class should be inherited by new query types.
- */
+
 public abstract class Query {
 
     protected ExchangeType type;

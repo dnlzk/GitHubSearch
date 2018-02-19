@@ -113,13 +113,16 @@ public class ResponsePartitioned {
 
 
     /**
-     * Getter for JsonObject. Available for all ExchangeType's instead of {@link ExchangeType#USER_DETAILED_STARS} and {@link ExchangeType#USER_DETAILED_AVATAR}.
-     * @return JsonObject or null for {@link ExchangeType#USER_DETAILED_STARS}, {@link ExchangeType#USER_DETAILED_AVATAR} and parsing error
+     * Getter for JsonObject. Available for all ExchangeType's instead
+     * of {@link ExchangeType#USER_DETAILED_STARS} and {@link ExchangeType#USER_DETAILED_AVATAR}.
+     * @return JsonObject or null for {@link ExchangeType#USER_DETAILED_STARS},
+     * {@link ExchangeType#USER_DETAILED_AVATAR} and parsing error
      */
     @Nullable
     public JsonObject getJsonObject() {
         return jsonObject;
     }
+
 
 
     /**
@@ -132,16 +135,19 @@ public class ResponsePartitioned {
     }
 
 
+
     @Nullable
     public String getNextPageURL() {
         return nextPage;
     }
 
 
+
     @Nullable
     public String getLastPageURL() {
         return lastPage;
     }
+
 
 
     public int getLastPageNumber() {
@@ -154,9 +160,11 @@ public class ResponsePartitioned {
     }
 
 
+
     public boolean isLastPage() {
         return isLastPage;
     }
+
 
 
     public String getMessage() {
@@ -164,10 +172,12 @@ public class ResponsePartitioned {
     }
 
 
+
     private void parseAndSetPagination() throws InvalidJsonObjectException {
         new JsonFactory().deserializeBody();
         new GitHubHeaderParser().setPageVariables();
     }
+
 
 
 

@@ -17,6 +17,7 @@
 package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
@@ -51,14 +52,17 @@ class DetailedResultFactory implements ResultFactory {
      * @return DetailedResult array for {@link ExchangeType#USER_DETAILED_STARS},
      * singleton array for {@link ExchangeType#USER_DETAILED}
      * and a singleton array with empty result for {@link ExchangeType#USER_DETAILED_AVATAR}.
+     *
      * Note that {@link ExchangeType#USER_DETAILED} will show
      * results with stars count equal to 0 and avatar image equal to null.
      * To have a full detailed user result ({@link UserDetailedResult}), pass a correct response package
      * to {@link #makeResults(ResponsePackage)}.
+     *
      * @throws InvalidJsonObjectException Thrown in two cases:
      * when passed {@link ResponsePartitioned} object in {@link ResponsePackage}
      * contains impermissible {@link ExchangeType},
      * while counting stars input object {@link ResponsePartitioned} ain't or missing first or last page.
+     *
      * @see #makeResults(ResponsePackage)
      */
     @Override
@@ -68,6 +72,7 @@ class DetailedResultFactory implements ResultFactory {
     }
 
 
+
     /**
      * This works correctly if passed response package contains {@link ResponsePartitioned} objects from:
      * <li>1. {@link ExchangeType#USER_DETAILED} </li>
@@ -75,6 +80,7 @@ class DetailedResultFactory implements ResultFactory {
      * <li>3. {@link ExchangeType#USER_DETAILED_STARS} - first page </li>
      * <li>4. {@link ExchangeType#USER_DETAILED_STARS} - last page (optionally) </li>
      * These elements are required to produce a correct {@link UserDetailedResult}
+     *
      * @throws InvalidJsonObjectException Thrown in two cases:
      * when passed {@link ResponsePartitioned} object in {@link ResponsePackage} contains impermissible {@link ExchangeType},
      * while counting stars input object {@link ResponsePartitioned} ain't or missing first or last page.
@@ -97,7 +103,9 @@ class DetailedResultFactory implements ResultFactory {
     }
 
 
-    private DetailedResult[] createConcreteResults(ResponsePartitioned responsePartitioned)  throws InvalidJsonObjectException {
+
+    private DetailedResult[] createConcreteResults(ResponsePartitioned responsePartitioned)
+            throws InvalidJsonObjectException {
 
         ExchangeType type = responsePartitioned.getExchangeType();
 
@@ -112,9 +120,11 @@ class DetailedResultFactory implements ResultFactory {
                 return setBitmap(responsePartitioned);
 
             default:
-                throw new InvalidJsonObjectException("Expected USER_DETAILED, USER_DETAILED_STARS or USER_DETAILED_AVATAR exchange type! Got: " + type.toString());
+                throw new InvalidJsonObjectException("Expected USER_DETAILED, USER_DETAILED_STARS " +
+                        "or USER_DETAILED_AVATAR exchange type! Got: " + type.toString());
         }
     }
+
 
 
     private void createUserDetailedResult(ResponsePackage responsePackage) throws InvalidJsonObjectException {
@@ -152,9 +162,11 @@ class DetailedResultFactory implements ResultFactory {
 
 
 
-    private void getStarsFromResponsePackage(ResponsePackage responsePackage) throws InvalidJsonObjectException, NullPointerException {
+    private void getStarsFromResponsePackage(ResponsePackage responsePackage)
+                                            throws InvalidJsonObjectException, NullPointerException {
 
-        for(ResponsePartitioned responsePartitioned : responsePackage.getAllResponsesWith(ExchangeType.USER_DETAILED_STARS)) {
+        for(ResponsePartitioned responsePartitioned :
+                responsePackage.getAllResponsesWith(ExchangeType.USER_DETAILED_STARS)) {
             DetailedResult[] starsResults = makeResults(responsePartitioned);
 
             if(responsePartitioned.isFirstPage() && responsePartitioned.isLastPage()) {
@@ -171,21 +183,28 @@ class DetailedResultFactory implements ResultFactory {
             else if(responsePartitioned.isLastPage())
                 countStarsOnLastPage(starsResults);
 
-            else throw new InvalidJsonObjectException("Expected first and/or last page of USER_DETAILED_STARS exchange.");
+            else throw new InvalidJsonObjectException(
+                    "Expected first and/or last page of USER_DETAILED_STARS exchange.");
         }
         checkIfAreAllNeededPages();
     }
 
 
-    private void getAvatarFromResponsePackage(ResponsePackage responsePackage) throws InvalidJsonObjectException, NullPointerException {
-        ResponsePartitioned avatarResponse = responsePackage.getAllResponsesWith(ExchangeType.USER_DETAILED_AVATAR).get(0);
+    private void getAvatarFromResponsePackage(ResponsePackage responsePackage)
+                                        throws InvalidJsonObjectException, NullPointerException {
+
+        ResponsePartitioned avatarResponse =
+                responsePackage.getAllResponsesWith(ExchangeType.USER_DETAILED_AVATAR).get(0);
         makeResults(avatarResponse);
     }
 
 
 
-    private void getDetailedDataFromResponsePackage(ResponsePackage responsePackage) throws InvalidJsonObjectException, NullPointerException {
-        ResponsePartitioned userResponse = responsePackage.getAllResponsesWith(ExchangeType.USER_DETAILED).get(0);
+    private void getDetailedDataFromResponsePackage(ResponsePackage responsePackage)
+                                        throws InvalidJsonObjectException, NullPointerException {
+
+        ResponsePartitioned userResponse =
+                responsePackage.getAllResponsesWith(ExchangeType.USER_DETAILED).get(0);
         results.addAll(Arrays.asList(makeResults(userResponse)));
     }
 

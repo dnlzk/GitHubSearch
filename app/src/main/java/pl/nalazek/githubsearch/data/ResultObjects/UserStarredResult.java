@@ -25,11 +25,15 @@ public class UserStarredResult extends DetailedResult {
 
     private String url;
 
+
+
     public UserStarredResult(int id, String url) {
         super(ExchangeType.USER_DETAILED_STARS, id);
         this.id = id;
         this.url = url;
     }
+
+
 
     @Override
     public String getResultType() {

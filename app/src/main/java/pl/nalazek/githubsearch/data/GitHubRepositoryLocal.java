@@ -26,6 +26,7 @@ import pl.nalazek.githubsearch.data.ResultObjects.Result;
 import pl.nalazek.githubsearch.data.ResultObjects.ResultCreator;
 import pl.nalazek.githubsearch.data.ResultObjects.SearchResult;
 
+
 public class GitHubRepositoryLocal implements GitHubRepository {
 
     private static SearchQueryHistory searchQueryHistory;
@@ -119,6 +120,7 @@ public class GitHubRepositoryLocal implements GitHubRepository {
 
         gitHubAPI.startSearch(keyword, searchOptions,
                 new GitHubRepositoryAPIInterface.SearchAPICallback() {
+
                     @Override
                     public void onResultsReady(ResponsePackage responsePackage) {
                         searchQueryHistory.put(keyword, responsePackage);
@@ -145,6 +147,7 @@ public class GitHubRepositoryLocal implements GitHubRepository {
 
         gitHubAPI.getDetailedData(resultForRequest,
                 new GitHubRepositoryAPIInterface.DetailedDataAPICallback() {
+
                     @Override
                     public void onResultsReady(ResponsePackage responsePackage) {
                         detailedResultsCallback.onDetailedDataResultReady(makeResults(responsePackage));

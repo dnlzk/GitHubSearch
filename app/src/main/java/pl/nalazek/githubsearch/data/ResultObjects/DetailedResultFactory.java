@@ -1,3 +1,19 @@
+/**
+ *  Copyright 2018 Daniel Nalazek
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.graphics.Bitmap;
@@ -16,8 +32,9 @@ import pl.nalazek.githubsearch.data.ResponsePackage;
 import pl.nalazek.githubsearch.data.ResponsePartitioned;
 
 /**
- * Produces DetailedResult Objects. Do not use directly to avoid throwing {@link InvalidJsonObjectException} and {@link InvalidObjectException}. Instead use {@link ResultCreator}.
- * @author Daniel Nalazek
+ * Produces DetailedResult Objects. Do not use directly to avoid
+ * throwing {@link InvalidJsonObjectException} and {@link InvalidObjectException}.
+ * Instead use {@link ResultCreator}.
  */
 
 class DetailedResultFactory implements ResultFactory {
@@ -33,11 +50,14 @@ class DetailedResultFactory implements ResultFactory {
     /**
      * @return DetailedResult array for {@link ExchangeType#USER_DETAILED_STARS},
      * singleton array for {@link ExchangeType#USER_DETAILED}
-     * and a singleton array with empty result for {@link ExchangeType#USER_DETAILED_AVATAR}. Note that {@link ExchangeType#USER_DETAILED} will show
-     * results with stars count equal to 0 and avatar image equal to null. To have a full detailed user result ({@link UserDetailedResult}), pass a correct response package
+     * and a singleton array with empty result for {@link ExchangeType#USER_DETAILED_AVATAR}.
+     * Note that {@link ExchangeType#USER_DETAILED} will show
+     * results with stars count equal to 0 and avatar image equal to null.
+     * To have a full detailed user result ({@link UserDetailedResult}), pass a correct response package
      * to {@link #makeResults(ResponsePackage)}.
      * @throws InvalidJsonObjectException Thrown in two cases:
-     * when passed {@link ResponsePartitioned} object in {@link ResponsePackage} contains impermissible {@link ExchangeType},
+     * when passed {@link ResponsePartitioned} object in {@link ResponsePackage}
+     * contains impermissible {@link ExchangeType},
      * while counting stars input object {@link ResponsePartitioned} ain't or missing first or last page.
      * @see #makeResults(ResponsePackage)
      */

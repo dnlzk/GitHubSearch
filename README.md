@@ -1,5 +1,6 @@
 # GitHubSearch
-Enables to search for GitHub users and repos
+Enables to search for GitHub users and repos.
+Shows up to 100 results of both Users and Repo searches.
 
 Written in Android Studio.
 

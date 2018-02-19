@@ -9,8 +9,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="android.app.default_searchable"
             android:value=".ScrollingActivity" />
@@ -20,12 +20,10 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
@@ -34,20 +32,17 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <provider
-            android:name=".search.GitSuggestionProvider"
-            android:authorities="pl.nalazek.githubsearch.provider.GitSuggestionProvider"
-            android:exported="false"></provider>
-
         <activity
             android:name=".userdetails.UserDetailedActivity"
             android:label="@string/title_activity_user_detailed"
             android:parentActivityName=".search.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.nalazek.githubsearch.search.SearchActivity" />
         </activity>
+
     </application>
 
 </manifest>

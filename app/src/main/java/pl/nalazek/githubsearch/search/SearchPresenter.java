@@ -38,7 +38,6 @@ public class SearchPresenter implements SearchContract.UserActionListener {
     public SearchPresenter(GitHubRepository gitHubRepository, SearchContract.Showable showable) {
         this.gitHubRepository = gitHubRepository;
         this.showable = showable;
-        setSearchOptions();
     }
 
 
@@ -95,6 +94,7 @@ public class SearchPresenter implements SearchContract.UserActionListener {
 
         this.searchInHistory = searchInHistory;
         showable.showBusy();
+        setSearchOptions();
         createSearchRequest(keyword, options);
     }
 

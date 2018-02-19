@@ -36,6 +36,7 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <include
@@ -53,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        app:layout_behavior="pl.nalazek.githubsearch.LayoutWithListBehavior">
+        app:layout_behavior="pl.nalazek.githubsearch.util.LayoutWithListBehavior">
     </include>
 
 </android.support.design.widget.CoordinatorLayout>

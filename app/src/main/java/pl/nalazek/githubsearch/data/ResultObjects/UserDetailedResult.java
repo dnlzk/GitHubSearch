@@ -38,9 +38,14 @@ public class UserDetailedResult extends DetailedResult {
      * @param avatarImage Avatar image
      * @param exchangeType Type of Exchange
      */
-    public UserDetailedResult(String userName, int followers, int stars, Bitmap avatarImage, ExchangeType exchangeType) {
+    public UserDetailedResult(String userName,
+                              int followers,
+                              int stars,
+                              Bitmap avatarImage,
+                              ExchangeType exchangeType,
+                              int id) {
 
-        super(exchangeType);
+        super(exchangeType, id);
         this.userName = userName;
         this.followers = followers;
         this.stars = stars;
@@ -54,9 +59,13 @@ public class UserDetailedResult extends DetailedResult {
      * @param stars Count of stars
      * @param avatarImage Avatar image
      */
-    public UserDetailedResult(String userName, int followers, int stars, @Nullable Bitmap avatarImage) {
+    public UserDetailedResult(String userName,
+                              int followers,
+                              int stars,
+                              @Nullable Bitmap avatarImage,
+                              int id) {
 
-        super(ExchangeType.USER_DETAILED);
+        super(ExchangeType.USER_DETAILED, id);
         this.userName = userName;
         this.followers = followers;
         this.stars = stars;

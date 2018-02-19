@@ -22,7 +22,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 /**
  * @author Daniel Nalazek
  */
-@RunWith(AndroidJUnit4.class)
 @LargeTest
 public class SearchActivityTest {
 

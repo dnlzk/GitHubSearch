@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Daniel Nalazek
  */
-@RunWith(AndroidJUnit4.class)
 @MediumTest
 public class RepoSearchResultTest {
 

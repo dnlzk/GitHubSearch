@@ -38,6 +38,7 @@ public class SearchPresenter implements SearchContract.UserActionListener {
     public SearchPresenter(GitHubRepository gitHubRepository, SearchContract.Showable showable) {
         this.gitHubRepository = gitHubRepository;
         this.showable = showable;
+        setSearchOptions();
     }
 
 

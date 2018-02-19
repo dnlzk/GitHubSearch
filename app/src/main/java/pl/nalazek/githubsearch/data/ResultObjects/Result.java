@@ -27,9 +27,18 @@ public abstract class Result {
 
     protected ExchangeType exchangeType;
 
-    protected Result(ExchangeType exchangeType) {
+    protected int id;
+
+    protected Result(ExchangeType exchangeType, int id) {
+        this.id = id;
         this.exchangeType = exchangeType;
     }
+
+
+    public int getId() {
+        return id;
+    }
+
 
     /**
      * Gets the {@link ExchangeType} of the Resut

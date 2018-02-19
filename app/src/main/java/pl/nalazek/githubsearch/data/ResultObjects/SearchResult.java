@@ -30,13 +30,11 @@ public abstract class SearchResult extends Result implements Parcelable {
 
     private String title;
     private String description;
-    private int id;
 
-    protected SearchResult(String title, String description, ExchangeType exchangeType, int id ) {
-        super(exchangeType);
+    protected SearchResult(String title, String description, ExchangeType exchangeType, int id) {
+        super(exchangeType, id);
         this.title = title;
         this.description = description;
-        this.id = id;
     }
 
     public String getTitle() {
@@ -47,5 +45,4 @@ public abstract class SearchResult extends Result implements Parcelable {
         return description;
     }
 
-    public int getId() { return id; }
 }

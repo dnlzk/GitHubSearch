@@ -25,7 +25,7 @@ public abstract class DetailedResult extends Result {
 
     public final static String TYPE = "EmptyDetailedResult";
 
-    protected DetailedResult(ExchangeType exchangeType) {
-        super(exchangeType);
+    protected DetailedResult(ExchangeType exchangeType, int id) {
+        super(exchangeType, id);
     }
 }

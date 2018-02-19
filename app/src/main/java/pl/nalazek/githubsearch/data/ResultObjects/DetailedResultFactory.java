@@ -194,7 +194,12 @@ class DetailedResultFactory implements ResultFactory {
     private DetailedResult[] createUserDetailedResultsSingletonArray(JsonUserDetailed jsonObject) {
 
         DetailedResult[] results = new DetailedResult[1];
-        results[0] = new UserDetailedResult(jsonObject.getName(), jsonObject.getFollowers(), countStars(), bitmap);
+        results[0] = new UserDetailedResult(
+                jsonObject.getName(),
+                jsonObject.getFollowers(),
+                countStars(),
+                bitmap,
+                jsonObject.getId());
         return results;
     }
 
@@ -217,7 +222,7 @@ class DetailedResultFactory implements ResultFactory {
     private DetailedResult[] singletonArrayWithEmptyResult() {
 
         return new DetailedResult[] {
-                new DetailedResult(ExchangeType.USER_DETAILED_AVATAR) {
+                new DetailedResult(ExchangeType.USER_DETAILED_AVATAR, 0) {
                     @Override
                     public String getResultType() {
                         return TYPE;

@@ -18,6 +18,8 @@ package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.StrictMode;
+
 import pl.nalazek.githubsearch.data.ExchangeType;
 
 
@@ -30,20 +32,6 @@ public class UserSearchResult extends SearchResult {
     private String starredURL;
     private String avatarURL;
 
-    /**
-     * @param title Name to show on list
-     * @param description Description of the result
-     * @param userURL URL of user page
-     * @param starredURL URL of user stars
-     * @param avatarURL URL of users avatar image4
-     * @param exchangeType Type of exhange
-     */
-    public UserSearchResult(String title, String description, String userURL, String starredURL, String avatarURL, ExchangeType exchangeType) {
-        super(title, description, exchangeType);
-        this.userURL = userURL;
-        this.starredURL = starredURL;
-        this.avatarURL = avatarURL;
-    }
 
     /**
      * @param title Name to show on list
@@ -52,8 +40,14 @@ public class UserSearchResult extends SearchResult {
      * @param starredURL URL of user stars
      * @param avatarURL URL of users avatar image4
      */
-    public UserSearchResult(String title, String description, String userURL, String starredURL, String avatarURL) {
-        super(title, description, ExchangeType.USER_SEARCH);
+    public UserSearchResult(String title,
+                            String description,
+                            String userURL,
+                            String starredURL,
+                            String avatarURL,
+                            int id) {
+
+        super(title, description, ExchangeType.USER_SEARCH, id);
         this.userURL = userURL;
         this.starredURL = starredURL;
         this.avatarURL = avatarURL;
@@ -67,9 +61,11 @@ public class UserSearchResult extends SearchResult {
 
     public String getAvatarURL() { return avatarURL; }
 
-    public static final Parcelable.Creator<UserSearchResult> CREATOR = new Parcelable.Creator<UserSearchResult>() {
+    public static final Parcelable.Creator<UserSearchResult> CREATOR =
+            new Parcelable.Creator<UserSearchResult>() {
+
         public UserSearchResult createFromParcel(Parcel in) {
-            String[] parcelData = new String[5];
+            String[] parcelData = new String[6];
             in.readStringArray(parcelData);
             return buildFromParcelData(parcelData);
         }
@@ -89,9 +85,10 @@ public class UserSearchResult extends SearchResult {
         dest.writeStringArray(new String[] {
                 getTitle(),
                 getDescription(),
-                this.userURL,
-                this.starredURL,
-                this.avatarURL
+                userURL,
+                starredURL,
+                avatarURL,
+                String.valueOf(getId())
         });
     }
 
@@ -101,7 +98,8 @@ public class UserSearchResult extends SearchResult {
                 parcelData[1],
                 parcelData[2],
                 parcelData[3],
-                parcelData[4]
+                parcelData[4],
+                Integer.valueOf(parcelData[5])
         );
     }
 
@@ -119,6 +117,7 @@ public class UserSearchResult extends SearchResult {
         result = 37 * result + getTitle().hashCode();
         result = 37 * result + getDescription().hashCode();
         result = 37 * result + getExchangeType().hashCode();
+        result *= getId();
         return result;
     }
 
@@ -130,6 +129,7 @@ public class UserSearchResult extends SearchResult {
                 starredURL.equals( ((UserSearchResult)o).getStarredURL() ) &&
                 getTitle().equals( ((UserSearchResult)o).getTitle() ) &&
                 getDescription().equals( ((UserSearchResult)o).getDescription() ) &&
-                getExchangeType().equals( ((UserSearchResult)o).getExchangeType() );
+                getExchangeType().equals( ((UserSearchResult)o).getExchangeType() ) &&
+                getId() == ((UserSearchResult)o).getId();
     }
 }

@@ -17,10 +17,11 @@ public class RepoSearchResultTest {
     String name = "John";
     String description = "evaluate description";
     String exampleRepoUrl = "http://u.pl";
+    int id = 564;
 
     @Before
     public void beforeConstructor() {
-        repoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl);
+        repoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl, id);
     }
 
     @Test
@@ -49,26 +50,31 @@ public class RepoSearchResultTest {
     }
 
     @Test
+    public void whenGetIdThenId() throws Exception {
+        assertThat("Type fault", repoSearchResult.getId(), is(id));
+    }
+
+    @Test
     public void givenNewUserSearchResultSameValuesWhenEqualsThenEqual() throws Exception {
-        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl);
+        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl, id);
         assertTrue(repoSearchResult.equals(newRepoSearchResult));
     }
 
     @Test
     public void givenNewUserSearchResultSameValuesWhenHashCodeEqualityCheckThenEqual() throws Exception {
-        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl);
+        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl, id);
         assertTrue(repoSearchResult.hashCode() == newRepoSearchResult.hashCode());
     }
 
     @Test
     public void givenNewUserSearchResultDifferentValuesWhenEqualsThenNotEqual() throws Exception {
-        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, "other", exampleRepoUrl);
+        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, "other", exampleRepoUrl, id);
         assertFalse(repoSearchResult.equals(newRepoSearchResult));
     }
 
     @Test
     public void givenNewUserSearchResultDifferentValuesWhenHashCodeEqualityCheckThenNptEqual() throws Exception {
-        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, description, "other");
+        RepoSearchResult newRepoSearchResult = new RepoSearchResult(name, description, "other", id);
         assertFalse(repoSearchResult.hashCode() == newRepoSearchResult.hashCode());
     }
 

@@ -29,7 +29,7 @@ public class RepoSearchResultTest {
 
     @Before
     public void beforeConstructor() {
-        repoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl);
+        repoSearchResult = new RepoSearchResult(name, description, exampleRepoUrl, 26);
         parcel = Parcel.obtain();
     }
 

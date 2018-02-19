@@ -35,7 +35,8 @@ public class UserSearchResultTest {
                 description,
                 exampleUserUrl,
                 exampleStarredUrl,
-                exampleAvatarUrl);
+                exampleAvatarUrl,
+                55);
 
         parcel = Parcel.obtain();
     }

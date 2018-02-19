@@ -19,10 +19,12 @@ public class UserSearchResultTest {
     String exampleUserUrl = "http://u.pl";
     String exampleStarredUrl = "http://s.pl";
     String exampleAvatarUrl = "http://a.pl";
+    int id = 34;
 
     @Before
     public void beforeConstructor() {
-        userSearchResult = new UserSearchResult(name, description, exampleUserUrl, exampleStarredUrl, exampleAvatarUrl);
+        userSearchResult = new UserSearchResult(name, description, exampleUserUrl, exampleStarredUrl,
+                exampleAvatarUrl, id);
     }
 
     @Test
@@ -56,31 +58,40 @@ public class UserSearchResultTest {
     }
 
     @Test
+    public void whenGetIdThenId() throws Exception {
+        assertThat("Type fault", userSearchResult.getId(), is(id));
+    }
+
+    @Test
     public void whenGetStarredURLThenStarredUrl() throws Exception {
         assertThat("Type fault", userSearchResult.getStarredURL(), is(exampleStarredUrl));
     }
 
     @Test
     public void givenNewUserSearchResultSameValuesWhenEqualsThenEqual() throws Exception {
-        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl, exampleStarredUrl, exampleAvatarUrl);
+        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl,
+                exampleStarredUrl, exampleAvatarUrl, id);
         assertTrue(userSearchResult.equals(newUserSearchResult));
     }
 
     @Test
     public void givenNewUserSearchResultSameValuesWhenHashCodeEqualityCheckThenEqual() throws Exception {
-        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl, exampleStarredUrl, exampleAvatarUrl);
+        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl,
+                exampleStarredUrl, exampleAvatarUrl, id);
         assertTrue(userSearchResult.hashCode() == newUserSearchResult.hashCode());
     }
 
     @Test
     public void givenNewUserSearchResultDifferentValuesWhenEqualsThenNotEqual() throws Exception {
-        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl, exampleStarredUrl, "other");
+        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl,
+                exampleStarredUrl, "other", id);
         assertFalse(userSearchResult.equals(newUserSearchResult));
     }
 
     @Test
     public void givenNewUserSearchResultDifferentValuesWhenHashCodeEqualityCheckThenNotEqual() throws Exception {
-        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl, "other", exampleAvatarUrl);
+        UserSearchResult newUserSearchResult = new UserSearchResult(name, description, exampleUserUrl,
+                "other", exampleAvatarUrl, id);
         assertFalse(userSearchResult.hashCode() == newUserSearchResult.hashCode());
     }
 

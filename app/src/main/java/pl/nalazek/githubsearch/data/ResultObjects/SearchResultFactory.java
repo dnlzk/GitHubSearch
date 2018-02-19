@@ -104,14 +104,14 @@ public class SearchResultFactory implements ResultFactory {
 
 
     private RepoSearchResult createRepoSearchResult(JsonRepoSearchResult.Item item) {
-        return new RepoSearchResult(item.getName(), item.getHtmlUrl(), item.getUrl());
+        return new RepoSearchResult(item.getName(), item.getHtmlUrl(), item.getUrl(), item.getId());
     }
 
 
 
     private UserSearchResult createUserSearchResult(JsonUserSearchResult.Item item) {
         String starredURL = item.getStarredUrl().contains("{") ? (item.getStarredUrl().split("\\{"))[0] : item.getStarredUrl();
-        return new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), starredURL, item.getAvatarUrl());
+        return new UserSearchResult(item.getLogin(), item.getHtmlUrl(), item.getUrl(), starredURL, item.getAvatarUrl(), item.getId());
     }
 }
 

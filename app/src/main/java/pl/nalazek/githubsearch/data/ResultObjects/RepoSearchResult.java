@@ -18,6 +18,8 @@ package pl.nalazek.githubsearch.data.ResultObjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.StrictMode;
+
 import pl.nalazek.githubsearch.data.ExchangeType;
 
 
@@ -34,21 +36,21 @@ public class RepoSearchResult extends SearchResult {
      * @param repoURL URL of repositorium
      * @param exchangeType Type of Exchange
      */
-    public RepoSearchResult(String title, String description, String repoURL, ExchangeType exchangeType) {
-        super(title, description, exchangeType);
+    public RepoSearchResult(String title, String description, String repoURL, ExchangeType exchangeType, int id) {
+        super(title, description, exchangeType, id);
         this.repoURL = repoURL;
     }
 
 
-    public RepoSearchResult(String title, String description, String repoURL) {
-        super(title, description, ExchangeType.REPOS_SEARCH);
+    public RepoSearchResult(String title, String description, String repoURL, int id) {
+        super(title, description, ExchangeType.REPOS_SEARCH, id);
         this.repoURL = repoURL;
     }
 
 
     public static final Parcelable.Creator<RepoSearchResult> CREATOR = new Parcelable.Creator<RepoSearchResult>() {
         public RepoSearchResult createFromParcel(Parcel in) {
-            String[] parcelData = new String[3];
+            String[] parcelData = new String[4];
             in.readStringArray(parcelData);
             return buildFromParcelData(parcelData);
         }
@@ -76,6 +78,7 @@ public class RepoSearchResult extends SearchResult {
                 getTitle(),
                 getDescription(),
                 this.repoURL,
+                String.valueOf(getId())
         });
     }
 
@@ -92,6 +95,7 @@ public class RepoSearchResult extends SearchResult {
         result = 37 * result + getTitle().hashCode();
         result = 37 * result + getDescription().hashCode();
         result = 37 * result + getExchangeType().hashCode();
+        result *= getId();
         return result;
     }
 
@@ -102,7 +106,8 @@ public class RepoSearchResult extends SearchResult {
                 repoURL.equals( ((RepoSearchResult)o).getRepoURL() ) &&
                 getTitle().equals( ((RepoSearchResult)o).getTitle() ) &&
                 getDescription().equals( ((RepoSearchResult)o).getDescription() ) &&
-                getExchangeType().equals( ((RepoSearchResult)o).getExchangeType() );
+                getExchangeType().equals( ((RepoSearchResult)o).getExchangeType() ) &&
+                getId() == ((RepoSearchResult)o).getId();
     }
 
 
@@ -111,7 +116,8 @@ public class RepoSearchResult extends SearchResult {
                 parcelData[0],
                 parcelData[1],
                 parcelData[2],
-                ExchangeType.REPOS_SEARCH
+                ExchangeType.REPOS_SEARCH,
+                Integer.valueOf(parcelData[3])
         );
     }
 }

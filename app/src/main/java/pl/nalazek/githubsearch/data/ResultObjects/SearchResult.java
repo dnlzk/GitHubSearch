@@ -12,7 +12,7 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
+ **/
 
 package pl.nalazek.githubsearch.data.ResultObjects;
 
@@ -30,11 +30,13 @@ public abstract class SearchResult extends Result implements Parcelable {
 
     private String title;
     private String description;
+    private int id;
 
-    protected SearchResult(String title, String description, ExchangeType exchangeType ) {
+    protected SearchResult(String title, String description, ExchangeType exchangeType, int id ) {
         super(exchangeType);
         this.title = title;
         this.description = description;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -44,4 +46,6 @@ public abstract class SearchResult extends Result implements Parcelable {
     public String getDescription() {
         return description;
     }
+
+    public int getId() { return id; }
 }
